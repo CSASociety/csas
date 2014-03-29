@@ -29,6 +29,10 @@ GEM
     atomic (1.1.16)
     bcrypt (3.1.7)
     builder (3.1.4)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.3)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -65,10 +69,19 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
     multi_json (1.9.2)
+    nifty-generators (0.4.6)
     orm_adapter (0.5.0)
+    paperclip (4.1.1)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     pg (0.17.1)
     polyglot (0.3.4)
     rack (1.5.2)
@@ -143,6 +156,9 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   less-rails
+  mocha
+  nifty-generators
+  paperclip
   pg
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)

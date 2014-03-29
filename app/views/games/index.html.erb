@@ -1,0 +1,21 @@
+<% title "Games" %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Link</th>
+  </tr>
+  <% for game in @games %>
+    <tr>
+      <td><%= game.title %></td>
+      <td><%= game.description %></td>
+      <td><%= game.link %></td>
+      <td><%= link_to "Show", game %></td>
+      <td><%= link_to "Edit", edit_game_path(game) %></td>
+      <td><%= link_to "Destroy", game, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Game", new_game_path %></p>
