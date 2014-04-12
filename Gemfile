@@ -12,6 +12,11 @@ gem "twitter-bootstrap-rails"
 gem 'devise'
 gem "nifty-generators", :group => :development
 gem "paperclip"
+gem 'aws-sdk'
+
+group :development do
+  gem 'debugger'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
