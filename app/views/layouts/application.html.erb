@@ -10,6 +10,12 @@
   <body>
     <nav>
       <ul>
+        <li>
+          <%=link_to 'Home', root_path-%>
+        </li>
+        <li>
+          <%=link_to 'Games', games_path-%>
+        </li>
         <%- if user_signed_in? %>
           <li>
             <%= link_to current_user.email, edit_user_registration_path %>
