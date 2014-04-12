@@ -13,6 +13,7 @@ gem 'devise'
 gem "nifty-generators", :group => :development
 gem "paperclip"
 gem 'aws-sdk'
+gem 'bootsy'
 
 group :development do
   gem 'debugger'
