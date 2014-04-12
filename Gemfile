@@ -15,6 +15,8 @@ gem "paperclip"
 gem 'aws-sdk'
 gem 'bootsy'
 
+gem 'rails_12factor', group: :production
+
 group :development do
   gem 'debugger'
 end
