@@ -13,7 +13,6 @@ gem 'devise'
 gem "nifty-generators", :group => :development
 gem "paperclip"
 gem 'aws-sdk'
-gem 'bootsy'
 
 gem 'rails_12factor', group: :production
 

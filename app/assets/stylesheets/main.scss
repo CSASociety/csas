@@ -1,0 +1,29 @@
+body {
+  nav {
+    background-color: black;
+    color: white;
+    ul {
+      margin: 0 auto;
+      width: 55%;
+      overflow: auto;
+      li {
+        float:left;
+        list-style: none;
+        padding: 7px;
+      }
+    }
+  }
+  #container {
+    width: 55%;
+    margin: 0 auto;
+    form {
+      input {
+        width: 90%;
+      }
+      textarea {
+        width: 90%;
+        height: 200px;
+      }
+    }
+  }
+}

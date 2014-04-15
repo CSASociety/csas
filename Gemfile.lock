@@ -32,16 +32,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt (3.1.7)
-    bootsy (2.0.7)
-      carrierwave (~> 0.10.0)
-      mini_magick (~> 3.7.0)
-      remotipart (~> 1.2.1)
     builder (3.1.4)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -91,8 +82,6 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.25.1)
-    mini_magick (3.7.0)
-      subexec (~> 0.2.1)
     mini_portile (0.5.3)
     minitest (4.7.5)
     mocha (0.10.5)
@@ -134,7 +123,6 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
-    remotipart (1.2.1)
     sass (3.2.17)
     sass-rails (4.0.2)
       railties (>= 4.0.0, < 5.0)
@@ -153,7 +141,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    subexec (0.2.3)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -184,7 +171,6 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
-  bootsy
   coffee-rails (~> 4.0.0)
   debugger
   devise

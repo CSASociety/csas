@@ -1,6 +1,5 @@
 Csas::Application.routes.draw do
 
-  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   resources :games
   root 'welcome#index'
 
