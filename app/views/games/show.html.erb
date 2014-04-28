@@ -1,6 +1,8 @@
 <% title "Game" %>
 
-<%= image_tag @game.image.url(:medium) %>
+<%-if @game.image.present? %>
+  <%= image_tag @game.image.file.url(:medium) %>
+<%-end%>
 
 <p>
   <strong>Title:</strong>

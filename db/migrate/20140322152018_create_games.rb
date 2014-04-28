@@ -4,6 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.string :title
       t.text :description
       t.string :link
+      t.integer :image_id
       t.timestamps
     end
   end
