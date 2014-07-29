@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
+//= require lodash.min.js
+//= require backbone.js
+//= require rivets.min.js
 //= require_tree .

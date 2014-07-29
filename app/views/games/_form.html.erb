@@ -12,7 +12,8 @@
     <%= f.label :link %><br />
     <%= f.text_field :link %>
     </p>
-    <p>You must create a resource to add and image to a game. This will be updated in the future so you can create both at the same time. I would suggest creating with out the an image to begin with and then updating the image after creating the resource.</p>
-    <%= f.collection_select :image_id, Resource.all, :id, :file_file_name, :include_blank => true %>
+    <p>Once you create this game you will be able to go to resource and add images and documents. You will be able to add thoes here in the future but it is a bit more complicated than expected. </p>
   <p><%= f.submit %></p>
+
 <% end %>
+

@@ -7,7 +7,7 @@
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
-  <body>
+  <body id='main'>
     <nav>
       <ul>
         <li>
@@ -43,5 +43,6 @@
       <%= content_tag :h1, yield(:title) if show_title? %>
       <%= yield %>
     </div>
+    <%= yield :javascript %>
   </body>
   </html>

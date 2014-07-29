@@ -6,7 +6,7 @@
 
 <p>
   <strong>Title:</strong>
-  <%= @game.title %>
+  <span rv-text='game:title'></span>
 </p>
 <p>
   <strong>Description:</strong>
@@ -21,4 +21,19 @@
   <%= link_to "Edit", edit_game_path(@game) %> |
   <%= link_to "Destroy", @game, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", games_path %>
-</p>
+  </p>
+
+<script>
+  var baked = {
+    title: "<%= @game.title %>",
+    link: "<%= @game.link %>",
+    description: "<%= @game.description %>"
+  }
+</script>
+
+
+<%- content_for :javascript do %>
+  <%= javascript_include_tag('games_model.js') %>
+<%- end %>
+
+
