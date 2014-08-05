@@ -5,6 +5,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @possible_images = Resource.where('file_content_type like ?', '%image%')
   end
 
   def create
@@ -27,6 +28,7 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+    debugger
     if @game.update_attributes(game_params)
       redirect_to @game, :notice  => "Successfully updated game."
     else

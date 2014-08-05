@@ -1,5 +1,5 @@
 //This will containg the backbone or javascript object for the games models.
-alert('Testing')
+//alert('Testing')
 var Game = Backbone.Model.extend(function(){
 
 })
