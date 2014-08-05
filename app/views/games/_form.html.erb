@@ -12,6 +12,11 @@
     <%= f.label :link %><br />
     <%= f.text_field :link %>
   </p>
+  <p>
+    <%= f.label :image %>
+    <%= f.collection_select :image, @possible_images, :id, :file_file_name, prompt: true %>
+    <%=  link_to("Current Image:", @game.image.file.url )if @game.image.present? %>
+  </p>
   <p><%= f.submit %></p>
 <% end %>
 <%- if @game.new_record? %>

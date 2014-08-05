@@ -18,6 +18,10 @@ class GamesController < ApplicationController
 
   def edit
     @game = Game.find(params[:id])
+    @possible_images = Resource.where('file_content_type like ?', '%image%')
+    if @game.image present?
+      @possible_images = @possible_images - [@game.image]
+    end
     @attachment = Attachment.new()
   end
 
