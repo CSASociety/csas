@@ -1,4 +1,19 @@
 body {
+  table {
+    border: 1px solid #CCC;
+    tr {
+      border: 1px solid #CCC;
+    }
+    th {
+      border: 2px solid #CCC;
+    }
+    td {
+      border: 1px solid #CCC;
+      min-width: 75px;
+      padding: 7px;
+    }
+
+  }
   nav {
     background-color: black;
     color: white;

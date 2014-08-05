@@ -5,15 +5,18 @@
     <th>Title</th>
     <th>Description</th>
     <th>Link</th>
+    <th>Actions</th>
   </tr>
   <% for game in @games %>
     <tr>
       <td><%= game.title %></td>
-      <td><%= game.description %></td>
+      <td><%= game.description.truncate(100) %></td>
       <td><%= game.link %></td>
-      <td><%= link_to "Show", game %></td>
-      <td><%= link_to "Edit", edit_game_path(game) %></td>
-      <td><%= link_to "Destroy", game, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td>
+        <%= link_to "Show", game %>
+         | 
+        <%= link_to "Edit", edit_game_path(game) %>
+      </td>
     </tr>
   <% end %>
 </table>

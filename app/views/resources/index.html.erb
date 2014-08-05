@@ -4,14 +4,17 @@
   <tr>
     <th>Name</th>
     <th>Type</th>
+    <th>Actions</th>
   </tr>
   <% for resource in @resources %>
     <tr>
       <td><%= resource.file_file_name %></td>
       <td><%= resource.file_content_type %></td>
-      <td><%= link_to "Show", resource %></td>
-      <td><%= link_to "Edit", edit_resource_path(resource) %></td>
-      <td><%= link_to "Destroy", resource, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td>
+        <%= link_to "Show", resource %>
+         | 
+        <%= link_to "Edit", edit_resource_path(resource) %>
+      </td>
     </tr>
   <% end %>
 </table>
