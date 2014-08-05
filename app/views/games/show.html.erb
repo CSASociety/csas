@@ -6,7 +6,7 @@
 
 <p>
   <strong>Title:</strong>
-  <span rv-text='game:title'></span>
+  <%= @game.title %>
 </p>
 <p>
   <strong>Description:</strong>
@@ -21,7 +21,33 @@
   <%= link_to "Edit", edit_game_path(@game) %> |
   <%= link_to "Destroy", @game, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", games_path %>
-  </p>
+</p>
+
+<%- content_for :javascript do %>
+  <%= javascript_include_tag('games_model.js') %>
+<%- end %>
+
+<h2> Attachemnts </h2>
+<ul>
+  <%- @game.attachments.each do |attachment| %>
+    <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+  <%- end %>
+</ul>
+
+<h2>Add Attachment</h2>
+<% if (@possible_resources.count < 1)  %>
+  <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
+  <%= link_to "Create new resource", new_resource_path %>
+<% else %>
+  <%= form_for @new_attachment do |f| %>
+    <%= f.hidden_field :attachable_id, value: @game.id %>
+    <%= f.hidden_field :attachable_type, value: @game.class %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
+    <%= f.submit %>
+  <%-end %>
+<% end %>
 
 <script>
   var baked = {
@@ -30,10 +56,4 @@
     description: "<%= @game.description %>"
   }
 </script>
-
-
-<%- content_for :javascript do %>
-  <%= javascript_include_tag('games_model.js') %>
-<%- end %>
-
 

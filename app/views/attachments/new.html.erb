@@ -1,0 +1,10 @@
+<%=form_for @attachment do |f|%>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :resource %>
+  <%= f.collection_select :resource_id, Resource.all, :id, :file_file_name, prompt: true %>
+  <%= f.hidden_field :attachable_type, value: "Game" %>
+  <%= f.label :attachable, value: "Attached to:" %>
+  <%= f.collection_select :attachable_id, Game.all, :id, :title, prompt: true %>
+  <%= f.submit %>
+<%-end%>

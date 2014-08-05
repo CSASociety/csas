@@ -11,9 +11,12 @@
   <p>
     <%= f.label :link %><br />
     <%= f.text_field :link %>
-    </p>
-    <p>Once you create this game you will be able to go to resource and add images and documents. You will be able to add thoes here in the future but it is a bit more complicated than expected. </p>
+  </p>
   <p><%= f.submit %></p>
-
 <% end %>
+<%- if @game.new_record? %>
+  <p>Once you create this game you will be able to go to resource and add images and documents. You will be abe to add thoes here in the future but it is a bit more complicated than expected. </p>
+<%-else%>
+<%-end%>
+
 

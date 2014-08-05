@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th>Attachment Title</th>
+    <th>File Name</th>
+    <th>Attached to type</th>
+    <th>Attached to Title</th>
+  </tr>
+  <%- @attachments.each do |a| %>
+    <tr>
+      <td><%= a.title %></td>
+      <td><%= a.resource.file_file_name %></td>
+      <td><%= a.attachable_type %></td>
+      <td><%= a.attachable.title %></td>
+    </tr>
+  <%end%>
+</table>

@@ -1,0 +1,5 @@
+<%= @attachments.each do |attachment| %>
+  <%= attachment.resource.file_file_name %>
+  <%= attachment.attachable_type %>
+  <%= attachment.attachable.title %>
+<%-end%>

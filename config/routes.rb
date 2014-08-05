@@ -1,6 +1,7 @@
 Csas::Application.routes.draw do
 
   resources :resources
+  resources :attachments
   resources :games
   root 'welcome#index'
 

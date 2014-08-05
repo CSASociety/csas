@@ -1,4 +1,7 @@
 class Resource < ActiveRecord::Base
+
+  has_many :attachments
+
   has_attached_file :file,
                     :styles => { :medium => "300x300>", :thumb => "100x100>" },
                     :storage => :s3,
@@ -10,7 +13,7 @@ class Resource < ActiveRecord::Base
 
   validates :file, :attachment_presence => true
 
-  has_one :game_image, class_name: "Game", foreign_key: "image_id"
+  has_many :game_images, class_name: "Game", foreign_key: "image_id"
 
   do_not_validate_attachment_file_type :file
 end

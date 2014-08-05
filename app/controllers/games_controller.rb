@@ -18,6 +18,7 @@ class GamesController < ApplicationController
 
   def edit
     @game = Game.find(params[:id])
+    @attachment = Attachment.new()
   end
 
   def update
@@ -37,6 +38,13 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    @new_attachment = Attachment.new
+    @attachments = @game.attachments
+    @possible_resources = Resource.all
+    @attachments.each do  |attachment|
+      @possible_resources  = @possible_resources  - [attachment.resource]
+    end
+    @possible_resources
   end
 
   private

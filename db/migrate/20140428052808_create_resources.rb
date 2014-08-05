@@ -9,4 +9,5 @@ class CreateResources < ActiveRecord::Migration
   def self.down
     drop_table :resources
   end
+
 end
