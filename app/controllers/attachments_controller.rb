@@ -9,7 +9,6 @@ class AttachmentsController < ApplicationController
 
   def create
     @attachment = Attachment.new(attachment_params)
-    debugger
     @entry = @attachment.attachable
     if @attachment.save
       redirect_to @entry, :notice => "Successfully created attachment ."
