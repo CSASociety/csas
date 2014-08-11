@@ -1,0 +1,23 @@
+<%= form_for @charcter do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :bio %><br />
+    <%= f.text_area :bio %>
+  </p>
+  <p>
+    <%= f.label :image %>
+    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, prompt: true %>
+    <%=  link_to("Current Image:", @charcter.image.file.url )if @charcter.image.present? %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+<%- if @charcter.new_record? %>
+  <p>Once you create this charcter you will be able to go to resource and add images and documents. You will be abe to add thoes here in the future but it is a bit more complicated than expected. </p>
+<%-else%>
+<%-end%>
+
+

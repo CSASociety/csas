@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>Feature (Class)</th>
+    <th>Feature Title</th>
+    <th>Action</th>
+    <th>When</th>
+  </tr>
+  <% @versions.each do |v| %>
+    <tr>
+      <td><%=v.item_type%></td>
+      <td><%=item(v).title%></td>
+      <td><%=v.event%></td>
+      <td><%=v.created_at%></td>
+    </tr>
+<%end%>
