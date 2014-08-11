@@ -1,6 +1,6 @@
 class CreateCharcters < ActiveRecord::Migration
   def self.up
-    create_table :charcters do |t|
+    create_table :characters do |t|
       t.string :player
       t.string :name
       t.text :bio
@@ -12,6 +12,6 @@ class CreateCharcters < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :charcters
+    drop_table :characters
   end
 end

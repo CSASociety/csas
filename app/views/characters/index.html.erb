@@ -7,13 +7,21 @@
     <th>Updated</th>
     <th>Actions</th>
   </tr>
-  <% @charcters.each do |c| %>
+  <% @characters.each do |c| %>
     <tr>
       <td><%=c.name%></td>
       <td><%=c.player%></td>
       <td>Placeholder</td>
       <td><%=c.created_at%></td>
       <td><%=c.updated_at%></td>
-      <td>Show | Edit</td>
+      <td>
+        <%= link_to "Show", c %>
+         | 
+         <%= link_to "Edit", edit_character_path(c) %>
+      </td>
     </tr>
-<%end%>
+  <%end%>
+</table>
+<br>
+<%= link_to "Create new character", new_character_path -%>
+

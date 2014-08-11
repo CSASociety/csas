@@ -4,7 +4,7 @@ Csas::Application.routes.draw do
   resources :attachments
   resources :games
   resources :versions
-  resources :charcters
+  resources :characters
   root 'welcome#index'
 
   devise_for :users

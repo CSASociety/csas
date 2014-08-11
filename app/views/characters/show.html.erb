@@ -1,31 +1,31 @@
-<% title "Charcter" %>
+<% title "Character" %>
 
-<%-if @charcter.image.present? %>
-  <%= image_tag @charcter.image.file.url(:medium) %>
+<%-if @character.image.present? %>
+  <%= image_tag @character.image.file.url(:medium) %>
 <%-end%>
 
 <p>
-  <strong>Charcter Name:</strong>
-  <%= @charcter.name %>
+  <strong>Character Name:</strong>
+  <%= @character.name %>
 </p>
 <p>
   <strong>Bio:</strong>
-  <%= @charcter.bio %>
+  <%= @character.bio %>
 </p>
 <p>
   <strong>Status:</strong>
-  <%= @charcter.status %>
+  <%= @character.status %>
 </p>
 
 <p>
-  <%= link_to "Edit", edit_charcter_path(@charcter) %> |
-  <%= link_to "Destroy", @charcter, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", charcters_path %>
+  <%= link_to "Edit", edit_character_path(@character) %> |
+  <%= link_to "Destroy", @character, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", characters_path %>
 </p>
 
 <h2> Attachemnts </h2>
 <ul>
-  <%- @charcter.attachments.each do |attachment| %>
+  <%- @character.attachments.each do |attachment| %>
     <li><%= link_to attachment.title, attachment.resource.file.url %></li>
   <%- end %>
 </ul>
@@ -36,8 +36,8 @@
   <%= link_to "Create new resource", new_resource_path %>
 <% else %>
   <%= form_for @new_attachment do |f| %>
-    <%= f.hidden_field :attachable_id, value: @charcter.id %>
-    <%= f.hidden_field :attachable_type, value: @charcter.class %>
+    <%= f.hidden_field :attachable_id, value: @character.id %>
+    <%= f.hidden_field :attachable_type, value: @character.class %>
     <%= f.label :title %>
     <%= f.text_field :title %>
     <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
