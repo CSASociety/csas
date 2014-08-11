@@ -5,4 +5,6 @@ class Charcter < ActiveRecord::Base
 
   belongs_to :image, class_name: "Resource"
 
+   alias_attribute :title, :name
+
 end
