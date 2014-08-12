@@ -1,0 +1,59 @@
+<% title "Campaign" %>
+
+<%-if @campaign.image.present? %>
+  <%= image_tag @campaign.image.file.url(:medium) %>
+<%-end%>
+
+<p>
+  <strong>Title:</strong>
+  <%= @campaign.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @campaign.description %>
+</p>
+
+<p>
+<strong>Intro:</strong>
+  <%= @campaign.intro %>
+</p>
+
+<p>
+  <strong>Link:</strong>
+  <%= @campaign.link %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= link_to @campaign.game.title,  @campaign.game%>
+</p>
+
+
+<p>
+  <%= link_to "Edit", edit_campaign_path(@campaign) %> |
+  <%= link_to "Destroy", @campaign, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", campaigns_path %>
+</p>
+
+<h2> Attachemnts </h2>
+<ul>
+  <%- @campaign.attachments.each do |attachment| %>
+    <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+  <%- end %>
+</ul>
+
+<h2>Add Attachment</h2>
+<% if (@possible_resources.count < 1)  %>
+  <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
+  <%= link_to "Create new resource", new_resource_path %>
+<% else %>
+  <%= form_for @new_attachment do |f| %>
+    <%= f.hidden_field :attachable_id, value: @campaign.id %>
+    <%= f.hidden_field :attachable_type, value: @campaign.class %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
+    <%= f.submit %>
+  <%-end %>
+<% end %>

@@ -1,0 +1,31 @@
+<%= form_for @campaign do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :link %><br />
+    <%= f.text_field :link %>
+  </p>
+  <p>
+    <%= f.label :intro %><br />
+    <%= f.text_field :intro %>
+    </p>
+  <p>
+    <%= f.label :game %>
+    <%= f.collection_select :game_id, Game.all, :id, :title, prompt: true %>
+  </p>
+
+  <p>
+    <%= f.label :image %>
+    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, include_blank: "Please Select" %>
+    <%= link_to("Current Image:", @campaign.image.file.url )if @campaign.image.present? %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+

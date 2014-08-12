@@ -1,0 +1,24 @@
+<% title "Campaigns" %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Game</th>
+    <th>Link</th>
+    <th>Actions</th>
+  </tr>
+  <% for c in @campaigns %>
+    <tr>
+      <td><%= c.title %></td>
+      <td><%= c.link %></td>
+      <td><%= link_to c.link, c.link %> </td>
+      <td>
+        <%= link_to "Show", c %>
+         | 
+        <%= link_to "Edit", edit_campaign_path(c) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Campaign", new_campaign_path %></p>

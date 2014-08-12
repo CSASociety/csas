@@ -1,5 +1,6 @@
 Csas::Application.routes.draw do
 
+  resources :campaigns
   resources :resources
   resources :attachments
   resources :games
