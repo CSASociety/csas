@@ -10,10 +10,18 @@ class CampaignCharactersController < ApplicationController
   def create
     @campaign_character = CampaignCharacter.new(campaign_character_params)
     if @campaign_character.save
-      redirect_to @campaign_character, :notice  => "Successfully add character to this campaign."
+      if request.referrer.match('campaign_characters')
+        redirect_to @campaign_character, :notice  => "Successfully add character to the campaign."
+      else
+        redirect_to request.referrer, :notice  => "Successfully add character to the campaign."
+      end
     else
-      flash['alert'] = "Failed to add character to this campaign."
-      render "new"
+      if request.referrer.match('campaign_characters')
+        flash['alert'] = "Failed to add character to this campaign."
+        render "new"
+      else
+        redirect_to request.referrer, :notice  => "Unable to add character to the campaign."
+      end
     end
   end
 

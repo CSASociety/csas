@@ -52,6 +52,7 @@ class CampaignsController < ApplicationController
       @possible_resources  = @possible_resources  - [attachment.resource]
     end
     @possible_resources
+    @campaign_character = CampaignCharacter.new
   end
 
   private

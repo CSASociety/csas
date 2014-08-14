@@ -78,6 +78,17 @@
 </table>
 
 <h2>Add PC</h2>
+<%= form_for @campaign_character do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.hidden_field :campaign_id, value: @campaign.id%>
+  </p>
+  <p>
+    <%= f.label :characters %>
+    <%= f.collection_select :character_id, Character.all, :id, :name, prompt: true %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
 
 
 <h3> Non-Player Charcters</h3>
