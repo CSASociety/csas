@@ -9,7 +9,8 @@
   <% @versions.each do |v| %>
     <tr>
       <td><%=v.item_type%></td>
-      <td><%=item(v).title%></td>
+      <%debugger%>
+      <td><%=item(v).class == String ? item(v) : item(v).title %></td>
       <td><%=v.event%></td>
       <td><%=v.created_at%></td>
     </tr>

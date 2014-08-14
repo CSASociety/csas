@@ -1,0 +1,27 @@
+<% title "Campaign Character" %>
+<%debugger%>
+<p>
+  <strong>Campaign:</strong>
+  <%= link_to @campaign_character.campaign.title, campaign_path(@campaign_character.campaign) %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= link_to @campaign_character.character.name, character_path(@campaign_character.character) %>
+</p>
+
+<p>
+<strong>Status:</strong>
+  <%= @campaign_character.status%>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= link_to @campaign_character.campaign.game.title,  @campaign_character.campaign.game %>
+</p>
+
+
+<p>
+  <%= link_to "View All", campaigns_path %>
+</p>
+

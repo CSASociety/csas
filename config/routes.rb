@@ -1,11 +1,13 @@
 Csas::Application.routes.draw do
 
+
   resources :campaigns
+  resources :campaign_characters
+  resources :characters
   resources :resources
   resources :attachments
   resources :games
   resources :versions
-  resources :characters
   root 'welcome#index'
 
   devise_for :users

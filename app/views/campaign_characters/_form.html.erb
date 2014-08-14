@@ -1,0 +1,13 @@
+<%= form_for @campaign_character do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :campaign %>
+    <%= f.collection_select :campaign_id, Campaign.all, :id, :title, prompt: true %>
+  </p>
+  <p>
+    <%= f.label :characters %>
+    <%= f.collection_select :character_id, Character.all, :id, :name, prompt: true %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+

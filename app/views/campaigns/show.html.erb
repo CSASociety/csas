@@ -57,3 +57,27 @@
     <%= f.submit %>
   <%-end %>
 <% end %>
+
+<h2> Charcters </h2>
+<h3> Player Charcters</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Race/Class</th>
+    <th>Status</th>
+    <th>Join Campaigned</th>
+  </tr>
+  <% @campaign.characters.each do |character| %>
+    <tr>
+      <td><%=character.name%></td>
+      <td><%=character.caste%></td>
+      <td><%=character.status%></td>
+      <td><%=character.created_at%></td>
+    </tr>
+  <%end%>
+</table>
+
+<h2>Add PC</h2>
+
+
+<h3> Non-Player Charcters</h3>
