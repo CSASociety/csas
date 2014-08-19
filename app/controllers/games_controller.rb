@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  load_and_authorize_resource param_method: :game_params
+
   def index
     @games = Game.all
   end
@@ -10,6 +12,8 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    @game.user = current_user if current_user.present?
+
     if @game.save
       redirect_to @game, :notice => "Successfully created game."
     else

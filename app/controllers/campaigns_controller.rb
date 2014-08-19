@@ -1,4 +1,6 @@
 class CampaignsController < ApplicationController
+  load_and_authorize_resource param_method: :campaign_params
+
   def index
     @campaigns = Campaign.all
   end
@@ -10,6 +12,7 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = Campaign.new(campaign_params)
+    @campaign.user = current_user if current_user.present?
     if @campaign.save
       redirect_to @campaign, :notice => "Successfully created campaign."
     else
@@ -51,7 +54,6 @@ class CampaignsController < ApplicationController
     @attachments.each do  |attachment|
       @possible_resources  = @possible_resources  - [attachment.resource]
     end
-    @possible_resources
     @campaign_character = CampaignCharacter.new
   end
 

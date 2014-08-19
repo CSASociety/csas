@@ -15,6 +15,9 @@ gem "paperclip"
 gem 'aws-sdk'
 gem 'paper_trail', '~> 3.0.3'
 
+#Attempt at adding a comunity revived cancan
+gem 'cancancan', '~> 1.9'
+
 gem 'rails_12factor', group: :production
 
 group :development do

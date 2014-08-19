@@ -1,4 +1,6 @@
 class CharactersController < ApplicationController
+  load_and_authorize_resource param_method: :character_params
+
   def index
     @characters = Character.all
   end
@@ -10,6 +12,7 @@ class CharactersController < ApplicationController
 
   def create
     @character = Character.new(character_params)
+    @character.user = current_user if current_user.present?
     if @character.save
       redirect_to @character, :notice => "Successfully created character."
     else

@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+  load_and_authorize_resource param_method: :resource_params
+
   def index
     @resources = Resource.all
   end
@@ -9,6 +11,7 @@ class ResourcesController < ApplicationController
 
   def create
     @resource = Resource.new(resource_params)
+    @resource.user = current_user if current_user.present?
     if @resource.save
       redirect_to @resource, :notice => "Successfully created resource."
     else
