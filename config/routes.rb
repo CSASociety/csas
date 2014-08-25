@@ -1,6 +1,8 @@
 Csas::Application.routes.draw do
 
 
+  resources :players
+
   resources :campaigns
   resources :campaign_characters
   resources :characters

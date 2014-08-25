@@ -14,6 +14,7 @@ gem "nifty-generators", :group => :development
 gem "paperclip"
 gem 'aws-sdk'
 gem 'paper_trail', '~> 3.0.3'
+gem 'aasm'
 
 #Attempt at adding a comunity revived cancan
 gem 'cancancan', '~> 1.9'

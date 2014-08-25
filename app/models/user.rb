@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   has_many :charcters
   has_many :resources
   has_many :campaigns
+  has_many :status_approver, class_name: 'Player'
 end
