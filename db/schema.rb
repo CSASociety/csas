@@ -71,10 +71,7 @@ ActiveRecord::Schema.define(version: 20140819033432) do
   create_table "players", force: true do |t|
     t.integer  "campaign_id"
     t.integer  "user_id"
-    t.boolean  "pending",            default: true
-    t.boolean  "active",             default: false
-    t.boolean  "denied",             default: false
-    t.boolean  "removed",            default: false
+    t.string   "aasm_state"
     t.integer  "status_approver_id"
     t.datetime "created_at"
     t.datetime "updated_at"

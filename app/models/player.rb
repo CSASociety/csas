@@ -6,48 +6,46 @@ class Player < ActiveRecord::Base
   validate :user, presence: true
   validate :status_approver, presence: true
 
-  #include AASM
+  include AASM
 
-  #aasm do
-  #  state :sleeping, :initial => true
-  #  state :running
-  #  state :cleaning
+  alias_attribute :status, :aasm_state
 
-  #  event :run do
-  #    transitions :from => :sleeping, :to => :running
-  #  end
+  aasm do
+    state :pending, :initial => true
+    state :active
+    state :removed
+    state :denied
 
-  #  event :clean do
-  #    transitions :from => :running, :to => :cleaning
-  #  end
+    event :activate do
+      transitions :from => :pending, :to => :active,  :guard => :check_auth_active, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
+    end
 
-  #  event :sleep do
-  #    transitions :from => [:running, :cleaning], :to => :sleeping
-  #  end
-  #end
+    event :deny do
+      transitions :from => :pending, :to => :denied,  :guard => :check_auth_denied, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
+    end
 
+    event :remove do
+      transitions :from => :active, :to => :removed, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
+    end
 
-  def status
-    return 'Pending' if self.pending
-    return 'Active' if self.active
-    return 'Removed' if self.removed
-    return 'Denied' if self.denied
+    event :invite do
+      transitions :from => [:denied, :removed], :to => :pending,  :guard => :check_auth_pending, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
+    end
   end
 
-  def status=(val)
-    self.clear_status
-    self.pending = true if val == 'Pending'
-    self.active = true if val == 'Active'
-    self.denied = true if val == 'Denied'
-    self.removed = true if val == 'Removed'
+  def check_auth_active(user)
+    return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
   end
 
-
-  def clear_status
-    self.pending = false
-    self.active = false
-    self.denied = false
-    self.removed = false
+  def check_auth_denied(user)
+    return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
   end
 
+  def check_auth_pending(user)
+    return (self.status_approver_id.nil? || self.status_approver == user) ? true : false
+  end
+
+  def set_status_approver(user)
+    self.status_approver = user
+  end
 end
