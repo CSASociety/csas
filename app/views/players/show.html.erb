@@ -19,3 +19,77 @@
 
 <%= link_to 'Edit', edit_player_path(@player) %> |
 <%= link_to 'Back', players_path %>
+<h2>Button for Changing Status</h2>
+<%if @player.status == "pending" && @player.user == current_user%>
+  <%if @player.status_approver == current_user %>
+    <p>Awaiting responce</p>
+  <%else%>
+    <%= form_for @player, url: accept_campaign_request_path do |f| %>
+      <%= f.submit value: "Accept Request"  %>
+    <%end%>
+    <%= form_for @player, url: reject_campaign_request_path do |f| %>
+      <%= f.submit value: "Reject Request"  %>
+    <%end%>
+  <%end%>
+<%end%>
+
+<%if @player.status == "pending" && @player.user != current_user%>
+  <%if @player.status_approver == current_user %>
+    <p>Awaiting responce</p>
+  <%else%>
+    <%= form_for @player, url: accept_campaign_request_path do |f| %>
+      <%= f.submit value: "Accept Request" %>
+    <%end%>
+    <%= form_for @player, url: reject_campaign_request_path do |f| %>
+      <%= f.submit value: "Reject Request" %>
+    <%end%>
+
+  <%end%>
+<%end%>
+
+<%if @player.status == "active"%>
+    <%= form_for @player, url: remove_campaign_participation_path do |f| %>
+      <%= f.submit value: (current_user == @player.user ? "Leave Campaign" : "Remove Player from Campaing")%>
+    <%end%>
+<%end%>
+
+<%if @player.status == "denied" && @player.user == current_user%>
+  <%if @player.status_approver == current_user %>
+    <%= form_for @player, url: request_campaign_participation_path do |f| %>
+      <%= f.submit value: "Re-Request Access" %>
+    <%end%>
+  <%else%>
+    <p>The GM rejected your request to join this campaign and will need to re-invite you to change the status<p>
+  <%end%>
+<%end%>
+
+<%if @player.status == "denied" && @player.user != current_user%>
+  <%if @player.status_approver != current_user %>
+    <p>User rejected the invite to this campaign and will need to amke a new request to change the status</p>
+  <%else%>
+    <%= form_for @player, url: request_campaign_participation_path do |f| %>
+      <%= f.submit value: "Re-Invite Player" %>
+    <%end%>
+  <%end%>
+<%end%>
+
+<%if @player.status == "removed" && @player.user == current_user%>
+  <%if @player.status_approver == current_user %>
+    <%= form_for @player, url: request_campaign_participation_path do |f| %>
+      <%= f.submit value: "Re-Request Access" %>
+    <%end%>
+  <%else%>
+    <p>The GM removed you from this campaign and will need to re-invite you to change the status<p>
+  <%end%>
+<%end%>
+
+<%if @player.status == "removed" && @player.user != current_user%>
+  <%if @player.status_approver != current_user %>
+    <p>User removed them self from this campaign and will need to amke a new request to change the status</p>
+  <%else%>
+    <%= form_for @player, url: request_campaign_participation_path do |f| %>
+      <%= f.submit value: "Re-Invite Player"%>
+    <%end%>
+
+  <%end%>
+<%end%>

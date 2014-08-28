@@ -26,7 +26,6 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     @player.status_approver = current_user
-    debugger
     respond_to do |format|
       if @player.save
         format.html { redirect_to @player, notice: 'Player was successfully created.' }
@@ -55,12 +54,61 @@ class PlayersController < ApplicationController
   # DELETE /players/1
   # DELETE /players/1.json
   def destroy
+    @player = Player.find(params[:id])
     @player.destroy
     respond_to do |format|
       format.html { redirect_to players_url }
       format.json { head :no_content }
     end
   end
+
+  def accept
+    @player = Player.find(params[:id])
+    authorize! :update, @player
+    @player.activate(:active, current_user)
+    if @player.save
+      redirect_to @player
+    else
+      flash[:alert] = "Updable to approve this request"
+      render 'show'
+    end
+  end
+
+  def reject
+    @player = Player.find(params[:id])
+    authorize! :update, @player
+    @player.deny(:denied, current_user)
+    if @player.save
+      redirect_to @player
+    else
+      flash[:alert] = "Updable to reject this request"
+      render 'show'
+    end
+  end
+
+  def remove
+    @player = Player.find(params[:id])
+    authorize! :update, @player
+    @player.remove(:removed, current_user)
+    if @player.save
+      redirect_to @player
+    else
+      render 'show'
+    end
+  end
+
+  def propose
+    @player = Player.find(params[:id])
+    authorize! :update, @player
+    @player.request(:pending, current_user)
+    if @player.save
+      redirect_to @player
+    else
+      flash[:alert] = "Updable to reject this request"
+      render 'show'
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -70,6 +118,6 @@ class PlayersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def player_params
-      params.require(:player).permit(:campaign_id, :user_id, :status, :status_approved_by, :who_can_change_status)
+      params.require(:player).permit(:campaign_id, :user_id, :status, :status_approved_by)
     end
 end

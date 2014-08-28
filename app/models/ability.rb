@@ -8,6 +8,8 @@ class Ability
       can :manage, :all
     elsif !user.email.empty?
       can :read, :all
+      can :update, Player, :campaign => { :user_id => user.id }
+      can :update, Player, :user_id => user.id
       cannot :read, Version
       can :create, :all
       can :update, Game, :user_id => user.id

@@ -28,7 +28,7 @@ class Player < ActiveRecord::Base
       transitions :from => :active, :to => :removed, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
     end
 
-    event :invite do
+    event :request do
       transitions :from => [:denied, :removed], :to => :pending,  :guard => :check_auth_pending, :on_transition => Proc.new {|obj, *args| obj.set_status_approver(*args) }
     end
   end
