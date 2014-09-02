@@ -7,7 +7,7 @@
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
-  <body id='main'>
+  <body>
     <nav>
       <ul>
         <li>
@@ -24,9 +24,12 @@
         </li>
         <li>
           <%=link_to 'Resources', resources_path-%>
-        </li>o<li>
-          <%=link_to 'Versions', versions_path-%>
         </li>
+        <% if can? :read, Version %>
+          <li>
+            <%=link_to 'Versions', versions_path-%>
+          </li>
+        <%end%>
         <%- if user_signed_in? %>
           <li>
             <%= link_to current_user.email, edit_user_registration_path %>
@@ -48,8 +51,11 @@
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
-      <%= content_tag :h1, yield(:title) if show_title? %>
+      <%= content_tag( :h1, yield(:title), class: "title") if show_title? %>
       <%= yield %>
+    </div>
+    <div id="sidebar">
+      <%= yield(:page_sidebar) %>
     </div>
     <%= yield :javascript %>
   </body>

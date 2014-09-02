@@ -1,47 +1,54 @@
-<% title "Character" %>
+<% title @character.name %>
 
-<%-if @character.image.present? %>
-  <%= image_tag @character.image.file.url(:medium) %>
-<%-end%>
+<section id="main">
+  <div id="main_image">
+    <%-if @character.image.present? %>
+      <%= image_tag @character.image.file.url(:medium) %>
+    <%-end%>
+  </div>
+  <div id="main_info">
+    <p>
+      <strong>Bio:</strong>
+      <%= @character.bio %>
+    </p>
+    <p>
+      <strong>Status:</strong>
+      <%= @character.status %>
+    </p>
 
-<p>
-  <strong>Character Name:</strong>
-  <%= @character.name %>
-</p>
-<p>
-  <strong>Bio:</strong>
-  <%= @character.bio %>
-</p>
-<p>
-  <strong>Status:</strong>
-  <%= @character.status %>
-</p>
+    <p>
+      <%= link_to "Edit", edit_character_path(@character) %> |
+      <%= link_to "Destroy", @character, :confirm => 'Are you sure?', :method => :delete %> |
+      <%= link_to "View All", characters_path %>
+    </p>
+  </div>
+</section>
 
-<p>
-  <%= link_to "Edit", edit_character_path(@character) %> |
-  <%= link_to "Destroy", @character, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", characters_path %>
-</p>
+<section class="attachments">
+  <h2> Attachemnts </h2>
+  <ul>
+    <%- @character.attachments.each do |attachment| %>
+      <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+    <%- end %>
+  </ul>
+</section>
 
-<h2> Attachemnts </h2>
-<ul>
-  <%- @character.attachments.each do |attachment| %>
-    <li><%= link_to attachment.title, attachment.resource.file.url %></li>
-  <%- end %>
-</ul>
-
-<h2>Add Attachment</h2>
-<% if (@possible_resources.count < 1)  %>
-  <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
-  <%= link_to "Create new resource", new_resource_path %>
-<% else %>
-  <%= form_for @new_attachment do |f| %>
-    <%= f.hidden_field :attachable_id, value: @character.id %>
-    <%= f.hidden_field :attachable_type, value: @character.class %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-    <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
-    <%= f.submit %>
-  <%-end %>
-<% end %>
+<% content_for :page_sidebar do %>
+  <section class="add_item">
+    <h2>Add Attachment</h2>
+    <% if (@possible_resources.count < 1)  %>
+      <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
+      <%= link_to "Create new resource", new_resource_path %>
+    <% else %>
+      <%= form_for @new_attachment do |f| %>
+        <%= f.hidden_field :attachable_id, value: @character.id %>
+        <%= f.hidden_field :attachable_type, value: @character.class %>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+        <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
+        <%= f.submit %>
+      <%-end %>
+    <% end %>
+  </section>
+<% end%>
 

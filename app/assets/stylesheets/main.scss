@@ -1,4 +1,6 @@
 body {
+  width: 65%;
+  margin: 0 auto;
   table {
     border: 1px solid #CCC;
     tr {
@@ -19,7 +21,6 @@ body {
     color: white;
     ul {
       margin: 0 auto;
-      width: 55%;
       overflow: auto;
       li {
         float:left;
@@ -28,9 +29,16 @@ body {
       }
     }
   }
+  #sidebar {
+    float:right;
+    width: 29%;
+    padding: 1.2em;
+  }
   #container {
-    width: 55%;
-    margin: 0 auto;
+    float:left;
+    margin: 0;
+    padding: 1.2em;
+    width: 61%;
     form {
       input {
         width: 90%;
@@ -40,5 +48,28 @@ body {
         height: 200px;
       }
     }
+    #main {
+      clear: both;
+      #main_image{
+        padding: 7px;
+        float: left;
+      }
+      #main_info{
+      }
+    }
+    .title {
+      padding: 14px;
+      border-bottom: 2px solid black;
+    }
+    section {
+      &.attachments {
+        clear: both;
+      }
+      &.add_item {
+        width: 100%;
+        border: 1px solid black;
+      }
+    }
   }
 }
+
