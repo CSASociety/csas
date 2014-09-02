@@ -54,7 +54,17 @@ class CampaignsController < ApplicationController
     @attachments.each do  |attachment|
       @possible_resources  = @possible_resources  - [attachment.resource]
     end
+    @possible_players = User.all
+    @campaign.users.each do |user|
+      @possible_players =  @possible_players - [user]
+    end
+    @new_player = Player.new
     @campaign_character = CampaignCharacter.new
+
+    @possible_characters = Character.find_all_by_user_id(current_user.id)
+    @campaign.characters.each do |char|
+      @possible_characters =  @possible_characters - [char]
+    end
   end
 
   private

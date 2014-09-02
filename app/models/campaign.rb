@@ -7,9 +7,11 @@ class Campaign < ActiveRecord::Base
   has_many :campaign_characters
   has_many :characters, through: :campaign_characters
 
+  has_many :players
+  has_many :users, through: :players
+
 
   belongs_to :game
 
   belongs_to :image, class_name: "Resource"
 end
-

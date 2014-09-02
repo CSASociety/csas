@@ -45,6 +45,24 @@
   </ul>
 </section>
 
+<section class="players">
+  <h3> Players</h3>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th>Status</th>
+      <th>Join Campaigned</th>
+    </tr>
+    <% @campaign.players.each do |player| %>
+      <tr>
+        <td><%=player.user.email%></td>
+        <td><%=player.status%></td>
+        <td><%=player.created_at%></td>
+      </tr>
+    <%end%>
+  </table>
+</section>
+
 <section class="character">
   <h3> Player Charcters</h3>
   <table>
@@ -85,17 +103,57 @@
   </section>
 
   <section class="add">
-    <h2>Add PC</h2>
-    <%= form_for @campaign_character do |f| %>
-      <%= f.error_messages %>
-      <p>
-        <%= f.hidden_field :campaign_id, value: @campaign.id%>
-      </p>
-      <p>
-        <%= f.label :characters %>
-        <%= f.collection_select :character_id, Character.all, :id, :name, prompt: true %>
-      </p>
-      <p><%= f.submit %></p>
-    <% end %>
+    <%-##Add player is you are the GM%>
+    <%if @campaign.gm == current_user%>
+      <h2>Add Player</h2>
+        <% if (@possible_players.count < 1)%>
+          <p>No players are left to add to this page. Invite a user to this system and then invite to campaign.</p>
+      <% else %>
+        <%= form_for @new_player do |f| %>
+          <%= f.hidden_field :campaign_id, value: @campaign.id %>
+          <%= f.collection_select :user_id, @possible_players, :id, :email, prompt: true %>
+          <%= f.submit %>
+        <%-end %>
+      <%end%>
+    <%end%>
+  </section>
+
+  <section class="add">
+    <%-##Add charcter if you are a player%>
+    <%if @campaign.gm != current_user%>
+      <%- if @possible_players.exclude?(current_user)%>
+        <h2>Add PC</h2>
+        <% if @possible_characters.count < 1 %>
+          <p> You have no charcters available. Create a character and then come back here to add it to campaign.</p>
+        <% else %>
+          <%= form_for @campaign_character do |f| %>
+            <%= f.error_messages %>
+            <p>
+              <%= f.hidden_field :campaign_id, value: @campaign.id%>
+            </p>
+            <p>
+              <%= f.label :characters %>
+              <%= f.collection_select :character_id, @possible_characters , :id, :name, prompt: true %>
+            </p>
+            <p><%= f.submit %></p>
+          <% end %>
+        <% end %>
+      <%end%>
+    <%end%>
+  </section>
+  <section class="add">
+    <%-##Request access%>
+    <%- if @possible_players.include?(current_user)%>
+      <h2>Add Player</h2>
+      <% if @possible_characters.count < 1 %>
+        <p> You have no more charcter to add. Please create a charcter and then come back to add it </p>
+      <%else%>
+        <%= form_for @new_player do |f| %>
+          <%= f.hidden_field :campaign_id, value: @campaign.id %>
+          <%= f.hidden_field :user_id, value: current_user.id%>
+          <%= f.submit value: "Request Access" %>
+        <%end%>
+      <%end%>
+    <%end%>
   </section>
 <%end%>
