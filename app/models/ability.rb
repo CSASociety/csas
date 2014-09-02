@@ -18,6 +18,7 @@ class Ability
       can :update, Resource, :user_id => user.id
     else
       can :read, :all
+      cannot :read, Version
     end
 
 
