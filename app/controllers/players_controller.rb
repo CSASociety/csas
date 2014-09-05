@@ -28,7 +28,8 @@ class PlayersController < ApplicationController
     @player.status_approver = current_user
     respond_to do |format|
       if @player.save
-        format.html { redirect_to @player, notice: 'Player was successfully created.' }
+        debugger
+        format.html { redirect_to session.delete(:return_to), notice: 'Player was successfully created.' }
         format.json { render action: 'show', status: :created, location: @player }
       else
         format.html { render action: 'new' }
@@ -57,7 +58,7 @@ class PlayersController < ApplicationController
     @player = Player.find(params[:id])
     @player.destroy
     respond_to do |format|
-      format.html { redirect_to players_url }
+      format.html { redirect_to session.delete(:return_to), notice: "Player now pending" }
       format.json { head :no_content }
     end
   end
@@ -65,9 +66,10 @@ class PlayersController < ApplicationController
   def accept
     @player = Player.find(params[:id])
     authorize! :update, @player
+    return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     @player.activate(:active, current_user)
     if @player.save
-      redirect_to @player
+      redirect_to return_to, notice: "Player now active"
     else
       flash[:alert] = "Updable to approve this request"
       render 'show'
@@ -77,9 +79,10 @@ class PlayersController < ApplicationController
   def reject
     @player = Player.find(params[:id])
     authorize! :update, @player
+    return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     @player.deny(:denied, current_user)
     if @player.save
-      redirect_to @player
+      redirect_to return_to, notice: "Player now rejected"
     else
       flash[:alert] = "Updable to reject this request"
       render 'show'
@@ -89,9 +92,11 @@ class PlayersController < ApplicationController
   def remove
     @player = Player.find(params[:id])
     authorize! :update, @player
+    return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     @player.remove(:removed, current_user)
     if @player.save
-      redirect_to @player
+      debugger
+      redirect_to return_to, notice: "Player now removed"
     else
       render 'show'
     end
@@ -100,9 +105,10 @@ class PlayersController < ApplicationController
   def propose
     @player = Player.find(params[:id])
     authorize! :update, @player
+    return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     @player.request(:pending, current_user)
     if @player.save
-      redirect_to @player
+      redirect_to return_to, notice: "Player now pending"
     else
       flash[:alert] = "Updable to reject this request"
       render 'show'

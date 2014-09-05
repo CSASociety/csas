@@ -51,15 +51,12 @@
     <tr>
       <th>Email</th>
       <th>Status</th>
-      <th>Join Campaigned</th>
+      <th>Join Campaign</th>
+      <% if current_user.present? %>
+        <th>Actions</th>
+      <% end %>
     </tr>
-    <% @campaign.players.each do |player| %>
-      <tr>
-        <td><%=player.user.email%></td>
-        <td><%=player.status%></td>
-        <td><%=player.created_at%></td>
-      </tr>
-    <%end%>
+    <%= render partial: "players", collection: @campaign.players, as: "player" %>
   </table>
 </section>
 
@@ -71,6 +68,7 @@
       <th>Race/Class</th>
       <th>Status</th>
       <th>Join Campaigned</th>
+      <th>Played by</th>
     </tr>
     <% @campaign.characters.each do |character| %>
       <tr>
@@ -78,6 +76,7 @@
         <td><%=character.caste%></td>
         <td><%=character.status%></td>
         <td><%=character.created_at%></td>
+        <td><%=character.user.email%></td>
       </tr>
     <%end%>
   </table>
