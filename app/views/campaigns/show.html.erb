@@ -70,13 +70,13 @@
       <th>Join Campaigned</th>
       <th>Played by</th>
     </tr>
-    <% @campaign.characters.each do |character| %>
+    <% @campaign.campaign_characters.each do |cc| %>
       <tr>
-        <td><%=character.name%></td>
-        <td><%=character.caste%></td>
-        <td><%=character.status%></td>
-        <td><%=character.created_at%></td>
-        <td><%=character.user.email%></td>
+        <td><%=cc.character.name%></td>
+        <td><%=cc.character.caste%></td>
+        <td><%=cc.status%></td>
+        <td><%=cc.created_at%></td>
+        <td><%=cc.character.user.email%></td>
       </tr>
     <%end%>
   </table>
