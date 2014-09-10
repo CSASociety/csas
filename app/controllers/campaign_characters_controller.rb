@@ -38,6 +38,55 @@ class CampaignCharactersController < ApplicationController
     end
   end
 
+  #Figure out how to dry this up. Maybe one action with a argument.
+  def join
+    @cc = CampaignCharacter.find(params[:id])
+    authorize! :update, @cc
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
+    if @cc.join!
+      redirect_to return_to, notice: "Character is now adventuring in this campaign"
+    else
+      flash[:alert] = "Unable to proccess"
+      render 'show'
+    end
+  end
+
+  def retire
+    @cc = CampaignCharacter.find(params[:id])
+    authorize! :update, @cc
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
+    if @cc.retire!
+      redirect_to return_to, notice: "Character is now retired"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
+  def kill
+    @cc = CampaignCharacter.find(params[:id])
+    authorize! :update, @cc
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
+    if @cc.kill!
+      redirect_to return_to, notice: "Character is now dead"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
+  def lose
+    @cc = CampaignCharacter.find(params[:id])
+    authorize! :update, @cc
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
+    if @cc.lose!
+      redirect_to return_to, notice: "Character is now missing"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
   private
 
   def campaign_character_params

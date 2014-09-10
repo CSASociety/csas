@@ -1,5 +1,4 @@
 <% title "Campaign Character" %>
-<%debugger%>
 <p>
   <strong>Campaign:</strong>
   <%= link_to @campaign_character.campaign.title, campaign_path(@campaign_character.campaign) %>
@@ -25,3 +24,4 @@
   <%= link_to "View All", campaigns_path %>
 </p>
 
+<%= render partial: "status_actions", :locals => {:cc => @campaign_character} %>

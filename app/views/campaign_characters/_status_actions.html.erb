@@ -1,0 +1,19 @@
+<%- if current_user == cc.campaign.gm || current_user == cc.character.user%>
+  <%if ["dead", "missing", "retired"].include?(cc.status)%>
+    <%= form_for cc, url: join_cc_path(cc) do |f| %>
+      <%= f.submit value: "Re-Add Character to Campaign" %>
+    <%end%>
+  <% else %>
+    <%= form_for cc, url: kill_cc_path(cc) do |f| %>
+      <%= f.submit value: "Set Character to dead" %>
+    <%end%>
+    <%= form_for cc, url: retire_cc_path(cc) do |f| %>
+      <%= f.submit value: "Set character retired" %>
+    <%end%>
+    <%= form_for cc, url: lose_cc_path(cc) do |f| %>
+      <%= f.submit value: "Set character to MIA" %>
+    <%end%>
+  <%end%>
+<% else %>
+  No action avaliable
+<% end %>

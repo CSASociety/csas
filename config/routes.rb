@@ -6,6 +6,11 @@ Csas::Application.routes.draw do
   patch 'players/:id/reject' => 'players#reject', as: :reject_campaign_request
   patch 'players/:id/remove' => 'players#remove', as: :remove_campaign_participation
 
+  patch 'campaign_character/:id/join' => 'campaign_characters#join', as: :join_cc
+  patch 'campaign_character/:id/kill' => 'campaign_characters#kill', as: :kill_cc
+  patch 'campaign_character/:id/retire' => 'campaign_characters#retire', as: :retire_cc
+  patch 'campaign_character/:id/lose' => 'campaign_characters#lose', as: :lose_cc
+
   resources :players
 
   resources :campaigns

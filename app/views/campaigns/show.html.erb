@@ -67,18 +67,12 @@
       <th>Name</th>
       <th>Race/Class</th>
       <th>Status</th>
-      <th>Join Campaigned</th>
       <th>Played by</th>
+      <% if current_user.present? %>
+        <th>Actions</th>
+      <% end %>
     </tr>
-    <% @campaign.campaign_characters.each do |cc| %>
-      <tr>
-        <td><%=cc.character.name%></td>
-        <td><%=cc.character.caste%></td>
-        <td><%=cc.status%></td>
-        <td><%=cc.created_at%></td>
-        <td><%=cc.character.user.email%></td>
-      </tr>
-    <%end%>
+    <%= render partial: "cc", collection: @campaign.campaign_characters, as: "cc" %>
   </table>
 </section>
 
