@@ -15,8 +15,8 @@
   <tbody>
     <% @players.each do |player| %>
       <tr>
-        <td><%= player.campaign_id %></td>
-        <td><%= player.user_id %></td>
+        <td><%= player.campaign.title %></td>
+        <td><%= player.user.display_name %></td>
         <td><%= player.status %></td>
         <td><%= link_to 'Show', player %></td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>

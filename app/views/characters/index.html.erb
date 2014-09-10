@@ -4,8 +4,6 @@
   <tr>
     <th>Name</th>
     <th>Player</th>
-    <th>Campaign</th>
-    <th>Game</th>
     <th>Created</th>
     <th>Updated</th>
     <th>Actions</th>
@@ -13,9 +11,7 @@
   <% @characters.each do |c| %>
     <tr>
       <td><%=c.name%></td>
-      <td><%=c.player%></td>
-      <td>Placeholder</td>
-      <td>Placeholder</td>
+      <td><%=c.user.display_name%></td>
       <td><%=c.created_at%></td>
       <td><%=c.updated_at%></td>
       <td>

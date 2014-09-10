@@ -2,7 +2,7 @@
   <td><%=cc.character.name%></td>
   <td><%=cc.character.caste%></td>
   <td><%=cc.status%></td>
-  <td><%=cc.character.user.email%></td>
+  <td><%=cc.character.user.display_name%></td>
   <% if current_user.present? %>
     <td><%= render partial: "/campaign_characters/status_actions", :locals => {:cc => cc}  %></td>
   <% end %>

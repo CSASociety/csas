@@ -10,7 +10,7 @@
   <% for c in @campaigns %>
     <tr>
       <td><%= c.title %></td>
-      <td><%= c.link %></td>
+      <td><%= c.game.title %></td>
       <td><%= link_to c.link, c.link %> </td>
       <td>
         <%= link_to "Show", c %>
