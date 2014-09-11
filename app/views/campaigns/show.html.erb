@@ -138,10 +138,11 @@
   </section>
   <section class="add">
     <%-##Request access%>
+    <%debugger%>
     <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
       <h2>Add Player</h2>
-      <% if @possible_characters.count < 1 %>
-        <p> You have no more charcter to add. Please create a charcter and then come back to add it </p>
+      <% if @possible_players.count < 1 %>
+        <p> Should never see this. </p>
       <%else%>
         <%= form_for @new_player do |f| %>
           <%= f.hidden_field :campaign_id, value: @campaign.id %>
