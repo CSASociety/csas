@@ -1,4 +1,6 @@
 class CampaignCharactersController < ApplicationController
+  load_and_authorize_resource param_method: :campaign_character_params
+
   def index
     @campaign_characters = CampaignCharacter.all
   end

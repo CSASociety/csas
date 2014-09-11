@@ -14,4 +14,10 @@ class Campaign < ActiveRecord::Base
   belongs_to :game
 
   belongs_to :image, class_name: "Resource"
+
+  #TODO May be unneded. Check later after applyed.
+  def active_players
+    players.active
+  end
+
 end

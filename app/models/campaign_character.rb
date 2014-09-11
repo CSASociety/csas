@@ -3,6 +3,7 @@ class CampaignCharacter < ActiveRecord::Base
   belongs_to :character
 
   validates :character, :presence => true, :uniqueness => {:scope => :campaign}
+  validate :current_user_active
 
   include AASM
 
@@ -24,11 +25,14 @@ class CampaignCharacter < ActiveRecord::Base
       transitions from: [:adventuring, :missing], to: :dead
     end
 
-
     event :lose do
       transitions from: :adventuring, to: :missing
     end
 
+  end
+
+  def current_user_active
+    #if campaign.players
   end
  # def name
  #   self.character.name

@@ -8,10 +8,22 @@ class Ability
       can :manage, :all
     elsif !user.email.empty?
       can :read, :all
+      #can update player if the player is associate with a campaign owned by current user
       can :update, Player, :campaign => { :user_id => user.id }
+      #can update player if the player is the current user
       can :update, Player, :user_id => user.id
+      #only admin can see version
       cannot :read, Version
       can :create, :all
+      cannot :create, CampaignCharacter do |cc|
+        result = true
+        #Grab each active player and cycle through
+        cc.campaign.players.active.each do |player|
+          #set return value to true if the player is the user
+          result = false if player.user_id == user.id
+        end
+        result
+      end
       can :update, Game, :user_id => user.id
       can :update, Campaign, :user_id => user.id
       can :update, Character, :user_id => user.id

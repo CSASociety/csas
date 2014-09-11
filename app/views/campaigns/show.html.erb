@@ -79,19 +79,21 @@
 
 <% content_for :page_sidebar do %>
   <section class="add">
-    <h2>Add Attachment</h2>
-    <% if (@possible_resources.count < 1)  %>
-      <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
-      <%= link_to "Create new resource", new_resource_path %>
-    <% else %>
-      <%= form_for @new_attachment do |f| %>
-        <%= f.hidden_field :attachable_id, value: @campaign.id %>
-        <%= f.hidden_field :attachable_type, value: @campaign.class %>
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-        <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
-        <%= f.submit %>
-      <%-end %>
+    <% if can? :update, @campaign %>
+      <h2>Add Attachment</h2>
+      <% if (@possible_resources.count < 1)  %>
+        <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
+        <%= link_to "Create new resource", new_resource_path %>
+      <% else %>
+        <%= form_for @new_attachment do |f| %>
+          <%= f.hidden_field :attachable_id, value: @campaign.id %>
+          <%= f.hidden_field :attachable_type, value: @campaign.class %>
+          <%= f.label :title %>
+          <%= f.text_field :title %>
+          <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
+          <%= f.submit %>
+        <%-end %>
+      <% end %>
     <% end %>
   </section>
 

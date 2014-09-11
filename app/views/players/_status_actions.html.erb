@@ -1,5 +1,5 @@
 <%- if current_user == player.campaign.gm || current_user == player.user%>
-  <%if player.status == "pending" && player.user != current_user%>
+  <%if player.status == "pending" %>
     <%if player.status_approver == current_user %>
       <p>Awaiting responce</p>
     <%else%>
