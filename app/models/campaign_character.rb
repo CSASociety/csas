@@ -3,7 +3,6 @@ class CampaignCharacter < ActiveRecord::Base
   belongs_to :character
 
   validates :character, :presence => true, :uniqueness => {:scope => :campaign}
-  validate :current_user_active
 
   include AASM
 
@@ -31,9 +30,7 @@ class CampaignCharacter < ActiveRecord::Base
 
   end
 
-  def current_user_active
-    #if campaign.players
-  end
+
  # def name
  #   self.character.name
  # end

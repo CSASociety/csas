@@ -34,15 +34,27 @@ class Player < ActiveRecord::Base
   end
 
   def check_auth_active(user)
-    return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
+    if user == self.campaign.gm
+      return true
+    else
+      return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
+    end
   end
 
   def check_auth_denied(user)
-    return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
+    if user == self.campaign.gm
+      return true
+    else
+      return (self.status_approver_id.nil? || self.status_approver != user) ? true : false
+    end
   end
 
   def check_auth_pending(user)
-    return (self.status_approver_id.nil? || self.status_approver == user) ? true : false
+    if user == self.campaign.gm
+      return true
+    else
+      return (self.status_approver_id.nil? || self.status_approver == user) ? true : false
+    end
   end
 
   def set_status_approver(user)

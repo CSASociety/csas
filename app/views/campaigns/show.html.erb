@@ -115,7 +115,7 @@
 
   <section class="add">
     <%-##Add charcter if you are a player%>
-    <%if @campaign.gm != current_user%>
+    <%if user_is_active_player?(@campaign, current_user) %>
       <%- if @possible_players.exclude?(current_user)%>
         <h2>Add PC</h2>
         <% if @possible_characters.count < 1 %>
@@ -138,7 +138,7 @@
   </section>
   <section class="add">
     <%-##Request access%>
-    <%- if @possible_players.include?(current_user)%>
+    <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
       <h2>Add Player</h2>
       <% if @possible_characters.count < 1 %>
         <p> You have no more charcter to add. Please create a charcter and then come back to add it </p>

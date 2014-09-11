@@ -26,10 +26,10 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     @player.status_approver = current_user
+    return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     respond_to do |format|
       if @player.save
-        debugger
-        format.html { redirect_to session.delete(:return_to), notice: 'Player was successfully created.' }
+        format.html { redirect_to return_to, notice: 'Player was successfully created.' }
         format.json { render action: 'show', status: :created, location: @player }
       else
         format.html { render action: 'new' }
@@ -95,7 +95,6 @@ class PlayersController < ApplicationController
     return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     @player.remove(:removed, current_user)
     if @player.save
-      debugger
       redirect_to return_to, notice: "Player now removed"
     else
       render 'show'

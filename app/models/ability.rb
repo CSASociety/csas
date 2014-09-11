@@ -12,6 +12,13 @@ class Ability
       can :update, Player, :campaign => { :user_id => user.id }
       #can update player if the player is the current user
       can :update, Player, :user_id => user.id
+
+
+      #can update character if the player is associate with a campaign owned by current user
+      can [:update, :join, :retire, :kill, :remove], CampaignCharacter, :campaign => { :user_id => user.id }
+      #can update character if the player is the current user
+      can [:update, :join, :retire, :kill, :remove], CampaignCharacter, :character => {:user_id => user.id }
+
       #only admin can see version
       cannot :read, Version
       can :create, :all

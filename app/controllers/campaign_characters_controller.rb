@@ -42,10 +42,9 @@ class CampaignCharactersController < ApplicationController
 
   #Figure out how to dry this up. Maybe one action with a argument.
   def join
-    @cc = CampaignCharacter.find(params[:id])
-    authorize! :update, @cc
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
-    if @cc.join!
+    @campaign_character = CampaignCharacter.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @campaign_character : request.referrer
+    if @campaign_character.join!
       redirect_to return_to, notice: "Character is now adventuring in this campaign"
     else
       flash[:alert] = "Unable to proccess"
@@ -54,10 +53,9 @@ class CampaignCharactersController < ApplicationController
   end
 
   def retire
-    @cc = CampaignCharacter.find(params[:id])
-    authorize! :update, @cc
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
-    if @cc.retire!
+    @campaign_character = CampaignCharacter.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @campaign_character : request.referrer
+    if @campaign_character.retire!
       redirect_to return_to, notice: "Character is now retired"
     else
       flash[:alert] = "Unable to proccess "
@@ -66,10 +64,9 @@ class CampaignCharactersController < ApplicationController
   end
 
   def kill
-    @cc = CampaignCharacter.find(params[:id])
-    authorize! :update, @cc
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
-    if @cc.kill!
+    @campaign_character = CampaignCharacter.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @campaign_character : request.referrer
+    if @campaign_character.kill!
       redirect_to return_to, notice: "Character is now dead"
     else
       flash[:alert] = "Unable to proccess "
@@ -78,10 +75,9 @@ class CampaignCharactersController < ApplicationController
   end
 
   def lose
-    @cc = CampaignCharacter.find(params[:id])
-    authorize! :update, @cc
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @cc : request.referrer
-    if @cc.lose!
+    @campaign_character = CampaignCharacter.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "campaign_characters" ? @campaign_character : request.referrer
+    if @campaign_character.lose!
       redirect_to return_to, notice: "Character is now missing"
     else
       flash[:alert] = "Unable to proccess "

@@ -1,6 +1,6 @@
 <%- if current_user == player.campaign.gm || current_user == player.user%>
   <%if player.status == "pending" %>
-    <%if player.status_approver == current_user %>
+    <%if player.status_approver == current_user && player.user != player.campaign.gm  %>
       <p>Awaiting responce</p>
     <%else%>
       <%= form_for player, url: accept_campaign_request_path(player) do |f| %>
