@@ -138,7 +138,6 @@
   </section>
   <section class="add">
     <%-##Request access%>
-    <%debugger%>
     <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
       <h2>Add Player</h2>
       <% if @possible_players.count < 1 %>
