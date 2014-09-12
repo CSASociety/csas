@@ -12,7 +12,7 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = Campaign.new(campaign_params)
-    @campaign.user = current_user if current_user.present?
+    @campaign.gm = current_user if current_user.present?
     if @campaign.save
       redirect_to @campaign, :notice => "Successfully created campaign."
     else
