@@ -18,7 +18,7 @@
     </p>
   <p>
     <%= f.label :game %>
-    <%= f.collection_select :game_id, Game.all, :id, :title, prompt: true %>
+    <%= f.collection_select :game_id, Game.all, :id, :title, prompt: true, required: true %>
   </p>
   <p>
     <%= f.label :image %>

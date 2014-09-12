@@ -9,9 +9,9 @@
   </tr>
   <% for c in @campaigns %>
     <tr>
-      <td><%= c.title %></td>
-      <td><%= c.game.title %></td>
-      <td><%= link_to c.link, c.link %> </td>
+      <td><%= c.title.present? ? c.title : "Unknown" %></td>
+      <td><%= c.game.present? ? c.game.title : "No Game Selected" %></td>
+      <td><%= c.link.present? ? (link_to c.link, c.link) : "No Link" %> </td>
       <td>
         <%= link_to "Show", c %>
          | 

@@ -19,12 +19,12 @@
 
     <p>
       <strong>Link:</strong>
-      <%= @campaign.link %>
+      <%= @campaign.link.present? ? @campaign.link : "No Link" %>
     </p>
 
     <p>
       <strong>Game:</strong>
-      <%= link_to @campaign.game.title,  @campaign.game%>
+      <%= @campaign.game.present? ? (link_to @campaign.game.title,  @campaign.game) : "No game selected"%>
     </p>
 
 
