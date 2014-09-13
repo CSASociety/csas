@@ -1,4 +1,4 @@
-class CampaignCharacter < ActiveRecord::Base
+class PlayerCharacter < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :character_template
 

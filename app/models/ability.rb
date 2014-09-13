@@ -15,17 +15,17 @@ class Ability
 
 
       #can update character if the player is associate with a campaign owned by current user
-      can [:update, :join, :retire, :kill, :remove], CampaignCharacter, :campaign => { :user_id => user.id }
+      can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :campaign => { :user_id => user.id }
       #can update character if the player is the current user
-      can [:update, :join, :retire, :kill, :remove], CampaignCharacter, :character_template => {:user_id => user.id }
+      can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :character_template => {:user_id => user.id }
 
       #only admin can see version
       cannot :read, Version
       can :create, :all
-      cannot :create, CampaignCharacter do |cc|
+      cannot :create, PlayerCharacter do |pc|
         result = true
         #Grab each active player and cycle through
-        cc.campaign.players.active.each do |player|
+        pc.campaign.players.active.each do |player|
           #set return value to true if the player is the user
           result = false if player.user_id == user.id
         end

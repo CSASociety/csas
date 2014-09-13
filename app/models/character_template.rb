@@ -4,8 +4,8 @@ class CharacterTemplate < ActiveRecord::Base
   has_many :resources, through: :attachments
   belongs_to :user
 
-  has_many :campaign_characters
-  has_many :campaigns, through: :campaign_characters
+  has_many :player_characters
+  has_many :campaigns, through: :player_characters
 
   belongs_to :image, class_name: "Resource"
 

@@ -1,0 +1,19 @@
+<%- if current_user == pc.campaign.gm || current_user == pc.character_template.user%>
+  <%if ["dead", "missing", "retired"].include?(pc.status)%>
+    <%= form_for pc, url: join_pc_path(pc) do |f| %>
+      <%= f.submit value: "Re-Add Character to Campaign" %>
+    <%end%>
+  <% else %>
+    <%= form_for pc, url: kill_pc_path(pc) do |f| %>
+      <%= f.submit value: "Set Character to dead" %>
+    <%end%>
+    <%= form_for pc, url: retire_pc_path(pc) do |f| %>
+      <%= f.submit value: "Set character retired" %>
+    <%end%>
+    <%= form_for pc, url: lose_pc_path(pc) do |f| %>
+      <%= f.submit value: "Set character to MIA" %>
+    <%end%>
+  <%end%>
+<% else %>
+  No action avaliable
+<% end %>

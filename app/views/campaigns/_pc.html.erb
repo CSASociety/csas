@@ -1,0 +1,9 @@
+<tr>
+  <td><%=pc.character_template.name%></td>
+  <td><%=pc.character_template.caste%></td>
+  <td><%=pc.status%></td>
+  <td><%=pc.character_template.user.display_name%></td>
+  <% if current_user.present? %>
+    <td><%= render partial: "/player_characters/status_actions", :locals => {:pc => pc}  %></td>
+  <% end %>
+</tr>

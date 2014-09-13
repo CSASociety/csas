@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912230601) do
+ActiveRecord::Schema.define(version: 20140913045742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,14 +21,6 @@ ActiveRecord::Schema.define(version: 20140912230601) do
     t.integer  "resource_id"
     t.integer  "attachable_id"
     t.string   "attachable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "campaign_characters", force: true do |t|
-    t.integer  "campaign_id"
-    t.integer  "character_template_id"
-    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -66,6 +58,14 @@ ActiveRecord::Schema.define(version: 20140912230601) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "player_characters", force: true do |t|
+    t.integer  "campaign_id"
+    t.integer  "character_template_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "players", force: true do |t|

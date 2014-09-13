@@ -76,7 +76,7 @@
         <th>Actions</th>
       <% end %>
     </tr>
-    <%= render partial: "cc", collection: @campaign.campaign_characters, as: "cc" %>
+    <%= render partial: "pc", collection: @campaign.player_characters, as: "pc" %>
   </table>
 </section>
 
@@ -125,7 +125,7 @@
         <% if @possible_characters.count < 1 %>
           <p> You have no charcters available. Create a character and then come back here to add it to campaign.</p>
         <% else %>
-          <%= form_for @campaign_character do |f| %>
+          <%= form_for @player_character do |f| %>
             <%= f.error_messages %>
             <p>
               <%= f.hidden_field :campaign_id, value: @campaign.id%>

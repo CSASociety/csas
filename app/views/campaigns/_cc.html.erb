@@ -1,9 +1,0 @@
-<tr>
-  <td><%=cc.character_template.name%></td>
-  <td><%=cc.character_template.caste%></td>
-  <td><%=cc.status%></td>
-  <td><%=cc.character_template.user.display_name%></td>
-  <% if current_user.present? %>
-    <td><%= render partial: "/campaign_characters/status_actions", :locals => {:cc => cc}  %></td>
-  <% end %>
-</tr>

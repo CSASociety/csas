@@ -59,7 +59,7 @@ class CampaignsController < ApplicationController
       @possible_players =  @possible_players - [user]
     end
     @new_player = Player.new
-    @campaign_character = CampaignCharacter.new
+    @player_character = PlayerCharacter.new
 
     @possible_characters = current_user.present? ? CharacterTemplate.find_all_by_user_id(current_user.id) : []
     if @possible_characters.present?
