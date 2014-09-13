@@ -26,6 +26,10 @@
       <strong>Game:</strong>
       <%= @campaign.game.present? ? (link_to @campaign.game.title,  @campaign.game) : "No game selected"%>
     </p>
+    <p>
+      <strong>GM:</strong>
+      <%= @campaign.gm.display_name %>
+    </p>
 
 
     <p>
@@ -127,8 +131,8 @@
               <%= f.hidden_field :campaign_id, value: @campaign.id%>
             </p>
             <p>
-              <%= f.label :characters %>
-              <%= f.collection_select :character_id, @possible_characters , :id, :name, prompt: true %>
+              <%= f.label :character_templates %>
+              <%= f.collection_select :character_template_id, @possible_characters , :id, :name, prompt: true %>
             </p>
             <p><%= f.submit %></p>
           <% end %>

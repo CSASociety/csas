@@ -1,4 +1,4 @@
-<%- if current_user == cc.campaign.gm || current_user == cc.character.user%>
+<%- if current_user == cc.campaign.gm || current_user == cc.character_template.user%>
   <%if ["dead", "missing", "retired"].include?(cc.status)%>
     <%= form_for cc, url: join_cc_path(cc) do |f| %>
       <%= f.submit value: "Re-Add Character to Campaign" %>

@@ -19,6 +19,11 @@
   <%= link_to @campaign_character.campaign.game.title,  @campaign_character.campaign.game %>
 </p>
 
+<p>
+  <strong>GM:</strong>
+  <%= @campaign_character.campaign.gm.display_name %>
+</p>
+
 
 <p>
   <%= link_to "View All", campaigns_path %>

@@ -32,6 +32,7 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find(params[:id])
+    params["game"] = params["game"].except("image_id") if params["game"]["image_id"].blank?
     if @game.update_attributes(game_params)
       redirect_to @game, :notice  => "Successfully updated game."
     else

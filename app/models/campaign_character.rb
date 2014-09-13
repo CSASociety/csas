@@ -1,8 +1,8 @@
 class CampaignCharacter < ActiveRecord::Base
   belongs_to :campaign
-  belongs_to :character
+  belongs_to :character_template
 
-  validates :character, :presence => true, :uniqueness => {:scope => :campaign}
+  validates :character_template, :presence => true, :uniqueness => {:scope => :campaign}
 
   include AASM
 

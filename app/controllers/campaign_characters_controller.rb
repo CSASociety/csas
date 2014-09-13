@@ -88,6 +88,6 @@ class CampaignCharactersController < ApplicationController
   private
 
   def campaign_character_params
-    params.require(:campaign_character).permit(:campaign_id, :character_id, :status)
+    params.require(:campaign_character).permit(:campaign_id, :character_template_id, :status)
   end
 end

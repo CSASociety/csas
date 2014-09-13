@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :games
-  has_many :charcters
+  has_many :charcter_templates
   has_many :resources
   has_many :campaigns
   has_many :status_approver, class_name: 'Player'

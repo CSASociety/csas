@@ -14,7 +14,7 @@
   </p>
   <p>
     <%= f.label :image %>
-    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, prompt: true %>
+    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name,  include_blank: "Please Select" %>
     <%=  link_to("Current Image:", @game.image.file.url )if @game.image.present? %>
   </p>
   <p><%= f.submit %></p>

@@ -15,7 +15,7 @@ Csas::Application.routes.draw do
 
   resources :campaigns
   resources :campaign_characters
-  resources :characters
+  resources :character_templates
   resources :resources
   resources :attachments
   resources :games

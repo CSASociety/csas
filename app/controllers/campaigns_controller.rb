@@ -61,9 +61,9 @@ class CampaignsController < ApplicationController
     @new_player = Player.new
     @campaign_character = CampaignCharacter.new
 
-    @possible_characters = current_user.present? ? Character.find_all_by_user_id(current_user.id) : []
+    @possible_characters = current_user.present? ? CharacterTemplate.find_all_by_user_id(current_user.id) : []
     if @possible_characters.present?
-      @campaign.characters.each do |char|
+      @campaign.character_templates.each do |char|
         @possible_characters =  @possible_characters - [char]
       end
     end

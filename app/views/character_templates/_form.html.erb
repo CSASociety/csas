@@ -1,4 +1,4 @@
-<%= form_for @character do |f| %>
+<%= form_for @character_template do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %><br />
@@ -15,11 +15,11 @@
   <p>
     <%= f.label :image %>
     <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, include_blank: "Please Select" , required: false%>
-    <%= link_to("Current Image: #{@character.image.file_file_name}", @character.image.file.url )if @character.image.present? %>
+    <%= link_to("Current Image: #{@character_template.image.file_file_name}", @character_template.image.file.url )if @character_template.image.present? %>
   </p>
   <p><%= f.submit %></p>
 <% end %>
-<%- if @character.new_record? %>
+<%- if @character_template.new_record? %>
   <p>Once you create this character you will be able to go to resource and add images and documents. You will be abe to add thoes here in the future but it is a bit more complicated than expected. </p>
 <%-else%>
 <%-end%>

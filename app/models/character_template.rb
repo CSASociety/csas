@@ -1,4 +1,4 @@
-class Character < ActiveRecord::Base
+class CharacterTemplate < ActiveRecord::Base
   has_paper_trail
   has_many :attachments, as: :attachable
   has_many :resources, through: :attachments

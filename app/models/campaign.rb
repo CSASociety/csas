@@ -5,7 +5,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
   has_many :campaign_characters
-  has_many :characters, through: :campaign_characters
+  has_many :character_templates, through: :campaign_characters
 
   has_many :players
   has_many :users, through: :players
