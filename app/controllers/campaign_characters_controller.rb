@@ -11,6 +11,7 @@ class CampaignCharactersController < ApplicationController
 
   def create
     @campaign_character = CampaignCharacter.new(campaign_character_params)
+    debugger
     if @campaign_character.save
       if request.referrer.match('campaign_characters')
         redirect_to @campaign_character, :notice  => "Successfully add character to the campaign."
