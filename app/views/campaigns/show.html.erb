@@ -61,7 +61,7 @@
       <% end %>
     </tr>
     <%= render partial: "players", collection: @campaign.players, as: "player" %>
-  </table>
+  </table>.
 </section>
 
 <section class="character">
@@ -80,26 +80,18 @@
   </table>
 </section>
 
+<% if can? :update, @campaign %>
+  <%= modal_dialog :id => "testing",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Attach to #{@campaign.title}" },
+    :body => render(partial: "attachments/attach", locals: {item: @campaign, attachment: Attachment.new}),
+    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+  %>
+<%-end%>
 
 <% content_for :page_sidebar do %>
-  <section class="add">
-    <% if can? :update, @campaign %>
-      <h2>Add Attachment</h2>
-      <% if (@possible_resources.count < 1)  %>
-        <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
-        <%= link_to "Create new resource", new_resource_path %>
-      <% else %>
-        <%= form_for @new_attachment do |f| %>
-          <%= f.hidden_field :attachable_id, value: @campaign.id %>
-          <%= f.hidden_field :attachable_type, value: @campaign.class %>
-          <%= f.label :title %>
-          <%= f.text_field :title %>
-          <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
-          <%= f.submit %>
-        <%-end %>
-      <% end %>
-    <% end %>
-  </section>
+  <% if can? :update, @campaign %>
+    <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn', :data => {:toggle => 'modal'} %>
+  <%- end %>
 
   <section class="add">
     <%-##Add player is you are the GM%>

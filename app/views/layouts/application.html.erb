@@ -39,7 +39,8 @@
           </li>
         <%-else %>
           <li>
-            <%=link_to 'Login', new_user_session_path %>
+            <%= content_tag :a, "Login", :href => "#sign-in-modal", :class => '', :data => {:toggle => 'modal'} %>
+            <%#<%=link_to 'Login', new_user_session_path %>
           </li>
           <li>
             <%=link_to 'Sign Up', new_user_registration_path %>
@@ -47,6 +48,10 @@
         <%-end%>
       </ul>
     </nav>
+    <%= modal_dialog :id => "sign-in-modal",
+          :header => { :show_close => true, :dismiss => 'modal', :title => "Sign In" },
+          :body => render(partial: "devise/sessions/login" ),
+          :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })%>
     <div id="container">
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
