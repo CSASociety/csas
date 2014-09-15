@@ -33,22 +33,18 @@
   </ul>
 </section>
 
+<% if can? :update, @character_template %>
+  <%= modal_dialog :id => "attach_to_character_template",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Attach to #{@character_template.title} Template" },
+    :body => render(partial: "attachments/attach", locals: {item: @character_template, attachment: Attachment.new}),
+    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+  %>
+<%-end%>
+
+
 <% content_for :page_sidebar do %>
-  <section class="add_item">
-    <h2>Add Attachment</h2>
-    <% if (@possible_resources.count < 1)  %>
-      <p>No resources are left to add to this page. Please visit the resource page at the following link and them come back and attach it.</p>
-      <%= link_to "Create new resource", new_resource_path %>
-    <% else %>
-      <%= form_for @new_attachment do |f| %>
-        <%= f.hidden_field :attachable_id, value: @character_template.id %>
-        <%= f.hidden_field :attachable_type, value: @character_template.class %>
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-        <%= f.collection_select :resource_id, @possible_resources, :id, :file_file_name, prompt: true %>
-        <%= f.submit %>
-      <%-end %>
-    <% end %>
-  </section>
+  <% if can? :update, @character_template %>
+    <%= content_tag :a, "Attach File", :href => "#attach_to_character_template", :class => 'btn', :data => {:toggle => 'modal'} %>
+  <%- end %>
 <% end%>
 
