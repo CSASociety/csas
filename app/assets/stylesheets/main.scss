@@ -1,5 +1,25 @@
 body {
-  width: 65%;
+  overflow: hidden;
+  #flash_alert {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    background-color: #F50A31;
+    font-size: larger;
+    height: 28px;
+    font-weight: bold;
+  }
+  #flash_notice {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    background-color: #1ED406;
+    font-size: larger;
+    height: 28px;
+    font-weight: bold;
+  }
+
+  width: 100%;
   margin: 0 auto;
   table {
     border: 1px solid #CCC;
@@ -17,6 +37,8 @@ body {
 
   }
   nav {
+    position: fixed;
+    width: 100%;
     background-color: black;
     color: white;
     ul {
@@ -29,16 +51,20 @@ body {
       }
     }
   }
-  #sidebar {
-    float:right;
-    width: 29%;
+  .summary_box {
+    border: 1px solid red;
+    width: 200px;
+    height: 200px;
     padding: 1.2em;
+    margin: 1.2em;
+    float: left;
+    overflow: hidden;
   }
   #container {
     float:left;
     margin: 0;
-    padding: 1.2em;
-    width: 61%;
+    padding-top: 1.2em;
+    width: 100%;
     form {
       input {
         width: 90%;
@@ -54,20 +80,36 @@ body {
         padding: 7px;
         float: left;
       }
-      #main_info{
-      }
     }
-    .title {
-      padding: 14px;
-      border-bottom: 2px solid black;
+    section:nth-of-type(even) {
+      background: #F2F2ED;
     }
     section {
-      &.attachments {
-        clear: both;
+      &#main_title_section {
+        padding: 14px;
       }
-      &.add_item {
+      border-bottom: 2px solid #E3E3DE;
+      width: 100%;
+      overflow: hidden;
+      .section_header {
+        clear: both;
         width: 100%;
-        border: 1px solid black;
+        overflow: hidden;
+        .add_action_link {
+          float: right;
+          overflow:hidden;
+          margin: 1.2em;
+          width: 200px;
+          background: #45BF45;
+        }
+        h2, h1, h3 {
+          float: left;
+          overflow: hidden;
+        }
+      }
+      .section_content {
+        margin: 0 auto;
+        overflow: hidden;
       }
     }
   }

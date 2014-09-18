@@ -1,4 +1,8 @@
 <% title @campaign.title %>
+<% if can? :update, @game %>
+  <% edit_text "Edit Campaign" %>
+  <% edit_path edit_campaign_path(@campaign) %>
+<%end%>
 
 <section id="main">
   <div id="main_image">
@@ -30,55 +34,39 @@
       <strong>GM:</strong>
       <%= @campaign.gm.display_name %>
     </p>
-
-
-    <p>
-      <%= link_to "Edit", edit_campaign_path(@campaign) %> |
-      <%= link_to "Destroy", @campaign, :confirm => 'Are you sure?', :method => :delete %> |
-      <%= link_to "View All", campaigns_path %>
-    </p>
+  </div>
+  <div class="actions">
+    <%= link_to "Edit", edit_campaign_path(@campaign) %> 
   </div>
 </section>
 
+<section class="character">
+  <div class="section_header">
+    <h2>PCs</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "player_characters/pc", collection: @campaign.player_characters, as: "pc" %>
+  </div>
+</section>
+
+
 <section class="attachments">
-  <h2> Attachemnts </h2>
-  <ul>
-    <%- @campaign.attachments.each do |attachment| %>
-      <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+  <div class="section_header">
+    <h2> Attachemnts </h2>
+    <% if can? :update, @campaign %>
+      <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
-  </ul>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attachments/attached", collection: @campaign.attachments, as: "attachment" %>
+  </div>
 </section>
 
 <section class="players">
-  <h3> Players</h3>
-  <table>
-    <tr>
-      <th>Email</th>
-      <th>Status</th>
-      <th>Join Campaign</th>
-      <% if current_user.present? %>
-        <th>Actions</th>
-      <% end %>
-    </tr>
-    <%= render partial: "players", collection: @campaign.players, as: "player" %>
-  </table>.
+  <h2>Players</h2>
+  <%= render partial: "players/players", collection: @campaign.players, as: "player" %>
 </section>
 
-<section class="character">
-  <h3> Player Charcters</h3>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Race/Class</th>
-      <th>Status</th>
-      <th>Played by</th>
-      <% if current_user.present? %>
-        <th>Actions</th>
-      <% end %>
-    </tr>
-    <%= render partial: "pc", collection: @campaign.player_characters, as: "pc" %>
-  </table>
-</section>
 
 <% if can? :update, @campaign %>
   <%= modal_dialog :id => "testing",
@@ -88,63 +76,60 @@
   %>
 <%-end%>
 
-<% content_for :page_sidebar do %>
-  <% if can? :update, @campaign %>
-    <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn', :data => {:toggle => 'modal'} %>
-  <%- end %>
 
-  <section class="add">
-    <%-##Add player is you are the GM%>
-    <%if @campaign.gm == current_user%>
-      <h2>Add Player</h2>
-        <% if (@possible_players.count < 1)%>
-          <p>No players are left to add to this page. Invite a user to this system and then invite to campaign.</p>
+
+
+<section class="add">
+  <%-##Add player is you are the GM%>
+  <%if @campaign.gm == current_user%>
+    <h2>Add Player</h2>
+      <% if (@possible_players.count < 1)%>
+        <p>No players are left to add to this page. Invite a user to this system and then invite to campaign.</p>
+    <% else %>
+      <%= form_for @new_player do |f| %>
+        <%= f.hidden_field :campaign_id, value: @campaign.id %>
+        <%= f.collection_select :user_id, @possible_players, :id, :email, prompt: true %>
+        <%= f.submit %>
+      <%-end %>
+    <%end%>
+  <%end%>
+</section>
+
+<section class="add">
+  <%-##Add charcter if you are a player%>
+  <%if user_is_active_player?(@campaign, current_user) %>
+    <%- if @possible_players.exclude?(current_user)%>
+      <h2>Add PC</h2>
+      <% if @possible_characters.count < 1 %>
+        <p> You have no charcters available. Create a character and then come back here to add it to campaign.</p>
       <% else %>
-        <%= form_for @new_player do |f| %>
-          <%= f.hidden_field :campaign_id, value: @campaign.id %>
-          <%= f.collection_select :user_id, @possible_players, :id, :email, prompt: true %>
-          <%= f.submit %>
-        <%-end %>
-      <%end%>
-    <%end%>
-  </section>
-
-  <section class="add">
-    <%-##Add charcter if you are a player%>
-    <%if user_is_active_player?(@campaign, current_user) %>
-      <%- if @possible_players.exclude?(current_user)%>
-        <h2>Add PC</h2>
-        <% if @possible_characters.count < 1 %>
-          <p> You have no charcters available. Create a character and then come back here to add it to campaign.</p>
-        <% else %>
-          <%= form_for @player_character do |f| %>
-            <%= f.error_messages %>
-            <p>
-              <%= f.hidden_field :campaign_id, value: @campaign.id%>
-            </p>
-            <p>
-              <%= f.label :character_templates %>
-              <%= f.collection_select :character_template_id, @possible_characters , :id, :name, prompt: true %>
-            </p>
-            <p><%= f.submit %></p>
-          <% end %>
+        <%= form_for @player_character do |f| %>
+          <%= f.error_messages %>
+          <p>
+            <%= f.hidden_field :campaign_id, value: @campaign.id%>
+          </p>
+          <p>
+            <%= f.label :character_templates %>
+            <%= f.collection_select :character_template_id, @possible_characters , :id, :name, prompt: true %>
+          </p>
+          <p><%= f.submit %></p>
         <% end %>
+      <% end %>
+    <%end%>
+  <%end%>
+</section>
+<section class="add">
+  <%-##Request access%>
+  <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
+    <h2>Add Player</h2>
+    <% if @possible_players.count < 1 %>
+      <p> Should never see this. </p>
+    <%else%>
+      <%= form_for @new_player do |f| %>
+        <%= f.hidden_field :campaign_id, value: @campaign.id %>
+        <%= f.hidden_field :user_id, value: current_user.id%>
+        <%= f.submit value: "Request Access" %>
       <%end%>
     <%end%>
-  </section>
-  <section class="add">
-    <%-##Request access%>
-    <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
-      <h2>Add Player</h2>
-      <% if @possible_players.count < 1 %>
-        <p> Should never see this. </p>
-      <%else%>
-        <%= form_for @new_player do |f| %>
-          <%= f.hidden_field :campaign_id, value: @campaign.id %>
-          <%= f.hidden_field :user_id, value: current_user.id%>
-          <%= f.submit value: "Request Access" %>
-        <%end%>
-      <%end%>
-    <%end%>
-  </section>
-<%end%>
+  <%end%>
+</section>

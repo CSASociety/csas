@@ -1,4 +1,8 @@
 <% title @character_template.name %>
+<% if can? :update, @character_template %>
+  <% edit_text "Edit Character Template" %>
+  <% edit_path edit_character_template_path(@character_template) %>
+<%end%>
 
 <section id="main">
   <div id="main_image">
@@ -25,12 +29,15 @@
 </section>
 
 <section class="attachments">
-  <h2> Attachemnts </h2>
-  <ul>
-    <%- @character_template.attachments.each do |attachment| %>
-      <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+  <div class="section_header">
+    <h2> Attachemnts </h2>
+    <% if can? :update, @character_template %>
+      <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
-  </ul>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attachments/attached", collection: @character_template.attachments, as: "attachment" %>
+  </div>
 </section>
 
 <% if can? :update, @character_template %>
@@ -40,11 +47,4 @@
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>
-
-
-<% content_for :page_sidebar do %>
-  <% if can? :update, @character_template %>
-    <%= content_tag :a, "Attach File", :href => "#attach_to_character_template", :class => 'btn', :data => {:toggle => 'modal'} %>
-  <%- end %>
-<% end%>
 

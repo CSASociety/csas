@@ -1,8 +1,0 @@
-<tr>
-  <td><%=player.user.display_name%></td>
-  <td><%=player.status%></td>
-  <td><%=player.created_at%></td>
-  <% if current_user.present? %>
-    <td><%= render partial: "/players/status_actions", :locals => {:player => player}  %></td>
-  <% end %>
-</tr>

@@ -1,4 +1,8 @@
-<% title @game.title  %>
+<% title @game.title %>
+<% if can? :update, @game %>
+  <% edit_text "Edit Game" %>
+  <% edit_path edit_game_path(@game) %>
+<%end%>
 
 <section id="main">
   <div id="main_image">
@@ -19,14 +23,16 @@
     <p><%= link_to "Edit", edit_game_path(@game) %></p>
   </div>
 </section>
-
 <section class="attachments">
-  <h2> Attachemnts </h2>
-  <ul>
-    <%- @game.attachments.each do |attachment| %>
-      <li><%= link_to attachment.title, attachment.resource.file.url %></li>
+  <div class="section_header">
+    <h2> Attachemnts </h2>
+    <% if can? :update, @game %>
+      <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
-  </ul>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attachments/attached", collection: @game.attachments, as: "attachment" %>
+  </div>
 </section>
 <% if can? :update, @game %>
   <%= modal_dialog :id => "attach_to_game",
@@ -35,11 +41,3 @@
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>
-
-
-<% content_for :page_sidebar do %>
-  <% if can? :update, @game%>
-    <%= content_tag :a, "Attach File", :href => "#attach_to_game", :class => 'btn', :data => {:toggle => 'modal'} %>
-  <%- end %>
-<%end%>
-

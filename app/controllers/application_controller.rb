@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   def set_page
     if request.referer.nil? || !request.referer.include?('users/sign')
       session[:user_return_to] = request.referer
-      debugger
     end
   end
 

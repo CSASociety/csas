@@ -8,8 +8,22 @@ module LayoutHelper
     @show_title = show_title
   end
 
+  def edit_text(edit_text)
+    content_for(:edit_text) { edit_text }
+    @edit_text = edit_text
+  end
+
+  def edit_path(edit_path)
+    content_for(:edit_path) { edit_path }
+    @edit_path = edit_path
+  end
+
   def show_title?
     @show_title
+  end
+
+  def show_edit_button?
+    @edit_text && @edit_path
   end
 
   def stylesheet(*args)

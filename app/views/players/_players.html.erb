@@ -1,0 +1,13 @@
+<div class="summary_box" id="player_#{player.ud}">
+  Player Name: <%=player.user.display_name%>
+  <br>
+  Status: <%=player.status%>
+  <br>
+  Joined Campaign: <%=distance_of_time_in_words(player.created_at, Time.now)%> ago
+  <% if current_user.present? %>
+    <br>
+    <div class="action" id="player_#{player.id}_actions">
+      <%= render partial: "/players/status_actions", :locals => {:player => player}  %>
+    </div>
+  <% end %>
+</div>

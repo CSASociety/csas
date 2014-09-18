@@ -53,14 +53,18 @@
           :body => render(partial: "devise/sessions/login" ),
           :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })%>
     <div id="container">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <% end %>
-      <%= content_tag( :h1, yield(:title), class: "title") if show_title? %>
+      <section id="main_title_section">
+        <div class="section_header">
+          <%= content_tag( :h1, yield(:title), class: "title") if show_title? %>
+          <%= link_to yield(:edit_text), yield(:edit_path),  class: "btn add_action_link" if show_edit_button? %>
+        </div>
+        <div class="section_content">
+          <% flash.each do |name, msg| %>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <% end %>
+        </div>
+     </section>
       <%= yield %>
-    </div>
-    <div id="sidebar">
-      <%= yield(:page_sidebar) %>
     </div>
     <%= yield :javascript %>
   </body>
