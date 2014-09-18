@@ -40,6 +40,7 @@
   </div>
 </section>
 
+<% unless @campaign.player_characters.empty? %>
 <section class="character">
   <div class="section_header">
     <h2>PCs</h2>
@@ -48,8 +49,9 @@
     <%= render partial: "player_characters/pc", collection: @campaign.player_characters, as: "pc" %>
   </div>
 </section>
+<%end%>
 
-
+<% unless @campaign.attachments.empty? %>
 <section class="attachments">
   <div class="section_header">
     <h2> Attachemnts </h2>
@@ -61,11 +63,14 @@
     <%= render partial: "attachments/attached", collection: @campaign.attachments, as: "attachment" %>
   </div>
 </section>
+<%end%>
 
+<% unless @campaign.players.empty? %>
 <section class="players">
   <h2>Players</h2>
   <%= render partial: "players/players", collection: @campaign.players, as: "player" %>
 </section>
+<%end%>
 
 
 <% if can? :update, @campaign %>

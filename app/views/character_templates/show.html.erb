@@ -18,16 +18,11 @@
     <p>
       <strong>Status:</strong>
       <%= @character_template.status %>
-    </p>
-
-    <p>
-      <%= link_to "Edit", edit_character_template_path(@character_template) %> |
-      <%= link_to "Destroy", @character_template, :confirm => 'Are you sure?', :method => :delete %> |
-      <%= link_to "View All", character_templates_path %>
-    </p>
+    </p
   </div>
 </section>
 
+<% unless @character_template.attachments.empty? && cannot?(:update, @character_template) %>
 <section class="attachments">
   <div class="section_header">
     <h2> Attachemnts </h2>
@@ -39,6 +34,7 @@
     <%= render partial: "attachments/attached", collection: @character_template.attachments, as: "attachment" %>
   </div>
 </section>
+<%end%>
 
 <% if can? :update, @character_template %>
   <%= modal_dialog :id => "attach_to_character_template",
