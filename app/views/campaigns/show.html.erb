@@ -35,9 +35,6 @@
       <%= @campaign.gm.display_name %>
     </p>
   </div>
-  <div class="actions">
-    <%= link_to "Edit", edit_campaign_path(@campaign) %> 
-  </div>
 </section>
 
 <% unless @campaign.player_characters.empty? && @possible_characters.count < 1 %>

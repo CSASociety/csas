@@ -1,18 +1,17 @@
 <% title "Resource" %>
+<% if can? :create, Resource %>
+  <% edit_text "Upload Resource" %>
+  <% edit_path new_resource_path %>
+<%end%>
 
-<p>
-<strong>Name:</strong>
+<section>
+  <%- if @resource.file_content_type == 'image/jpeg' %>
+    <%= image_tag @resource.file.url(:medium) %>
+  <%-end%>
+  <br>
+  <strong>Name:</strong>
   <%= @resource.file_file_name %>
-<strong>Type:</strong>
+  <br>
+  <strong>Type:</strong>
   <%= @resource.file_content_type %>
-</p>
-<%- if @resource.file_content_type == 'image/jpeg' %>
-  <%= image_tag @resource.file.url(:medium) %>
-<%-end%>
-
-
-<p>
-  <%= link_to "Edit", edit_resource_path(@resource) %> |
-  <%= link_to "Destroy", @resource, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", resources_path %>
-</p>
+</section>
