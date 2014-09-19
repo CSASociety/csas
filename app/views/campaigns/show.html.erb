@@ -51,7 +51,7 @@
 </section>
 <%end%>
 
-<% unless @campaign.attachments.empty? %>
+<% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
 <section class="attachments">
   <div class="section_header">
     <h2> Attachemnts </h2>

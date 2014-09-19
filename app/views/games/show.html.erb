@@ -22,7 +22,7 @@
     </p>
   </div>
 </section>
-<% unless @game.attachments.empty? %>
+<% unless @game.attachments.empty? && cannot?(:update, @game) %>
 <section class="attachments">
   <div class="section_header">
     <h2> Attachemnts </h2>
