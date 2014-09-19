@@ -13,12 +13,12 @@
   <div id="main_info">
     <p>
       <strong>Description:</strong>
-      <%= @campaign.description %>
+      <%= markdown(@campaign.description) %>
     </p>
 
     <p>
     <strong>Intro:</strong>
-      <%= @campaign.intro %>
+      <%= markdown(@campaign.intro) %>
     </p>
 
     <p>
