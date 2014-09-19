@@ -1,0 +1,4 @@
+= form_for player do |f|
+  = f.hidden_field :campaign_id, value: item.id
+  = f.collection_select :user_id, possible_players, :id, :email, prompt: true
+  = f.submit

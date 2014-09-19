@@ -40,10 +40,13 @@
   </div>
 </section>
 
-<% unless @campaign.player_characters.empty? %>
+<% unless @campaign.player_characters.empty? && @possible_characters.count < 1 %>
 <section class="character">
   <div class="section_header">
     <h2>PCs</h2>
+    <% if @possible_characters.count > 0 && user_is_active_player?(@campaign, current_user)%>
+      <%= content_tag :a, "Add Player Character", :href => "#add_player_character", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <% end %>
   </div>
   <div class="section_content">
     <%= render partial: "player_characters/pc", collection: @campaign.player_characters, as: "pc" %>
@@ -56,7 +59,7 @@
   <div class="section_header">
     <h2> Attachemnts </h2>
     <% if can? :update, @campaign %>
-      <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+      <%= content_tag :a, "Attach File", :href => "#attach_to", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
   </div>
   <div class="section_content">
@@ -65,76 +68,48 @@
 </section>
 <%end%>
 
-<% unless @campaign.players.empty? %>
-<section class="players">
-  <h2>Players</h2>
-  <%= render partial: "players/player_summary_box", collection: @campaign.players, as: "player" %>
-</section>
+<% unless @campaign.players.empty? && !current_user.present? %>
+  <section class="players">
+    <div class="section_header">
+      <h2>Players</h2>
+      <%- if @campaign.gm == current_user && @possible_players.count > 0 %>
+        <%= content_tag :a, "Invite Player", :href => "#add_player", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+      <%end%>
+      <%-##Request access%>
+      <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
+        <%- if @possible_players.count < 1 %>
+          <p> Should never see this. </p>
+        <%else%>
+          <%= form_for @new_player  do |f| %>
+            <%= f.hidden_field :campaign_id, value: @campaign.id %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.submit value: "Request Access", class: "btn add_action_link" %>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+    <div class="section_content">
+      <%= render partial: "players/player_summary_box", collection: @campaign.players, as: "player" %>
+    </div>
+  </section>
 <%end%>
 
+<% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
+  <%= atttachment_form(@campaign) -%>
+<%- end %>
 
-<% if can? :update, @campaign %>
-  <%= modal_dialog :id => "testing",
-    :header => { :show_close => true, :dismiss => 'modal', :title => "Attach to #{@campaign.title}" },
-    :body => render(partial: "attachments/attach", locals: {item: @campaign, attachment: Attachment.new}),
+<% if current_user == @campaign.gm %>
+  <%= modal_dialog :id => "add_player",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Add player to #{@campaign.title}" },
+    :body => render(partial: "add_player_form", locals: {item: @campaign, player: Player.new, possible_players: @possible_players}),
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>
 
-
-
-
-<section class="add">
-  <%-##Add player is you are the GM%>
-  <%if @campaign.gm == current_user%>
-    <h2>Add Player</h2>
-      <% if (@possible_players.count < 1)%>
-        <p>No players are left to add to this page. Invite a user to this system and then invite to campaign.</p>
-    <% else %>
-      <%= form_for @new_player do |f| %>
-        <%= f.hidden_field :campaign_id, value: @campaign.id %>
-        <%= f.collection_select :user_id, @possible_players, :id, :email, prompt: true %>
-        <%= f.submit %>
-      <%-end %>
-    <%end%>
-  <%end%>
-</section>
-
-<section class="add">
-  <%-##Add charcter if you are a player%>
-  <%if user_is_active_player?(@campaign, current_user) %>
-    <%- if @possible_players.exclude?(current_user)%>
-      <h2>Add PC</h2>
-      <% if @possible_characters.count < 1 %>
-        <p> You have no charcters available. Create a character and then come back here to add it to campaign.</p>
-      <% else %>
-        <%= form_for @player_character do |f| %>
-          <%= f.error_messages %>
-          <p>
-            <%= f.hidden_field :campaign_id, value: @campaign.id%>
-          </p>
-          <p>
-            <%= f.label :character_templates %>
-            <%= f.collection_select :character_template_id, @possible_characters , :id, :name, prompt: true %>
-          </p>
-          <p><%= f.submit %></p>
-        <% end %>
-      <% end %>
-    <%end%>
-  <%end%>
-</section>
-<section class="add">
-  <%-##Request access%>
-  <%- if @possible_players.include?(current_user) && current_user != @campaign.gm%>
-    <h2>Add Player</h2>
-    <% if @possible_players.count < 1 %>
-      <p> Should never see this. </p>
-    <%else%>
-      <%= form_for @new_player do |f| %>
-        <%= f.hidden_field :campaign_id, value: @campaign.id %>
-        <%= f.hidden_field :user_id, value: current_user.id%>
-        <%= f.submit value: "Request Access" %>
-      <%end%>
-    <%end%>
-  <%end%>
-</section>
+<% if @possible_characters.count > 0 && user_is_active_player?(@campaign, current_user) %>
+  <%= modal_dialog :id => "add_player_character",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Add Player Character to #{@campaign.title}" },
+    :body => render(partial: "add_character_form", locals: {item: @campaign, player_character: PlayerCharacter.new, possible_characters: @possible_characters}),
+    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+  %>
+<%-end%>

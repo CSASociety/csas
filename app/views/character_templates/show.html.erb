@@ -27,7 +27,7 @@
   <div class="section_header">
     <h2> Attachemnts </h2>
     <% if can? :update, @character_template %>
-      <%= content_tag :a, "Attach File", :href => "#testing", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+      <%= content_tag :a, "Attach File", :href => "#attach_to", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
   </div>
   <div class="section_content">
@@ -36,11 +36,6 @@
 </section>
 <%end%>
 
-<% if can? :update, @character_template %>
-  <%= modal_dialog :id => "attach_to_character_template",
-    :header => { :show_close => true, :dismiss => 'modal', :title => "Attach to #{@character_template.title} Template" },
-    :body => render(partial: "attachments/attach", locals: {item: @character_template, attachment: Attachment.new}),
-    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
-  %>
-<%-end%>
-
+<% unless @character_template.attachments.empty? && cannot?(:update, @character_template) %>
+  <%= atttachment_form(@character_template) -%>
+<%- end %>
