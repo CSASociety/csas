@@ -1,24 +1,14 @@
 <% title "Games" %>
+<% if can? :create, @game %>
+  <% edit_text "Create New Game" %>
+  <% edit_path new_game_path %>
+<%end%>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Link</th>
-    <th>Actions</th>
-  </tr>
-  <% for game in @games %>
-    <tr>
-      <td><%= game.title %></td>
-      <td><%= game.description.truncate(100) %></td>
-      <td><%= game.link %></td>
-      <td>
-        <%= link_to "Show", game %>
-         | 
-        <%= link_to "Edit", edit_game_path(game) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "New Game", new_game_path %></p>
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "game_summary_box", collection: @games, as: "game" %>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+.summary_box
+  = "File Name:  #{resource.file_file_name.truncate(20)}"
+  %br
+  = "File Type: #{resource.file_content_type}"
+  %br
+  = "File Size #{number_to_human_size(resource.file_file_size)}"
+  %br
+  = link_to "View Attachment Info", resource_path(resource)
+  %br
+  = link_to "Download or Open File", resource.file.url

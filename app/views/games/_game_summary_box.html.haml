@@ -1,0 +1,8 @@
+.summary_box
+  = "Title: #{game.title}"
+  %br
+  Description:
+  %br
+  = game.description.truncate(100)
+  %br
+  = link_to "View Full Game", game_path(game)

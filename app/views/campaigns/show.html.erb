@@ -68,7 +68,7 @@
 <% unless @campaign.players.empty? %>
 <section class="players">
   <h2>Players</h2>
-  <%= render partial: "players/players", collection: @campaign.players, as: "player" %>
+  <%= render partial: "players/player_summary_box", collection: @campaign.players, as: "player" %>
 </section>
 <%end%>
 

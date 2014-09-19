@@ -1,31 +1,14 @@
-<h1>Listing players</h1>
+<% title "Players" %>
+<% if can? :create, Player %>
+  <% edit_text "Create New Player" %>
+  <% edit_path new_player_path %>
+<%end%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Campaign</th>
-      <th>User</th>
-      <th>Status</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @players.each do |player| %>
-      <tr>
-        <td><%= player.campaign.title %></td>
-        <td><%= player.user.display_name %></td>
-        <td><%= player.status %></td>
-        <td><%= link_to 'Show', player %></td>
-        <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Player', new_player_path %>
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "player_summary_box", collection: @players, as: "player" %>
+  </div>
+</section>

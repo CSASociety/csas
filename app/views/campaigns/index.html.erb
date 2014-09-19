@@ -1,24 +1,14 @@
 <% title "Campaigns" %>
+<% if can? :create, Campaign %>
+  <% edit_text "Create New Campaign" %>
+  <% edit_path new_campaign_path %>
+<%end%>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Game</th>
-    <th>Link</th>
-    <th>Actions</th>
-  </tr>
-  <% for c in @campaigns %>
-    <tr>
-      <td><%= c.title.present? ? c.title : "Unknown" %></td>
-      <td><%= c.game.present? ? c.game.title : "No Game Selected" %></td>
-      <td><%= c.link.present? ? (link_to c.link, c.link) : "No Link" %> </td>
-      <td>
-        <%= link_to "Show", c %>
-         | 
-        <%= link_to "Edit", edit_campaign_path(c) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "New Campaign", new_campaign_path %></p>
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "campaign_summary_box", collection: @campaigns, as: "campaign" %>
+  </div>
+</section>

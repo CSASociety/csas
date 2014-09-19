@@ -1,22 +1,14 @@
 <% title "Resources" %>
+<% if can? :create, Resource %>
+  <% edit_text "Upload New Resource" %>
+  <% edit_path new_resource_path %>
+<%end%>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Actions</th>
-  </tr>
-  <% for resource in @resources %>
-    <tr>
-      <td><%= resource.file_file_name %></td>
-      <td><%= resource.file_content_type %></td>
-      <td>
-        <%= link_to "Show", resource %>
-         | 
-        <%= link_to "Edit", edit_resource_path(resource) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "New Resource", new_resource_path %></p>
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "resource_summary_box", collection: @resources, as: "resource" %>
+  </div>
+</section>

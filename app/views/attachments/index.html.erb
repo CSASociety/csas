@@ -1,16 +1,14 @@
-<table>
-  <tr>
-    <th>Attachment Title</th>
-    <th>File Name</th>
-    <th>Attached to type</th>
-    <th>Attached to Title</th>
-  </tr>
-  <%- @attachments.each do |a| %>
-    <tr>
-      <td><%= a.title %></td>
-      <td><%= a.resource.file_file_name %></td>
-      <td><%= a.attachable_type %></td>
-      <td><%= a.attachable.title %></td>
-    </tr>
-  <%end%>
-</table>
+<% title "Attachments" %>
+<% if can? :create, Attachment %>
+  <% edit_text "Create New Attachment" %>
+  <% edit_path new_attachment_path %>
+<%end%>
+
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attached", collection: @attachments, as: "attachment" %>
+  </div>
+</section>

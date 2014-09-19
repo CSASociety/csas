@@ -1,24 +1,14 @@
 <% title "Player Characters" %>
+<% if can? :create, PlayerCharacter %>
+  <% edit_text "Create New Player" %>
+  <% edit_path new_player_character_path %>
+<%end%>
 
-<table>
-  <tr>
-    <th>Campaign Title</th>
-    <th>Charcter Name</th>
-    <th>Status</th>
-    <th>Add On</th>
-    <th>Actions/th>
-  </tr>
-  <% for pc in @player_characters %>
-    <tr>
-      <td><%= pc.campaign.title %></td>
-      <td><%= pc.character.name %></td>
-      <td><%= pc.status %></td>
-      <td><%= pc.created_at %></td>
-      <td>
-        <%= link_to "Show", cc %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "New Campaign Character", new_player_character_path %></p>
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "pc.html.haml", collection: @player_characters, as: "pc" %>
+  </div>
+</section>

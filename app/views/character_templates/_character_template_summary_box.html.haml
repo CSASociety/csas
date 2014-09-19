@@ -1,0 +1,8 @@
+.summary_box
+  = "Name: #{character_template.title}"
+  %br
+  = "Class: #{character_template.caste}"
+  %br
+  = "Owner: #{character_template.user.display_name}"
+  %br
+  = link_to "View Full Template", character_template_path(character_template)

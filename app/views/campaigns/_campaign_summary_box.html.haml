@@ -1,0 +1,8 @@
+.summary_box
+  = "Title: #{campaign.title}"
+  %br
+  Description:
+  %br
+  = campaign.description.truncate(100)
+  %br
+  = link_to "View Full Campaign", campaign_path(campaign)
