@@ -91,7 +91,7 @@ Csas::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { :host => 'vaultofholding.com/' }
+  config.action_mailer.default_url_options = { :host => 'csas-staging.herokuapp.com' }
   config.assets.precompile += %w( *.js )
 
    ActionMailer::Base.smtp_settings = {
@@ -105,3 +105,4 @@ Csas::Application.configure do
     ActionMailer::Base.delivery_method = :smtp
 
 end
+
