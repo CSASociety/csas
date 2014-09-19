@@ -15,6 +15,7 @@ gem "paperclip"
 gem 'aws-sdk'
 gem 'paper_trail', '~> 3.0.5'
 gem 'aasm'
+gem 'newrelic_rpm'
 
 #Attempt at adding a comunity revived cancan
 gem 'cancancan', '~> 1.9'
