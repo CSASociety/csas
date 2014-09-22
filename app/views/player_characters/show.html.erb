@@ -1,32 +1,60 @@
 <% title "Player Character" %>
-<p>
-  <strong>Campaign:</strong>
-  <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
-</p>
+<% if can? :update, @player_character %>
+  <% edit_text "Edit PC" %>
+  <% edit_path edit_player_character_path(@player_character) %>
+<%end%>
 
-<p>
+<section id="main">
+  <p>
+    <strong>Campaign:</strong>
+    <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= link_to @player_character.character_template.name, character_template_path(@player_character.character_template) %>
+  </p>
+
+  <p>
   <strong>Status:</strong>
-  <%= link_to @player_character.character.name, character_path(@player_character.character) %>
-</p>
+    <%= @player_character.status%>
+  </p>
 
-<p>
-<strong>Status:</strong>
-  <%= @player_character.status%>
-</p>
+  <p>
+    <strong>Game:</strong>
+    <%= link_to @player_character.campaign.game.title,  @player_character.campaign.game %>
+  </p>
 
-<p>
-  <strong>Game:</strong>
-  <%= link_to @player_character.campaign.game.title,  @player_character.campaign.game %>
-</p>
-
-<p>
-  <strong>GM:</strong>
-  <%= @player_character.campaign.gm.display_name %>
-</p>
+  <p>
+    <strong>GM:</strong>
+    <%= @player_character.campaign.gm.display_name %>
+  </p>
 
 
-<p>
-  <%= link_to "View All", campaigns_path %>
-</p>
+  <p>
+    <%= link_to "View All", campaigns_path %>
+  </p>
 
-<%= render partial: "status_actions", :locals => {:pc => @player_character} %>
+  <%= render partial: "status_actions", :locals => {:pc => @player_character} %>
+</section>
+
+<section>
+  <div class="section_header">
+    <h2>Journal Entries</h2>
+    <% if current_user == @player_character.character_template.user%>
+      <%= content_tag :a, "Add Journal Entry", :href => "#add_journal_entry", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <% end %>
+
+  </div>
+  <div class="section_content">
+    <%= render partial: "journal_entries/journal_entry_summary_box", collection: @player_character.journal_entries, as: "journal_entry" %>
+  </div>
+</section>
+
+<%if current_user == @player_character.character_template.user %>
+  <%= modal_dialog :id => "add_journal_entry",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Add Journal Entry to #{@player_character.character_template.name}" },
+    :body => render(partial: "journal_entries/form", locals: {player_character: @player_character, journal_entry: JournalEntry.new}),
+    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+  %>
+<%-end%>

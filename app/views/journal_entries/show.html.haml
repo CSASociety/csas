@@ -1,0 +1,9 @@
+- title "#{@journal_entry.player_character.character_template.name} #{@journal_entry.date}"
+- if can? :update, @journal_entry
+  - edit_text "Edit Journal Entry"
+  - edit_path edit_journal_entry_path(@journal_entry)
+
+%section{id: "main"}
+  #main_info
+    = markdown(@journal_entry.content)
+    %p= "Written By: #{link_to @journal_entry.player_character.character_template.name, player_character_path(@journal_entry.player_character)}".html_safe

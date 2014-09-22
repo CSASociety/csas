@@ -2,6 +2,8 @@ class PlayerCharacter < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :character_template
 
+  has_many :journal_entries
+
   validates :character_template, :presence => true, :uniqueness => {:scope => :campaign}
 
   include AASM

@@ -1,5 +1,5 @@
 <% title @campaign.title %>
-<% if can? :update, @game %>
+<% if can? :update, @campaign %>
   <% edit_text "Edit Campaign" %>
   <% edit_path edit_campaign_path(@campaign) %>
 <%end%>

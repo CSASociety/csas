@@ -1,0 +1,19 @@
+-# Below is to allow this form to be used by other controller as renders
+- journal_entry = @journal_entry if @journal_entry.present?
+= form_for journal_entry do |f|
+  = f.error_messages
+  %p
+    = f.label :date
+    = f.text_field :date
+  %p
+    = f.label :content
+    = f.text_area :content
+  - if defined?(player_character) && player_character.present?
+    = f.hidden_field :player_character_id, value: player_character.id
+  -else
+    %p
+      = f.label :player_character
+      = f.collection_select :player_character_id, PlayerCharacter.all, :id, :id,  include_blank: "Please Select"
+  %p
+    = f.submit
+

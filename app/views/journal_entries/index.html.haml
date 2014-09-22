@@ -1,0 +1,10 @@
+- title "Journal Entires"
+- if can? :create, JournalEntry
+  - edit_text "Create New Journal Entry"
+  - edit_path new_journal_entry_path
+
+%section
+  .section_header
+    %h2 Listing
+  .section_content
+    = render partial: "journal_entry_summary_box", collection: @journal_entries, as: "journal_entry"

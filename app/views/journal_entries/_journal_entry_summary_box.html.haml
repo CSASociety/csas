@@ -1,0 +1,10 @@
+.summary_box
+  = "Character: #{journal_entry.player_character.character_template.name}"
+  %br
+  = "Date: #{journal_entry.date}"
+  %br
+  Content:
+  %br
+  = journal_entry.content.truncate(150)
+  %br
+  = link_to "View Full Entry", journal_entry_path(journal_entry)
