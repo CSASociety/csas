@@ -1,33 +1,58 @@
-<% title "Player Character" %>
+<% title @player_character.name %>
 <% if can? :update, @player_character %>
   <% edit_text "Edit PC" %>
   <% edit_path edit_player_character_path(@player_character) %>
 <%end%>
 
 <section id="main">
-  <p>
-    <strong>Campaign:</strong>
-    <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
-  </p>
-  <p>
-  <strong>Status:</strong>
-    <%= @player_character.status%>
-  </p>
+  <div id="main_image">
+    <%-if @player_character.image.present? %>
+      <%= image_tag @player_character.image.file.url(:medium) %>
+    <%-end%>
+  </div>
+  <div class="main_info">
+    <p>
+      <strong>Description:</strong>
+      <%= markdown(@player_character.description) if @player_character.description %>
+    </p>
+    <p>
+      <strong>Bio:</strong>
+      <%= markdown(@player_character.bio) if @player_character.bio %>
+    </p>
+    <p>
+      <strong>Secrets:</strong>
+      <%= markdown(@player_character.secrets) if @player_character.secrets %>
+    </p>
 
-  <p>
-    <strong>Game:</strong>
-    <%= link_to @player_character.campaign.game.title,  @player_character.campaign.game %>
-  </p>
+    <p>
+      <strong>Campaign:</strong>
+      <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
+    </p>
+    <p>
+    <strong>Player:</strong>
+      <%= @player_character.player.display_name %>
+      </p>
+    <p
+    <p>
+    <strong>Status:</strong>
+      <%= @player_character.status.humanize%>
+    </p>
 
-  <p>
-    <strong>GM:</strong>
-    <%= @player_character.campaign.gm.display_name %>
-  </p>
+    <p>
+      <strong>Game:</strong>
+      <%= link_to @player_character.campaign.game.title,  @player_character.campaign.game %>
+    </p>
+
+    <p>
+      <strong>GM:</strong>
+      <%= @player_character.campaign.gm.display_name %>
+    </p>
 
 
-  <p>
-    <%= link_to "View All", campaigns_path %>
-  </p>
+    <p>
+      <%= link_to "View All", campaigns_path %>
+    </p>
+  </div>
 
   <%= render partial: "status_actions", :locals => {:pc => @player_character} %>
 </section>
