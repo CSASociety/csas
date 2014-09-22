@@ -37,11 +37,11 @@
   </div>
 </section>
 
-<% unless @campaign.player_characters.empty? && @possible_characters.count < 1 %>
+<% unless @campaign.player_characters.empty? && !defined?(@current_player)%>
 <section class="character">
   <div class="section_header">
     <h2>PCs</h2>
-    <% if @possible_characters.count > 0 && user_is_active_player?(@campaign, current_user)%>
+    <% if user_is_active_player?(@campaign, current_user)%>
       <%= content_tag :a, "Add Player Character", :href => "#add_player_character", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <% end %>
   </div>
@@ -103,10 +103,10 @@
   %>
 <%-end%>
 
-<% if @possible_characters.count > 0 && user_is_active_player?(@campaign, current_user) %>
+<% if defined?(@current_player) %>
   <%= modal_dialog :id => "add_player_character",
     :header => { :show_close => true, :dismiss => 'modal', :title => "Add Player Character to #{@campaign.title}" },
-    :body => render(partial: "add_character_form", locals: {item: @campaign, player_character: PlayerCharacter.new, possible_characters: @possible_characters}),
+    :body => render(partial: "player_characters/form", locals: {campaign_id: @campaign.id, player_character: PlayerCharacter.new, player_id: @current_player.id}),
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>

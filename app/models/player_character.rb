@@ -1,10 +1,13 @@
 class PlayerCharacter < ActiveRecord::Base
   belongs_to :campaign
+  belongs_to :player
   belongs_to :character_template
+  belongs_to :image, class_name: "Resource"
 
   has_many :journal_entries
 
-  validates :character_template, :presence => true, :uniqueness => {:scope => :campaign}
+  validates :player, :presence => true
+  validates :campaign, :presence => true
 
   include AASM
 
@@ -31,9 +34,4 @@ class PlayerCharacter < ActiveRecord::Base
     end
 
   end
-
-
- # def name
- #   self.character.name
- # end
 end

@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :games
   has_many :charcter_templates
   has_many :resources
-  has_many :campaigns
+  has_many :players
+  has_many :campaigns, through: :players
   has_many :status_approver, class_name: 'Player'
 end

@@ -26,7 +26,6 @@ class CharacterTemplatesController < ApplicationController
     if @character_template.image present?
       @possible_images = @possible_images - [@character_template.image]
     end
-    @attachment = Attachment.new()
   end
 
   def update

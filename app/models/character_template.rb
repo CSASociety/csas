@@ -5,7 +5,6 @@ class CharacterTemplate < ActiveRecord::Base
   belongs_to :user
 
   has_many :player_characters
-  has_many :campaigns, through: :player_characters
 
   belongs_to :image, class_name: "Resource"
 

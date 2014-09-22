@@ -9,12 +9,6 @@
     <strong>Campaign:</strong>
     <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
   </p>
-
-  <p>
-    <strong>Status:</strong>
-    <%= link_to @player_character.character_template.name, character_template_path(@player_character.character_template) %>
-  </p>
-
   <p>
   <strong>Status:</strong>
     <%= @player_character.status%>
@@ -41,7 +35,7 @@
 <section>
   <div class="section_header">
     <h2>Journal Entries</h2>
-    <% if current_user == @player_character.character_template.user%>
+    <% if current_user == @player_character.player.user%>
       <%= content_tag :a, "Add Journal Entry", :href => "#add_journal_entry", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <% end %>
 
@@ -51,9 +45,9 @@
   </div>
 </section>
 
-<%if current_user == @player_character.character_template.user %>
+<%if current_user == @player_character.player.user %>
   <%= modal_dialog :id => "add_journal_entry",
-    :header => { :show_close => true, :dismiss => 'modal', :title => "Add Journal Entry to #{@player_character.character_template.name}" },
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Add Journal Entry to #{@player_character.name}" },
     :body => render(partial: "journal_entries/form", locals: {player_character: @player_character, journal_entry: JournalEntry.new}),
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>

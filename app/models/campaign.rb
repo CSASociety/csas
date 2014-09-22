@@ -5,7 +5,6 @@ class Campaign < ActiveRecord::Base
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
   has_many :player_characters
-  has_many :character_templates, through: :player_characters
 
   has_many :players
   has_many :users, through: :players
@@ -19,5 +18,14 @@ class Campaign < ActiveRecord::Base
   def active_players
     players.active
   end
+
+  def user_is_active_player?(user)
+    result = false
+    self.players.active.each do |player|
+      result = true if user.present? && player.user_id == user.id
+    end
+    result
+  end
+
 
 end

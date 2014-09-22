@@ -48,7 +48,6 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find(params[:id])
-    @new_attachment = Attachment.new
     @attachments = @campaign.attachments
     @possible_resources = Resource.all
     @attachments.each do  |attachment|
@@ -58,14 +57,8 @@ class CampaignsController < ApplicationController
     @campaign.users.each do |user|
       @possible_players =  @possible_players - [user]
     end
-    @new_player = Player.new
-    @player_character = PlayerCharacter.new
-
-    @possible_characters = current_user.present? ? CharacterTemplate.find_all_by_user_id(current_user.id) : []
-    if @possible_characters.present?
-      @campaign.character_templates.each do |char|
-        @possible_characters =  @possible_characters - [char]
-      end
+    if current_user.present? && @campaign.user_is_active_player?(current_user)
+      @current_player = Player.where(campaign_id: @campaign.id, user_id: current_user.id).first
     end
   end
 

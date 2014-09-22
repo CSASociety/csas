@@ -1,4 +1,4 @@
-<%- if current_user == pc.campaign.gm || current_user == pc.character_template.user%>
+<%- if current_user == pc.campaign.gm || current_user == pc.player.user%>
   <%if ["dead", "missing", "retired"].include?(pc.status)%>
     <%= form_for pc, url: join_pc_path(pc) do |f| %>
       <%= f.submit value: "Re-Add Character to Campaign" %>

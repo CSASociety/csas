@@ -7,6 +7,7 @@ class PlayerCharactersController < ApplicationController
 
   def new
     @player_character = PlayerCharacter.new
+    @possible_images = Resource.where('file_content_type like ?', '%image%')
   end
 
   def create
@@ -24,6 +25,24 @@ class PlayerCharactersController < ApplicationController
       else
         redirect_to request.referrer, :notice  => "Unable to add character to the campaign."
       end
+    end
+  end
+
+  def edit
+    @player_character = PlayerCharacter.find(params[:id])
+    @possible_images = Resource.where('file_content_type like ?', '%image%')
+    if @player_character.image present?
+      @possible_images = @possible_images - [@player_character.image]
+    end
+  end
+
+  def update
+    @player_character = PlayerCharacter.find(params[:id])
+    params["player_character"] = params["player_character"].except("image_id") if params["player_character"]["image_id"].blank?
+    if @player_character.update_attributes(player_character_params)
+      redirect_to @player_character, :notice  => "Successfully updated PC."
+    else
+      render :action => 'edit'
     end
   end
 
@@ -88,6 +107,6 @@ class PlayerCharactersController < ApplicationController
   private
 
   def player_character_params
-    params.require(:player_character).permit(:campaign_id, :character_template_id, :status)
+    params.require(:player_character).permit(:name, :caste, :campaign_id, :description, :bio, :secrets, :player_id, :character_template_id, :image_id, :status)
   end
 end

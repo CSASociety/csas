@@ -1,2 +1,8 @@
-<h1>PlayerCharacters#edit</h1>
-<p>Find me in app/views/player_characters/edit.html.erb</p>
+<% title "Edit Player Charcter" %>
+
+<%= render 'form' %>
+
+<p>
+  <%= link_to "Show", @player_character%> |
+  <%= link_to "View All", player_character_path %>
+</p>

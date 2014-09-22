@@ -3,8 +3,12 @@ class Player < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :status_approver, class_name: 'User'
 
+  has_many :player_characters
+
   validate :user, presence: true
   validate :status_approver, presence: true
+
+  delegate :display_name, to: :user
 
   include AASM
 

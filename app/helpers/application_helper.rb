@@ -12,4 +12,12 @@ module ApplicationHelper
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(renderOptions), markdownOptions)
     markdown.render(text).html_safe
   end
+
+  def possible_images(item)
+    possible_images = Resource.where('file_content_type like ?', '%image%')
+    if item.image.present?
+      possible_images = possible_images - [item.image]
+    end
+    possible_images
+  end
 end
