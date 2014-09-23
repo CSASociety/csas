@@ -1,0 +1,14 @@
+<% title "Events" %>
+<% if can? :create, @event %>
+  <% edit_text "Create New Event" %>
+  <% edit_path new_event_path %>
+<%end%>
+
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "summary_box", collection: @events, as: "event" %>
+  </div>
+</section>

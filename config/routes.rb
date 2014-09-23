@@ -1,6 +1,7 @@
 Csas::Application.routes.draw do
 
 
+  resources :events
   patch 'players/:id/request' => 'players#propose', as: :request_campaign_participation
   patch 'players/:id/accept' => 'players#accept', as: :accept_campaign_request
   patch 'players/:id/reject' => 'players#reject', as: :reject_campaign_request
@@ -10,6 +11,9 @@ Csas::Application.routes.draw do
   patch 'player_character/:id/kill' => 'player_characters#kill', as: :kill_pc
   patch 'player_character/:id/retire' => 'player_characters#retire', as: :retire_pc
   patch 'player_character/:id/lose' => 'player_characters#lose', as: :lose_pc
+
+  patch 'events/:id/attach_campaign' => "events#attach_campaign", as: :attach_campaign_to_event
+  patch 'campaigns/:id/attach_event' => "campaigns#attach_event", as: :attach_event_to_campaign
 
   resources :players
 

@@ -77,7 +77,7 @@
         <%- if @possible_players.count < 1 %>
           <p> Should never see this. </p>
         <%else%>
-          <%= form_for @new_player  do |f| %>
+          <%= form_for Player.new  do |f| %>
             <%= f.hidden_field :campaign_id, value: @campaign.id %>
             <%= f.hidden_field :user_id, value: current_user.id %>
             <%= f.submit value: "Request Access", class: "btn add_action_link" %>
@@ -90,7 +90,15 @@
     </div>
   </section>
 <%end%>
-
+<section>
+  <div class="section_header">
+    <h2>Events</h2>
+    <%= content_tag :a, "Add Event", :href => "#connect_event_to_campaign", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+  </div>
+  <div class="section_content">
+    <%= render partial: "events/summary_box", collection: @campaign.events, as: "event" %>
+  </div>
+</section>
 <% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
   <%= atttachment_form(@campaign) -%>
 <%- end %>
@@ -110,3 +118,10 @@
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>
+
+<%= modal_dialog :id => "connect_event_to_campaign",
+  :header => { :show_close => true, :dismiss => 'modal', :title => "Attach Campaing to Event" },
+  :body => render(partial: "attach_event", locals: {campaign: @campaign}),
+  :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+%>
+

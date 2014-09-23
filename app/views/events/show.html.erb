@@ -1,0 +1,48 @@
+<% title "Event" %>
+<% if can? :update, @event %>
+  <% edit_text "Edit Event" %>
+  <% edit_path edit_event_path(@event) %>
+<%end%>
+
+<section class="main">
+  <div class="section_content">
+    <p>
+      <strong>Start At:</strong>
+      <%= @event.start_at %>
+    </p>
+    <p>
+      <strong>Stop At:</strong>
+      <%= @event.stop_at %>
+    </p>
+    <p>
+      <strong>Group:</strong>
+      <%= @event.group_id %>
+    </p>
+    <p>
+      <strong>Host:</strong>
+      <%= @event.host_id %>
+    </p>
+    <p>
+      <strong>Location:</strong>
+      <%= @event.location %>
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="section_header">
+    <h2>Campaigns</h2>
+    <%= content_tag :a, "Add Campaign", :href => "#connect_campaign_to_event", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+  </div>
+  <div class="section_content">
+    <%= render partial: "campaigns/campaign_summary_box", collection: @event.campaigns, as: "campaign" %>
+  </div>
+</section>
+
+<%= modal_dialog :id => "connect_campaign_to_event",
+  :header => { :show_close => true, :dismiss => 'modal', :title => "Attach Campaing to Event" },
+  :body => render(partial: "attach_campaign", locals: {event: @event}),
+  :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+%>
+
+

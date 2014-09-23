@@ -62,6 +62,14 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def attach_event
+    @campaign = Campaign.find(params[:id])
+    @campaign.events << Event.find(params[:campaign][:events])
+    if @campaign.save
+      redirect_to @campaign, :notice => "Successfully added event to campaign."
+    end
+  end
+
   private
 
   def campaign_params

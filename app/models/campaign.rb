@@ -4,6 +4,8 @@ class Campaign < ActiveRecord::Base
   has_many :resources, through: :attachments
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
+  has_and_belongs_to_many :events
+
   has_many :player_characters
 
   has_many :players

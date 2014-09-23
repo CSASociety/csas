@@ -14,7 +14,7 @@
   <div id="main_info">
     <p>
       <strong>Description:</strong>
-      <%= markdown(@game.description) %>
+      <%= markdown(@game.description) if @game.description %>
     </p>
     <p>
       <strong>Link:</strong>

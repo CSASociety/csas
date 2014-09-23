@@ -1,0 +1,12 @@
+.summary_box
+  = "Start: #{event.start_at.strftime("%a, %d %b %Y, %H:%M")}"
+  %br
+  = "Till: #{event.stop_at.strftime("%a, %d %b %Y, %H:%M")}"
+  - unless event.campaigns.nil?
+    = "Playing: #{event.campaigns.first.title}" if event.campaigns.count == 1
+    = "Playing: Multiple" if event.campaigns.count > 1
+  Location
+  %br
+  = event.location
+  %br
+  = link_to 'See more', event_path(event)

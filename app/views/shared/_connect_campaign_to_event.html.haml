@@ -1,0 +1,8 @@
+= form_for item.class.to_s, url: item.class == "Event" ? "events/attach_campaign" : "campaigns/add_event" do |f|
+  - if item.class == "Event"
+    = f.hidden_field :event_id, value: item.id
+    = f.collection_select :campaign_id, Campaing.all , :id, :title, prompt: true
+  - else
+    = f.hidden_field :campaign_id, value: item.id
+    = f.collection_select :event_id, Event.all , :id, :start_at, prompt: true
+  = f.submit

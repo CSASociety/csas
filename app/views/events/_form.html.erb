@@ -1,0 +1,21 @@
+<%- event = @event if defined?(@event) %>
+<%= form_for event do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :start_at %><br />
+    <%= f.text_field :start_at, type: "datetime-local" %>
+  </p>
+  <p>
+    <%= f.label :stop_at %><br />
+    <%= f.text_field :stop_at, type: "datetime-local" %>
+  </p>
+  <p>
+    <%= f.label :host_id %><br />
+    <%= f.collection_select :host_id, User.all, :id, :display_name, include_blank: "Please Select" , required: false%>
+  </p>
+  <p>
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

@@ -1,0 +1,3 @@
+= form_for event, url: attach_campaign_to_event_path(event) do |f|
+  = f.collection_select :campaigns, Campaign.all , :id, :title, prompt: true
+  = f.submit
