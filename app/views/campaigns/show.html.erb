@@ -93,7 +93,9 @@
 <section>
   <div class="section_header">
     <h2>Events</h2>
-    <%= content_tag :a, "Add Event", :href => "#connect_event_to_campaign", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <% if current_user == @campaign.gm %>
+      <%= content_tag :a, "Add Event", :href => "#connect_event_to_campaign", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <%end %>
   </div>
   <div class="section_content">
     <%= render partial: "events/summary_box", collection: @campaign.events, as: "event" %>
@@ -119,9 +121,11 @@
   %>
 <%-end%>
 
+<% if current_user == @campaign.gm %>
 <%= modal_dialog :id => "connect_event_to_campaign",
   :header => { :show_close => true, :dismiss => 'modal', :title => "Attach Campaing to Event" },
   :body => render(partial: "attach_event", locals: {campaign: @campaign}),
   :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
 %>
+<% end %>
 
