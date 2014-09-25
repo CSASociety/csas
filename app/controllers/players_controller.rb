@@ -29,6 +29,11 @@ class PlayersController < ApplicationController
     return_to = Rails.application.routes.recognize_path(request.referrer)[:controller] == "players" ? @player : request.referrer
     respond_to do |format|
       if @player.save
+        if current_user == @player.campaign.gm && @player.user != current_user
+          CampaignAccess.invite_player(@player.campaign, @player.user).deliver
+        elsif current_user = @player.user && @player.campaign.gm != current_user
+          CampaignAccess.request_access(@player.campaign, @player.user).deliver
+        end
         format.html { redirect_to return_to, notice: 'Player was successfully created.' }
         format.json { render action: 'show', status: :created, location: @player }
       else
