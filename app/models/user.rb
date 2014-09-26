@@ -10,4 +10,8 @@ class User < ActiveRecord::Base
   has_many :players
   has_many :campaigns, through: :players
   has_many :status_approver, class_name: 'Player'
+
+  def self.confirmed
+    where.not(confirmed_at: nil)
+  end
 end

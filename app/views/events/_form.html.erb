@@ -11,7 +11,7 @@
   </p>
   <p>
     <%= f.label :host_id %><br />
-    <%= f.collection_select :host_id, User.all, :id, :display_name, include_blank: "Please Select" , required: false%>
+    <%= f.collection_select :host_id, User.confirmed, :id, :display_name, include_blank: "Please Select" , required: false%>
   </p>
   <p>
     <%= f.label :location %><br />

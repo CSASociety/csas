@@ -14,10 +14,10 @@
   <div class="field">
     <%= f.label :campaign_id %><br>
     <%= f.collection_select :campaign_id, Campaign.all, :id, :title, prompt: true %>
-  </div>
+  </div
   <div class="field">
     <%= f.label :user_id %><br>
-    <%= f.collection_select :user_id, User.all, :id, :email, prompt: true %>
+    <%= f.collection_select :user_id, User.confirmed, :id, :email, prompt: true %>
   </div>
   <div class="actions">
     <%= f.submit %>
