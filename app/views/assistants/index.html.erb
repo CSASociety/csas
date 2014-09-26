@@ -1,0 +1,14 @@
+<% title "Assistants" %>
+<% if can? :create, Assistant %>
+  <% edit_text "Create New Assistant" %>
+  <% edit_path new_assistant_path %>
+<%end%>
+
+<section>
+  <div class="section_header">
+    <h2>Listing</h2>
+  </div>
+  <div class="section_content">
+    <%= render partial: "summary_box", collection: @assistants, as: "assistant" %>
+  </div>
+</section>

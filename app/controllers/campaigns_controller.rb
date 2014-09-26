@@ -53,7 +53,7 @@ class CampaignsController < ApplicationController
     @attachments.each do  |attachment|
       @possible_resources  = @possible_resources  - [attachment.resource]
     end
-    @possible_players = User.all
+    @possible_players = User.confirmed
     @campaign.users.each do |user|
       @possible_players =  @possible_players - [user]
     end

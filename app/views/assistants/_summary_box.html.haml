@@ -1,0 +1,6 @@
+.summary_box{ id: "assistant_#{assistant.id}"}
+  = "Assitant User: #{assistant.user.display_name}"
+  %br
+  = "Campaign: #{assistant.campaign.title}"
+  %br
+  = link_to "View More Info", assistant_path(assistant)

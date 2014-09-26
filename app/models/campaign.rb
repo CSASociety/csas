@@ -2,6 +2,10 @@ class Campaign < ActiveRecord::Base
   has_paper_trail
   has_many :attachments, as: :attachable
   has_many :resources, through: :attachments
+
+  has_many :assistants
+  has_many :aids, through: :assistants, source: :user
+
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
   has_and_belongs_to_many :events

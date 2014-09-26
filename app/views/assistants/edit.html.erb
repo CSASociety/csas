@@ -1,0 +1,8 @@
+<% title "Edit Assistant" %>
+
+<%= render( partial: 'form', locals: {assistant: @assistant}) %>
+
+<p>
+  <%= link_to "Show", @assistant %> |
+  <%= link_to "View All", assistants_path %>
+</p>

@@ -1,6 +1,7 @@
 Csas::Application.routes.draw do
 
 
+  resources :assistants
   resources :events
   patch 'players/:id/request' => 'players#propose', as: :request_campaign_participation
   patch 'players/:id/accept' => 'players#accept', as: :accept_campaign_request

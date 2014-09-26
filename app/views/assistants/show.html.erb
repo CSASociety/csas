@@ -1,0 +1,16 @@
+<% title "Assistant" %>
+
+<p>
+  <strong>User:</strong>
+  <%= @assistant.user_id %>
+</p>
+<p>
+  <strong>Campaign:</strong>
+  <%= @assistant.campaign_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_assistant_path(@assistant) %> |
+  <%= link_to "Destroy", @assistant, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", assistants_path %>
+</p>
