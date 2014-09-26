@@ -10,6 +10,7 @@ gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'devise'
+gem 'devise_invitable', '~> 1.3.4'
 gem "nifty-generators", :group => :development
 gem "paperclip"
 gem 'aws-sdk'
