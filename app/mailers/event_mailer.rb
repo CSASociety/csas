@@ -10,6 +10,6 @@ class EventMailer < ActionMailer::Base
     if Rails.env == "staging" || Rails.env == "development"
       subject = subject + " - #{Rails.env}"
     end
-    mail(to: event.campaign.gm.email, subject: subject)
+    mail(to: "nejohannsen@gmail.com", subject: subject)
   end
 end
