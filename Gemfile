@@ -20,6 +20,8 @@ gem 'newrelic_rpm'
 gem 'redcarpet'
 gem 'geocoder'
 
+gem 'delayed_job_active_record'
+
 #Attempt at adding a comunity revived cancan
 gem 'cancancan', '~> 1.9'
 

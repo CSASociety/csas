@@ -14,6 +14,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
+      EventMailer.delay.reminder(@event)
       if request.referrer.match('events')
         redirect_to @event, :notice  => "Successfully created event."
       else

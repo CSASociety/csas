@@ -35,9 +35,8 @@ class Ability
         result
       end
       can :update, Game, :user_id => user.id
-      can :update, Campaign, :user_id => user.id
-      can :update, Campaign do |campaign|
-        campaign.aids.include?(user)
+      can [:update, :attach_event], Campaign do |campaign|
+         (campaign.aids.include?(user) || campaign.gm == user)
       end
       can :update, CharacterTemplate, :user_id => user.id
       can :update, Resource, :user_id => user.id
