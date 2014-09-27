@@ -90,6 +90,7 @@
     </div>
   </section>
 <%end%>
+ 
 <section>
   <div class="section_header">
     <h2>Events</h2>
@@ -104,6 +105,22 @@
 <% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
   <%= atttachment_form(@campaign) -%>
 <%- end %>
+
+<section>
+  <% if current_user == @campaign.gm %>
+    <div class="section_header">
+      <h2>Assistants</h2>
+            <%= content_tag :a, "Add Assistant", :href => "#add_assistant_to_campaign", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    </div>
+    <div class="section_content">
+      <%= render partial: "assistants/summary_box", collection: @campaign.assistants, as: "assistant" %>
+    </div>
+  <%- end %>
+</section>
+<% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
+  <%= atttachment_form(@campaign) -%>
+<%- end %>
+
 
 <% if current_user == @campaign.gm %>
   <%= modal_dialog :id => "add_player",
@@ -128,4 +145,13 @@
   :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
 %>
 <% end %>
+
+<% if current_user == @campaign.gm %>
+<%= modal_dialog :id => "add_assistant_to_campaign",
+  :header => { :show_close => true, :dismiss => 'modal', :title => "Add assistant to campaign" },
+  :body => render(partial: "assistants/form", locals: {campaign_id: @campaign.id, assistant: Assistant.new}),
+  :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
+%>
+<% end %>
+
 

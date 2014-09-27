@@ -3,10 +3,14 @@
   <p>
     <%= f.label :user_id %><br>
     <%= f.collection_select :user_id, User.confirmed, :id, :email, prompt: true %>
-  </p>
-  <p>
-    <%= f.label :campaign_id %><br>
-    <%= f.collection_select :campaign_id, Campaign.all, :id, :title, prompt: true %>
-  </p>
+    </p>
+  <%- if defined?(campaign_id) %>
+    <%= f.hidden_field :campaign_id, value: campaign_id %>
+  <%- else %>
+    <p>
+      <%= f.label :campaign_id %><br>
+      <%= f.collection_select :campaign_id, Campaign.all, :id, :title, prompt: true %>
+    </p>
+  <%- end %>
   <p><%= f.submit %></p>
 <% end %>

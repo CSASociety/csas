@@ -18,7 +18,10 @@ class Ability
       can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :campaign => { :user_id => user.id }
       #can update character if the player is the current user
       can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :character_template => {:user_id => user.id }
-
+      #Can update player if they are an assistant on the campaign.
+      can [:update, :join, :retire, :kill, :remove], PlayerCharacter do |pc|
+        pc.campaign.aids.include?(user)
+      end
       #only admin can see version
       cannot :read, Version
       can :create, :all
@@ -33,6 +36,9 @@ class Ability
       end
       can :update, Game, :user_id => user.id
       can :update, Campaign, :user_id => user.id
+      can :update, Campaign do |campaign|
+        campaign.aids.include?(user)
+      end
       can :update, CharacterTemplate, :user_id => user.id
       can :update, Resource, :user_id => user.id
     else
