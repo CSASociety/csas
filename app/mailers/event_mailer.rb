@@ -6,10 +6,14 @@ class EventMailer < ActionMailer::Base
     @start = event.start_at
     @end = event.stop_at
     @location = event.location
+    subject = "Event starting on #{@start}"
     @map_link = "http://maps.google.com/?q=#{@location}"
     if Rails.env == "staging" || Rails.env == "development"
       subject = subject + " - #{Rails.env}"
     end
-    mail(to: "nejohannsen@gmail.com", subject: subject)
+    if mail(to: "nejohannsen@gmail.com", subject: subject)
+      @event.reminder_sent = true
+      @event.save
+    end
   end
 end
