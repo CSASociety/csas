@@ -7,7 +7,7 @@ class EventMailer < ActionMailer::Base
     @end = event.stop_at
     @location = event.location
     subject = "Event starting on #{@start}"
-    @map_link = "http://maps.google.com/?q=#{@location}"
+    @map_link = "http://maps.google.com/?q=#{@location.tr(' ', '%20')}"
     if Rails.env == "staging" || Rails.env == "development"
       subject = subject + " - #{Rails.env}"
     end
