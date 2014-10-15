@@ -13,7 +13,7 @@ class EventMailer < ActionMailer::Base
       (user_emails << campaign.gm.email) if campaign.gm.email.present?
       campaign.players.each do |player|
         (users << player.user) if player.user.present?
-         would (user_emails << player.user.email) if player.user.email.present?
+        (user_emails << player.user.email) if player.user.email.present?
       end
     end
     subject = "Event starting on #{@start}"
