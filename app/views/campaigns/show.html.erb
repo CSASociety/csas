@@ -140,7 +140,7 @@
 
 <% if current_user == @campaign.gm || @campaign.aids.include?(current_user) %>
 <%= modal_dialog :id => "connect_event_to_campaign",
-  :header => { :show_close => true, :dismiss => 'modal', :title => "Attach Campaing to Event" },
+  :header => { :show_close => true, :dismiss => 'modal', :title => "Create and/or Attach Campaing to Event" },
   :body => render(partial: "attach_event", locals: {campaign: @campaign}),
   :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
 %>

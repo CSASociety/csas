@@ -9,6 +9,7 @@ class AttachmentsController < ApplicationController
 
   def create
     @attachment = Attachment.new(attachment_params)
+    debugger
     @entry = @attachment.attachable
     if @attachment.save
       redirect_to @entry, :notice => "Successfully created attachment ."
@@ -43,7 +44,7 @@ class AttachmentsController < ApplicationController
   private
 
   def attachment_params
-    params.require(:attachment).permit(:title, :resource_id, :attachable_type, :attachable_id)
+    params.require(:attachment).permit(:title, :resource_id, :attachable_type, :attachable_id, resource_attributes: [ :file ])
   end
 end
 

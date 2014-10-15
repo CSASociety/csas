@@ -1,8 +1,22 @@
+%h2 Attach Existing Resource
 = form_for attachment do |f|
   = f.label :title
   = f.text_field :title
   = f.label :resource
   = f.collection_select :resource_id, Resource.all, :id, :file_file_name, prompt: true
+  = f.hidden_field :attachable_type, value: item.class
+  = f.hidden_field :attachable_id, value: item.id
+  = f.submit value: "Attach"
+
+%h2 Create and Attach Resource
+- attachment.resource = Resource.new
+= form_for attachment do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.label :resource
+  = f.fields_for :resource do |builder|
+    = builder.label :file
+    = builder.file_field :file
   = f.hidden_field :attachable_type, value: item.class
   = f.hidden_field :attachable_id, value: item.id
   = f.submit value: "Attach"
