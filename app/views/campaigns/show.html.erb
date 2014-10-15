@@ -94,7 +94,7 @@
 <section>
   <div class="section_header">
     <h2>Events</h2>
-    <% if current_user == @campaign.gm %>
+    <% if current_user == @campaign.gm || @campaign.aids.include?(current_user) %>
       <%= content_tag :a, "Add Event", :href => "#connect_event_to_campaign", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%end %>
   </div>
@@ -138,7 +138,7 @@
   %>
 <%-end%>
 
-<% if current_user == @campaign.gm %>
+<% if current_user == @campaign.gm || @campaign.aids.include?(current_user) %>
 <%= modal_dialog :id => "connect_event_to_campaign",
   :header => { :show_close => true, :dismiss => 'modal', :title => "Attach Campaing to Event" },
   :body => render(partial: "attach_event", locals: {campaign: @campaign}),
