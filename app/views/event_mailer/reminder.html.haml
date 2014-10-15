@@ -1,8 +1,8 @@
 %h1 GAME ON!!!
-%p= "There has been a event scheduled for #{@start} and running till #{@end}. The event will take place at #{link_to @location, @map_link}"
+%p= "There has been a event scheduled for #{@start.strftime("%d %b %Y, %H:%M%p")} and running till #{@end.strftime("%d %b %Y, %H:%M%p")}. The event will take place at #{link_to @location, @map_link}".html_safe
 - unless @event.campaigns.empty?
   %p The following campaigns will be played
   %ul
-    = @event.campaigns.each do |campaign|
+    - @event.campaigns.each do |campaign|
       %li= link_to campaign.title, campaign_url(campaign)
 
