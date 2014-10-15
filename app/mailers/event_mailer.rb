@@ -19,7 +19,7 @@ class EventMailer < ActionMailer::Base
     if Rails.env == "staging" || Rails.env == "development"
       subject = subject + " - #{Rails.env}"
     end
-    if mail(to: (user_emails.empty? ? user_emails : 'nejohannsen@gmail.com'), subject: subject)
+    if mail(to: (user_emails.present? ? user_emails : 'nejohannsen@gmail.com'), subject: subject)
       @event.reminder_sent = true
       @event.save
     end
