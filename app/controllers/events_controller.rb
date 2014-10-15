@@ -13,6 +13,11 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
+    #If there is a campaign attach it to new event.
+    debugger
+    if defined?(params[:event][:campaign])
+      @event.campaigns << Campaign.find(params[:event][:campaign])
+    end
     if @event.save
       if request.referrer.match('events')
         redirect_to @event, :notice  => "Successfully created event."

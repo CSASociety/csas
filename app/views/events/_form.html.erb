@@ -17,5 +17,8 @@
     <%= f.label :location %><br />
     <%= f.text_field :location %>
   </p>
+  <%- if defined?(campaign) %>
+    <%= f.hidden_field :campaign, value: campaign.id %>
+  <%-end%>
   <p><%= f.submit %></p>
 <% end %>

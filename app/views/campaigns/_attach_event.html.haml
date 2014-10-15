@@ -1,3 +1,8 @@
-= form_for campaign, url: attach_event_to_campaign_path(campaign) do |f|
-  = f.collection_select :events, Event.all , :id, :start_at, prompt: true
-  = f.submit
+.right_form
+  %h2 Create new Event and attach
+  = render(partial: "events/form", locals: {event: Event.new, campaign: campaign})
+.left_form
+  %h2 Attach Existing Event
+  = form_for campaign, url: attach_event_to_campaign_path(campaign) do |f|
+    = f.collection_select :events, Event.all , :id, :start_at, prompt: true
+    = f.submit
