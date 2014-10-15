@@ -69,7 +69,7 @@
   <section class="players">
     <div class="section_header">
       <h2>Players</h2>
-      <%- if @campaign.gm == current_user && @possible_players.count > 0 %>
+      <%- if (@campaign.gm == current_user || @campaign.aids.include?(current_user)) && @possible_players.count > 0 %>
         <%= content_tag :a, "Invite Player", :href => "#add_player", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
       <%end%>
       <%-##Request access%>
@@ -122,7 +122,7 @@
 <%- end %>
 
 
-<% if current_user == @campaign.gm %>
+<% if (current_user == @campaign.gm) || @campaign.aids.include?(current_user) %>
   <%= modal_dialog :id => "add_player",
     :header => { :show_close => true, :dismiss => 'modal', :title => "Add player to #{@campaign.title}" },
     :body => render(partial: "add_player_form", locals: {item: @campaign, player: Player.new, possible_players: @possible_players}),
@@ -138,7 +138,7 @@
   %>
 <%-end%>
 
-<% if current_user == @campaign.gm || @campaign.aids.include?(current_user) %>
+<% if (current_user == @campaign.gm) || @campaign.aids.include?(current_user) %>
 <%= modal_dialog :id => "connect_event_to_campaign",
   :header => { :show_close => true, :dismiss => 'modal', :title => "Create and/or Attach Campaing to Event" },
   :body => render(partial: "attach_event", locals: {campaign: @campaign}),
