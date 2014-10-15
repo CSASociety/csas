@@ -64,8 +64,12 @@ class CampaignsController < ApplicationController
 
   def attach_event
     @campaign = Campaign.find(params[:id])
-    @campaign.events << Event.find(params[:campaign][:events])
+    @event = Event.find(params[:campaign][:events])
+    @campaign.events << @event
     if @campaign.save
+      delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.reminder.nil?
+      @event.reminder = delay.id
+      @event.save
       redirect_to @campaign, :notice => "Successfully added event to campaign."
     end
   end

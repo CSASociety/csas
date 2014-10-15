@@ -14,7 +14,6 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event)
       if request.referrer.match('events')
         redirect_to @event, :notice  => "Successfully created event."
       else
@@ -48,6 +47,9 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @event.campaigns << Campaign.find(params[:event][:campaigns])
     if @event.save
+      delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.reminder.nil?
+      @event.reminder = delay.id
+      @event.save
       redirect_to @event, :notice => "Successfully added campaign to event"
     end
   end
