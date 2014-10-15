@@ -4,5 +4,5 @@
   %p The following campaigns will be played
   %ul
     = @event.campaigns.each do |campaign|
-      %li= link_to campaign.title campaign_url(campaign)
+      %li= link_to campaign.title, campaign_url(campaign)
 
