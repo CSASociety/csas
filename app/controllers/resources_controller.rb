@@ -10,6 +10,7 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    debugger
     @resource = Resource.new(resource_params)
     @resource.user = current_user if current_user.present?
     if @resource.save
