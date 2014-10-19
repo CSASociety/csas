@@ -17,8 +17,8 @@ class EventsController < ApplicationController
     debugger
     if defined?(params[:event][:campaign])
       @event.campaigns << Campaign.find(params[:event][:campaign])
-      delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.reminder.nil?
-      @event.reminder = delay.id
+      delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.valid?
+      @event.reminder = delay.id if delay.present?
     end
     if @event.save
       if request.referrer.match('events')
