@@ -1,6 +1,8 @@
 = form_tag session_path(:user) do
+  = label_tag 'user[email]', "Email"
   = text_field_tag 'user[email]'
   %br
+  =label_tag 'user[password]', "Password"
   = password_field_tag 'user[password]'
   %br
   = check_box_tag 'user[remember_me]'

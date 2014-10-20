@@ -28,18 +28,19 @@ gem 'cancancan', '~> 1.9'
 gem 'rails_12factor', group: :production
 
 group :development do
-  gem 'debugger'
   gem 'rspec-rails'
-  gem 'spork-rails'
 end
 
 group :test do
   gem 'capybara'
-  gem 'database_cleaner', '1.0.1'
-  gem 'email_spec'
-  gem 'poltergeist'
-  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
   gem 'selenium-webdriver'
+  gem 'launchy'
+end
+
+group :development, :test do
+  gem 'debugger'
 end
 
 # Use SCSS for stylesheets

@@ -8,5 +8,6 @@ class Game < ActiveRecord::Base
 
   belongs_to :image, class_name: "Resource"
 
+  validates :title, length: { minimum: 3 }
 end
 
