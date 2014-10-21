@@ -15,12 +15,15 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     #If there is a campaign attach it to new event.
     debugger
-    if defined?(params[:event][:campaign])
-      @event.campaigns << Campaign.find(params[:event][:campaign])
-      delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.valid?
-      @event.reminder = delay.id if delay.present?
-    end
+
     if @event.save
+      unless params[:event][:campaign].nil?
+        debugger
+        @event.campaigns << Campaign.find(params[:event][:campaign])
+        delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.valid?
+        @event.reminder = delay.id if delay.present?
+        @event.save
+      end
       if request.referrer.match('events')
         redirect_to @event, :notice  => "Successfully created event."
       else
