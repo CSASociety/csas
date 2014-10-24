@@ -37,7 +37,6 @@ describe "the signup proccess", type: :feature do
       fill_in 'user[display_name]', with: @user.display_name
       click_button 'Sign up'
     end
-    debugger
     expect(page).to have_css('div#error_explanation')
   end
 
