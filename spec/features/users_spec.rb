@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe "the signup proccess", type: :feature do
   before :each do
+    clear_emails
     @user = build(:user)
     visit root_path
   end
@@ -40,6 +41,20 @@ describe "the signup proccess", type: :feature do
     expect(page).to have_css('div#error_explanation')
   end
 
+  it "should send out an email for confirmation" do
+    click_link "Sign Up"
+    within("#sign-up") do
+      fill_in 'user[email]', with: @user.email
+      fill_in 'user[password]', with: @user.password
+      fill_in 'user[password_confirmation]', with: @user.password
+      fill_in 'user[display_name]', with: @user.display_name
+      click_button 'Sign up'
+    end
+    open_email(@user.email)
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_css('div#flash_notice')
+  end
+
 end
 
 
@@ -66,7 +81,34 @@ describe "the signin process", :type => :feature do
     click_button 'Sign in'
     expect(page).to have_css('div#flash_alert')
   end
+end
 
+describe "the invite proccess", :type => :feature do
+  before :each do
+    clear_emails
+    @inviter = build(:user)
+    @inviter.save!
+    @inviter.confirm!
+    @invitee = build(:user, email: 'invitee@example.com')
+  end
 
+  it "should send out an invite message", js: true do
+    login_as(@inviter, :scope => :user)
+    visit new_user_invitation_path
+    within('.invite') do
+      fill_in 'user[email]', with: @invitee.email
+      click_button 'Send an invitation'
+    end
+    logout(:user)
+    open_email(@invitee.email)
+    current_email.click_link 'Accept invitation'
+    within('.invite') do
+      fill_in 'user[display_name]', with: "invited"
+      fill_in 'user[password]', with: @invitee.password
+      fill_in 'user[password_confirmation]', with: @invitee.password
+      click_button 'Set my password'
+    end
+    expect(page).to have_css('div#flash_notice')
+  end
 
 end

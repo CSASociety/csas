@@ -17,6 +17,8 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to @game, :notice => "Successfully created game."
     else
+      flash['alert'] = "Unable to save. See errors below"
+      @possible_images = Resource.where('file_content_type like ?', '%image%')
       render :action => 'new'
     end
   end

@@ -7,6 +7,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+Dir[Rails.root.join("spec/support/*.rb")].each {|f| require f}
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -33,6 +34,12 @@ RSpec.configure do |config|
 
   config.include Devise::TestHelpers, type: :controller
   config.include FactoryGirl::Syntax::Methods
+
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
+  Capybara.server_port = 3001
+  Capybara.app_host = 'http://localhost:3001'
 
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
