@@ -5,7 +5,6 @@ RSpec.describe Game, :type => :model do
   it "should save an objec with valid attributes" do 
     game = build(:game)
     game.save!
-    debugger
     expect(Game.first).to eq(game)
   end
 

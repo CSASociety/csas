@@ -20,7 +20,7 @@ describe "the signup proccess", type: :feature do
   end
 
   #Check required on fields. All other validation are checked via unit test in models
-  it "should require a email, display name, and passwords" do
+  it "should require a email, display name, and passwords", js: true do
     click_link "Sign Up"
     expect(page).to have_css("input#user_email[required]")
     expect(page).to have_css("input#user_password[required]")
@@ -28,7 +28,7 @@ describe "the signup proccess", type: :feature do
     expect(page).to have_css("input#user_display_name[required]")
   end
 
-  it "should give back an error if email taken"  do
+  it "should give back an error if email taken", js: true  do
     @user.save!
     click_link "Sign Up"
     within("#sign-up") do
@@ -41,7 +41,7 @@ describe "the signup proccess", type: :feature do
     expect(page).to have_css('div#error_explanation')
   end
 
-  it "should send out an email for confirmation" do
+  it "should send out an email for confirmation", js: true do
     click_link "Sign Up"
     within("#sign-up") do
       fill_in 'user[email]', with: @user.email
