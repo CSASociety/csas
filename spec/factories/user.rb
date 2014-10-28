@@ -8,6 +8,11 @@ FactoryGirl.define do
     trait :confirmed do
       confirmed_at DateTime.now
     end
+
+    trait :as_gm do
+      email "gm@example.com"
+      display_name 'the_GM'
+    end
   end
 
   # This will use the User class (Admin would have been guessed)

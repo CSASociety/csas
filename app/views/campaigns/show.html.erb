@@ -13,12 +13,12 @@
   <div id="main_info">
     <p>
       <strong>Description:</strong>
-      <%= markdown(@campaign.description) %>
+      <%= markdown(@campaign.description) if @campaign.description.present?%>
     </p>
 
     <p>
     <strong>Intro:</strong>
-      <%= markdown(@campaign.intro) %>
+      <%= markdown(@campaign.intro) if @campaign.intro.present?  %>
     </p>
 
     <p>
@@ -32,7 +32,7 @@
     </p>
     <p>
       <strong>GM:</strong>
-      <%= @campaign.gm.display_name %>
+      <%= @campaign.gm.present? ? @campaign.gm.display_name : "No GM" %>
     </p>
   </div>
 </section>
