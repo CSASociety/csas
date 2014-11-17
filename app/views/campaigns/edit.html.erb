@@ -6,3 +6,7 @@
   <%= link_to "Show", @campaign %> |
   <%= link_to "View All", campaigns_path %>
 </p>
+<p>
+  <h2 class='warning'>Danger</h2>
+  <%= link_to 'Destroy Campaign', campaign_path(@campaign), data: { confirm: 'Are you sure?' }, :method => :delete %>
+</p>

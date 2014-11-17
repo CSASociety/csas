@@ -35,3 +35,25 @@ describe "Edit proccess", type: :feature do
     expect(page).to have_content("Updated Title")
   end
 end
+
+describe "destroy process", type: :feature, js: true do
+  before :each do
+    @campaign = create(:campaign, :with_gm)
+    @user = @campaign.gm
+    login_as(@user, :scope => :user)
+    visit edit_campaign_path(@campaign)
+  end
+
+  it "should have destory link with varifiction" do
+    click_link 'Destroy Campaign'
+    page.driver.browser.switch_to.alert.accept
+    expect(page).to_not have_content(@campaign.title)
+  end
+
+  it "should not destory game when no is click on verfication" do
+    click_link 'Destroy Campaign'
+    page.driver.browser.switch_to.alert.dismiss
+    expect(page).to have_css("input#campaign_title") 
+  end
+
+end
