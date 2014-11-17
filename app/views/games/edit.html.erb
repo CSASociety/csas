@@ -6,3 +6,7 @@
   <%= link_to "Show", @game %> |
   <%= link_to "View All", games_path %>
 </p>
+<p>
+  <h2 class='warning'>Danger</h2>
+  <%= link_to 'Destroy Game', game_path(@game), data: { confirm: 'Are you sure?' }, :method => :delete %>
+</p>

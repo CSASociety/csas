@@ -14,11 +14,9 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     #If there is a campaign attach it to new event.
-    debugger
 
     if @event.save
       unless params[:event][:campaign].nil?
-        debugger
         @event.campaigns << Campaign.find(params[:event][:campaign])
         delay = EventMailer.delay(run_at: (@event.start_at - 24.hours)).reminder(@event) if @event.valid?
         @event.reminder = delay.id if delay.present?
