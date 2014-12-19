@@ -58,27 +58,44 @@ describe "destroy process", type: :feature, js: true do
 
 end
 
-describe "add a player", type: :feature, js: true do
+describe "Add a player", type: :feature, js: true do
   before :each do
     @campaign = create(:campaign, :with_gm)
     @gm = @campaign.gm
     @reg_user = create(:user, :confirmed, display_name: 'reg_user')
   end
 
-  it "should be able to invite a player as the GM" do
-    login_as(@gm, scope: :user)
-    visit campaign_path(@campaign)
-    click_link('Invite Player')
-    select(@reg_user.display_name, :from => 'player_user_id')
-    click_button('Create Player')
-    expect(page).to have_content(@reg_user.display_name)
+  describe "invite path", type: :feature, js: true do
+    before :each do
+      login_as(@gm, scope: :user)
+      visit campaign_path(@campaign)
+      click_link('Invite Player')
+      select(@reg_user.display_name, :from => 'player_user_id')
+      click_button('Create Player')
+    end
+
+    it "should be able to invite a player as the GM" do
+      expect(page).to have_content(@reg_user.display_name)
+    end
+
+    it "should allow user to accept the request" do
+      logout
+      login_as(@reg_user, scope: :user)
+      visit campaign_path(@campaign)
+      click_button('Accept Request')
+      expect(page).to have_selector("div#player_1", text: "Status: active")
+    end
+
+
   end
 
-  it "should be able to request to be a player as a user" do
-    login_as(@reg_user, scope: :user)
-    visit campaign_path(@campaign)
-    click_button('Request Access')
-    expect(page).to have_content(@reg_user.display_name)
+  describe "request path", type: :feature, js: true do
+    it "should be able to request to be a player as a user" do
+      login_as(@reg_user, scope: :user)
+      visit campaign_path(@campaign)
+      click_button('Request Access')
+      expect(page).to have_content("Player Name: #{@reg_user.display_name}")
+    end
   end
 
 end
