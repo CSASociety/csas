@@ -48,6 +48,13 @@ class PlayerCharactersController < ApplicationController
 
   def show
     @player_character = PlayerCharacter.find(params[:id])
+    @new_attachment = Attachment.new
+    @attachments = @player_character.attachments
+    @possible_resources = Resource.all
+    @attachments.each do  |attachment|
+      @possible_resources  = @possible_resources  - [attachment.resource]
+    end
+    @possible_resources
   end
 
   def destroy

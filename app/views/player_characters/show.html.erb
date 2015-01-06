@@ -56,6 +56,23 @@
 
   <%= render partial: "status_actions", :locals => {:pc => @player_character} %>
 </section>
+<% unless @player_character.attachments.empty? && cannot?(:update, @player_character) %>
+<section class="attachments">
+  <div class="section_header">
+    <h2> Attachemnts </h2>
+    <% if can? :update, @player_character %>
+      <%= content_tag :a, "Attach File", :href => "#attach_to", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <%- end %>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attachments/attached", collection: @player_character.attachments, as: "attachment" %>
+  </div>
+</section>
+<%end%>
+<% unless @player_character.attachments.empty? && cannot?(:update, @player_character) %>
+  <%= atttachment_form(@player_character) -%>
+<%- end %>
+
 
 <section>
   <div class="section_header">

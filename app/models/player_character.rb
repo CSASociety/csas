@@ -3,11 +3,15 @@ class PlayerCharacter < ActiveRecord::Base
   belongs_to :player
   belongs_to :character_template
   belongs_to :image, class_name: "Resource"
+  has_many :attachments, as: :attachable
+  has_many :resources, through: :attachments
 
   has_many :journal_entries
 
   validates :player, :presence => true
   validates :campaign, :presence => true
+
+  alias_attribute :title, :name
 
   include AASM
 
