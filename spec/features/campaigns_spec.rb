@@ -86,6 +86,21 @@ describe "Add a player", type: :feature, js: true do
       expect(page).to have_selector("div#player_1", text: "Status: active")
     end
 
+     it "should allow user to reject the request" do
+      logout
+      login_as(@reg_user, scope: :user)
+      visit campaign_path(@campaign)
+      click_button('Reject Request')
+      expect(page).to have_selector("div#player_1", text: "Status: denied")
+    end
+
+    it "should allow gm to remove the player" do
+      @player = create(:player, user: @reg_user, campaign: @campaign, status: "active")
+      logout
+      login_as(@reg_user, scope: :user)
+      expect(page).to have_selector("div#player_1", text: "Status: active")
+    end
+
 
   end
 
