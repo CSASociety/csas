@@ -1,5 +1,5 @@
 = form_for player_character do |f|
   = f.hidden_field :campaign_id, value: item.id
-  = f.label :character_templates
-  = f.collection_select :character_template_id, possible_characters , :id, :name, prompt: true
+  = f.label :character
+  = f.collection_select :character_id, possible_characters , :id, :name, prompt: true
   = f.submit

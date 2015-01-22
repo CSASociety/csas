@@ -1,7 +1,7 @@
 class PlayerCharacter < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :player
-  belongs_to :character_template
+  belongs_to :character
   belongs_to :image, class_name: "Resource"
   has_many :attachments, as: :attachable
   has_many :resources, through: :attachments

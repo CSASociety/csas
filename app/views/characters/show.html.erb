@@ -1,0 +1,41 @@
+<% title @character.name %>
+<% if can? :update, @character %>
+  <% edit_text "Edit Character" %>
+  <% edit_path edit_character_path(@character) %>
+<%end%>
+
+<section id="main">
+  <div id="main_image">
+    <%-if @character.image.present? %>
+      <%= image_tag @character.image.file.url(:medium) %>
+    <%-end%>
+  </div>
+  <div id="main_info">
+    <p>
+      <strong>Bio:</strong>
+      <%= markdown(@character.bio) %>
+    </p>
+    <p>
+      <strong>Status:</strong>
+      <%= @character.status %>
+    </p
+  </div>
+</section>
+
+<% unless @character.attachments.empty? && cannot?(:update, @character) %>
+<section class="attachments">
+  <div class="section_header">
+    <h2> Attachemnts </h2>
+    <% if can? :update, @character%>
+      <%= content_tag :a, "Attach File", :href => "#attach_to", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
+    <%- end %>
+  </div>
+  <div class="section_content">
+    <%= render partial: "attachments/attached", collection: @character.attachments, as: "attachment" %>
+  </div>
+</section>
+<%end%>
+
+<% unless @character.attachments.empty? && cannot?(:update, @character) %>
+  <%= atttachment_form(@character) -%>
+<%- end %>

@@ -1,10 +1,8 @@
-class CharacterTemplate < ActiveRecord::Base
+class Character < ActiveRecord::Base
   has_paper_trail
   has_many :attachments, as: :attachable
   has_many :resources, through: :attachments
   belongs_to :user
-
-  has_many :player_characters
 
   belongs_to :image, class_name: "Resource"
 
