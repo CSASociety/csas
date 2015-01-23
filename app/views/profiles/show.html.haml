@@ -1,0 +1,19 @@
+%h1= "The Profile for #{@user.display_name}"
+
+%section.campaigns
+  %h2 Campaigns
+  .section_content
+    = render partial: "campaigns/campaign_summary_box", collection: @user.campaigns, as: "campaign"
+
+%section.character
+  .section_header
+    %h2 Characters
+    - if current_user
+      = content_tag :a, "Add a Character", :href => "#add_character", :class => 'btn add_action_link', :data => {:toggle => 'modal'}
+  .section_content
+    = render partial: "characters/character_summary_box", collection: @user.characters, as: "character"
+
+= modal_dialog :id => "add_character",
+    :header => { :show_close => true, :dismiss => 'modal', :title => "Create Character" },
+    :body => render(partial: "characters/form", locals: {character: Character.new}),
+    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })

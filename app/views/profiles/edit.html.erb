@@ -1,0 +1,16 @@
+<% title "Edit Profile" %>
+
+<%= form_for @profile do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :private %><br />
+    <%= f.text_field :private %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+
+

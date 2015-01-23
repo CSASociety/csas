@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
   has_many :games
-  has_many :charcters
+  has_many :characters
   has_many :resources
   has_many :players
   has_many :campaigns, through: :players
   has_many :status_approver, class_name: 'Player'
-
+  has_one :profile
   has_many :assistants
   has_many :assisted_campaigns, through: :assistants, source: :campaign
 

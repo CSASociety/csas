@@ -1,6 +1,7 @@
 Csas::Application.routes.draw do
 
 
+  resources :profiles
   resources :assistants
   resources :events
   patch 'players/:id/request' => 'players#propose', as: :request_campaign_participation
@@ -28,7 +29,8 @@ Csas::Application.routes.draw do
   resources :versions
   root 'welcome#index'
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

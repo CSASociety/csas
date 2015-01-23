@@ -1,0 +1,13 @@
+<% title "Profiles" %>
+
+<table>
+  <tr>
+    <th>User</th>
+  </tr>
+  <% for profile in @profiles %>
+    <tr>
+      <td><%= link_to profile.user.display_name, profile_path(profile) %></td>
+    </tr>
+  <% end %>
+</table>
+
