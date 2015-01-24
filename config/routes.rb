@@ -27,6 +27,7 @@ Csas::Application.routes.draw do
   resources :attachments
   resources :games
   resources :versions
+  resources :newsletters
   root 'welcome#index'
 
   devise_for :users, controllers: { registrations: "users/registrations" }

@@ -1,0 +1,15 @@
+- title "New Newsletter"
+
+= form_for @newsletter do |f|
+  = f.error_messages
+  %p
+    = f.label :file
+    %br
+    = f.file_field :file
+  %p
+    = f.submit
+%br
+
+%p
+  =link_to "Back to List", newsletters_path
+
