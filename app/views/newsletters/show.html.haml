@@ -1,0 +1,7 @@
+- title "Newsletter"
+%br
+%iframe{src: @newsletter.file.url, width: "750", height: "1000"}
+%br
+= link_to 'download', @newsletter.file.url
+%br
+= link_to "Back to List", newsletters_path

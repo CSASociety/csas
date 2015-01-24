@@ -21,6 +21,9 @@
         <li>
           <%=link_to 'Resources', resources_path-%>
         </li>
+        <li>
+          <%=link_to "Newletters", newsletters_path-%>
+        </li>
         <% if can? :read, Version %>
           <li>
             <%=link_to 'Versions', versions_path-%>
