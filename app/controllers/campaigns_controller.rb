@@ -101,7 +101,8 @@ class CampaignsController < ApplicationController
       @campaign.characters -= [@character]
       if @campaign.save
         @character.stop!
-        #remove current campaign from character
+        @character.current_campaign = nil
+        @character.save
         redirect_to campaign_path(@campaign), notice: "#{@character.name} left the campaign: #{@campaign.title}"
       else
         redirect_to campaign_path(@campaign), alert: "Could not remove character from campaign"
