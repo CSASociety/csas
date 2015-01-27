@@ -59,6 +59,7 @@ class CampaignsController < ApplicationController
     end
     if current_user.present? && @campaign.user_is_active_player?(current_user)
       @current_player = Player.where(campaign_id: @campaign.id, user_id: current_user.id).first
+      @possible_characters = current_user.characters - @campaign.characters
     end
   end
 
@@ -71,6 +72,42 @@ class CampaignsController < ApplicationController
       @event.reminder = delay.id
       @event.save
       redirect_to @campaign, :notice => "Successfully added event to campaign."
+    end
+  end
+
+  def add_pc
+    @campaign = Campaign.find(params[:id])
+    @character = Character.find(params[:character])
+    if @character.status == 'resting' && !@campaign.characters.include?(@character)
+      @campaign.characters << @character
+      if @campaign.save
+        @character.begin
+        @character.current_campaign = @campaign
+        @character.save
+        redirect_to campaign_path(@campaign), notice: "#{@character.name} is now adveventuring in #{@campaign.title}"
+      else
+        redirect_to campaign_path(@campaign), alert: "Could not add character to campaign"
+      end
+    else
+      redirect_to campaign_path(@campaign), alert: "This character can not join this campaign"
+    end
+  end
+
+  def remove_pc
+    @campaign = Campaign.find(params[:id])
+    @character = Character.find(params[:character])
+    if @character.status == 'adventuring' && @campaign.characters.include?(@character)
+      # add character to formerchacter association
+      @campaign.characters -= [@character]
+      if @campaign.save
+        @character.stop!
+        #remove current campaign from character
+        redirect_to campaign_path(@campaign), notice: "#{@character.name} left the campaign: #{@campaign.title}"
+      else
+        redirect_to campaign_path(@campaign), alert: "Could not remove character from campaign"
+      end
+    else
+      redirect_to campaign_path(@campaign), alert: "This character can not leave this campaign"
     end
   end
 

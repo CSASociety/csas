@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: newsletters
+#
+#  id                :integer          not null, primary key
+#  created_at        :datetime
+#  updated_at        :datetime
+#  file_file_name    :string(255)
+#  file_content_type :string(255)
+#  file_file_size    :integer
+#  file_updated_at   :datetime
+#
+
 class Newsletter < ActiveRecord::Base
   has_attached_file :file,
                     :storage => :s3,
