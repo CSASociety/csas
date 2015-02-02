@@ -9,19 +9,26 @@ Csas::Application.routes.draw do
   patch 'players/:id/reject' => 'players#reject', as: :reject_campaign_request
   patch 'players/:id/remove' => 'players#remove', as: :remove_campaign_participation
 
-  patch 'player_character/:id/join' => 'player_characters#join', as: :join_pc
-  patch 'player_character/:id/kill' => 'player_characters#kill', as: :kill_pc
-  patch 'player_character/:id/retire' => 'player_characters#retire', as: :retire_pc
-  patch 'player_character/:id/lose' => 'player_characters#lose', as: :lose_pc
-
   patch 'events/:id/attach_campaign' => "events#attach_campaign", as: :attach_campaign_to_event
   patch 'campaigns/:id/attach_event' => "campaigns#attach_event", as: :attach_event_to_campaign
 
   resources :players
 
   resources :campaigns
+  patch 'campaigns/:id/add_pc' => 'campaigns#add_pc', as: :add_pc
+  patch 'campaigns/:id/remove_pc' => 'campaigns#remove_pc', as: :remove_pc
+  patch 'campaigns/:id/complete' => 'campaigns#complete', as: :complete_campaign
   resources :player_characters
   resources :characters
+  patch 'characters/:id/kill_character' => 'characters#kill', as: :kill_character
+  patch 'characters/:id/retire_character' => 'characters#retire', as: :retire_character
+  patch 'characters/:id/lose_character' => 'characters#lose', as: :lose_character
+
+  patch 'character/:id/ressurect_character' => 'character#ressurect', as: :ressurect_character
+  patch 'character/:id/find_character' => 'character#find', as: :find_character
+
+  patch 'character/:id/clone_character' => 'character#clone', as: :clone_character
+
   resources :journal_entries
   resources :resources
   resources :attachments

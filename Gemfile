@@ -20,6 +20,8 @@ gem 'newrelic_rpm'
 gem 'redcarpet'
 gem 'geocoder'
 
+gem 'annotate', github: 'ctran/annotate_models'
+
 gem 'delayed_job_active_record'
 
 #Attempt at adding a comunity revived cancan

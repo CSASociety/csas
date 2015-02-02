@@ -55,6 +55,68 @@ class CharactersController < ApplicationController
     @possible_resources
   end
 
+  def begin
+    @player_character = Character.find(params[:id])
+    @campaign = Campaign.find(params[:campaign][:id])
+    debugger
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
+    if @player_character.join!
+      redirect_to return_to, notice: "Character is now adventuring in this campaign"
+    else
+      flash[:alert] = "Unable to proccess"
+      render 'show'
+    end
+  end
+
+  def resting(campaign)
+
+  end
+
+  def retire
+    @character = Character.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "characters" ? @character : request.referrer
+    if @character.retire!
+      redirect_to return_to, notice: "Character is now retired"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
+  def kill
+    @character = Character.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
+    if @player_character.kill!
+      redirect_to return_to, notice: "Character is now dead"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
+  def lose
+    @player_character = PlayerCharacter.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
+    if @player_character.lose!
+      redirect_to return_to, notice: "Character is now missing"
+    else
+      flash[:alert] = "Unable to proccess "
+      render 'show'
+    end
+  end
+
+  def ressurect
+    #This should bring the character into a campaign via a campaign
+  end
+
+  def find(campaign)
+    #this adds a chacter to a campaign via being found
+  end
+
+  def clone
+    ## This will just create new character with all the same states
+  end
+
   private
 
   def character_params

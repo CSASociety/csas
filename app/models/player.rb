@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: players
+#
+#  id                 :integer          not null, primary key
+#  campaign_id        :integer
+#  user_id            :integer
+#  aasm_state         :string(255)
+#  status_approver_id :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 class Player < ActiveRecord::Base
   belongs_to :user
   belongs_to :campaign

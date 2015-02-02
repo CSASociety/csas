@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150124195925) do
+ActiveRecord::Schema.define(version: 20150127213530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(version: 20150124195925) do
     t.integer  "user_id"
   end
 
+  create_table "campaigns_characters", id: false, force: true do |t|
+    t.integer "campaign_id"
+    t.integer "character_id"
+  end
+
+  add_index "campaigns_characters", ["campaign_id"], name: "index_campaigns_characters_on_campaign_id", using: :btree
+  add_index "campaigns_characters", ["character_id"], name: "index_campaigns_characters_on_character_id", using: :btree
+
   create_table "campaigns_events", id: false, force: true do |t|
     t.integer "campaign_id"
     t.integer "event_id"
@@ -60,7 +68,10 @@ ActiveRecord::Schema.define(version: 20150124195925) do
     t.datetime "updated_at"
     t.string   "caste"
     t.integer  "user_id"
+    t.integer  "current_campaign_id"
   end
+
+  add_index "characters", ["current_campaign_id"], name: "index_characters_on_current_campaign_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

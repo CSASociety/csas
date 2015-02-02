@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: player_characters
+#
+#  id                    :integer          not null, primary key
+#  campaign_id           :integer
+#  character_template_id :integer
+#  status                :string(255)
+#  created_at            :datetime
+#  updated_at            :datetime
+#  name                  :string(255)
+#  caste                 :string(255)
+#  description           :text
+#  bio                   :text
+#  secrets               :text
+#  player_id             :integer
+#  image_id              :integer
+#
+
 class PlayerCharacter < ActiveRecord::Base
   belongs_to :campaign
   belongs_to :player

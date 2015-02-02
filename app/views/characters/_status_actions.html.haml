@@ -1,0 +1,13 @@
+- if current_user == character.user
+  - if character.current_campaign.present?
+    = form_tag(remove_pc_path(character.current_campaign.id), method: :patch) do
+      = hidden_field_tag(:character, character.id)
+      = submit_tag "Leave Campaign"
+  = form_for character, url: kill_character_path(character) do |f|
+    = f.submit value: "Set Character to dead", disabled: true
+  = form_for character, url: retire_character_path(character) do |f|
+    = f.submit value: "Set character retired", disabled: true
+  = form_for character, url: lose_character_path(character) do |f|
+    = f.submit value: "Set character to MIA", disabled: true
+- else
+  No action avaliable

@@ -1,5 +1,4 @@
-= form_for player_character do |f|
-  = f.hidden_field :campaign_id, value: item.id
-  = f.label :character
-  = f.collection_select :character_id, possible_characters , :id, :name, prompt: true
-  = f.submit
+= form_tag(add_pc_path(campaign_id), method: :patch) do
+  = label_tag :character
+  = select_tag(:character, options_from_collection_for_select(@possible_characters, :id, :name))
+  = submit_tag("Add")

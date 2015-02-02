@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: campaigns
+#
+#  id          :integer          not null, primary key
+#  title       :string(255)
+#  description :text
+#  link        :string(255)
+#  image_id    :integer
+#  intro       :text
+#  game_id     :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  user_id     :integer
+#
+
 class Campaign < ActiveRecord::Base
   has_paper_trail
   has_many :attachments, as: :attachable
@@ -8,6 +24,7 @@ class Campaign < ActiveRecord::Base
 
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
+  has_and_belongs_to_many :characters
   has_and_belongs_to_many :events
 
   has_many :player_characters
