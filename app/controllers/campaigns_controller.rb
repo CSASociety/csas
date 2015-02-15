@@ -94,6 +94,7 @@ class CampaignsController < ApplicationController
   end
 
   def remove_pc
+    debugger
     @campaign = Campaign.find(params[:id])
     @character = Character.find(params[:character])
     if @character.status == 'adventuring' && @campaign.characters.include?(@character)

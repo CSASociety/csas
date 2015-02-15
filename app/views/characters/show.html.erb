@@ -18,7 +18,15 @@
     <p>
       <strong>Status:</strong>
       <%= @character.status %>
-    </p
+    </p>
+    <p>
+      <strong>Current Campaign</strong>
+      <%- if @character.current_campaign.present? %>
+        <%= link_to @character.current_campaign.title, campaign_path(@character.current_campaign) %>
+      <%-else %>
+        Not currently part of a campaign
+      <%-end%>
+    </p>
   </div>
 </section>
 

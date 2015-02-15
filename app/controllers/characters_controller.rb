@@ -55,21 +55,28 @@ class CharactersController < ApplicationController
     @possible_resources
   end
 
-  def begin
-    @player_character = Character.find(params[:id])
-    @campaign = Campaign.find(params[:campaign][:id])
-    debugger
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
-    if @player_character.join!
-      redirect_to return_to, notice: "Character is now adventuring in this campaign"
+  def quit
+    @character = Character.find(params[:id])
+    @campaign = @character.current_campaign
+    if @character.stop!
+      @character.current_campaign = nil
+      @character.save
+      redirect_to @character, notice: "#{@character.name} left the campaign: #{@campaign.title}"
     else
-      flash[:alert] = "Unable to proccess"
-      render 'show'
+      redirect_to @character, alert: "Could not remove character from campaign"
     end
   end
 
-  def resting(campaign)
-
+  def join
+    @character = Character.find(params[:id])
+    @campaign = Campaign.find(params[:campaign])
+    if @character.begin!
+      @character.current_campaign = @campaign
+      @character.save
+      redirect_to @character, notice: "Character is now adventuring in this campaign"
+    else
+      redirect_to @character, alert: "Unable to proccess"
+    end
   end
 
   def retire
@@ -86,7 +93,9 @@ class CharactersController < ApplicationController
   def kill
     @character = Character.find(params[:id])
     return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
-    if @player_character.kill!
+    if @character.kill!
+      @character.current_campaign = nil
+      @character.save
       redirect_to return_to, notice: "Character is now dead"
     else
       flash[:alert] = "Unable to proccess "
@@ -95,9 +104,11 @@ class CharactersController < ApplicationController
   end
 
   def lose
-    @player_character = PlayerCharacter.find(params[:id])
-    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "player_characters" ? @player_character : request.referrer
-    if @player_character.lose!
+    @character = Character.find(params[:id])
+    return_to =  Rails.application.routes.recognize_path(request.referrer)[:controller] == "characters" ? @character : request.referrer
+    if @character.lose!
+      @character.current_campaign = nil
+      @character.save
       redirect_to return_to, notice: "Character is now missing"
     else
       flash[:alert] = "Unable to proccess "
@@ -105,11 +116,32 @@ class CharactersController < ApplicationController
     end
   end
 
-  def ressurect
-    #This should bring the character into a campaign via a campaign
+  def resurrect
+    @character = Character.find(params[:id])
+    @campaign = Campaign.find(params[:campaign])
+    if @character.begin!
+      @character.current_campaign = @campaign
+      if @character.save
+        redirect_to @character, notice: "Character has been resurrected and has joined the campaign: #{@campaign.title}"
+      else
+        @character.stop!
+        redirect_to @character, notice: "Character has been resurrected but was unable to join the campaign: #{@campaign.title}"
+      end
+    else
+      redirect_to @character, alert: "Character was unable to be resurrected"
+    end
   end
 
-  def find(campaign)
+  def find
+    @character = Character.find(params[:id])
+    @campaign = Campaign.find(params[:campaign])
+    if @character.begin!
+      @character.current_campaign = @campaign
+      @character.save
+      redirect_to @character, notice: "Character found in campaign: #{@campaign.title}"
+    else
+      redirect_to @character, alert: "Character unable to be found and added to campaign: #{@campaign.title}"
+    end
     #this adds a chacter to a campaign via being found
   end
 

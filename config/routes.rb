@@ -23,11 +23,12 @@ Csas::Application.routes.draw do
   patch 'characters/:id/kill_character' => 'characters#kill', as: :kill_character
   patch 'characters/:id/retire_character' => 'characters#retire', as: :retire_character
   patch 'characters/:id/lose_character' => 'characters#lose', as: :lose_character
+  patch 'characters/:id/character_quit' => 'characters#quit', as: :character_quit
+  patch 'characters/:id/character_join' => 'characters#join', as: :character_join
+  patch 'characters/:id/resurrect_character' => 'characters#resurrect', as: :resurrect_character
+  patch 'characters/:id/find_character' => 'characters#find', as: :find_character
 
-  patch 'character/:id/ressurect_character' => 'character#ressurect', as: :ressurect_character
-  patch 'character/:id/find_character' => 'character#find', as: :find_character
-
-  patch 'character/:id/clone_character' => 'character#clone', as: :clone_character
+  patch 'characters/:id/clone_character' => 'character#clone', as: :clone_character
 
   resources :journal_entries
   resources :resources

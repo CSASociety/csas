@@ -13,13 +13,13 @@ class Ability
       #can update player if the player is the current user
       can :update, Player, :user_id => user.id
 
-      #can update character if the player is associate with a campaign owned by current user
-      can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :campaign => { :user_id => user.id }
       #can update character if the player is the current user
-      can [:update, :join, :retire, :kill, :remove], PlayerCharacter, :character=> {:user_id => user.id }
+      can [:update, :join, :retire, :kill, :remove, :resurrect, :find, :lose, :quit], Character, :user_id => user.id
       #Can update player if they are an assistant on the campaign.
-      can [:update, :join, :retire, :kill, :remove], PlayerCharacter do |pc|
-        pc.campaign.aids.include?(user)
+      can [:update, :join, :remove], Character do |char|
+        if char.current_campaign.present?
+          char.current_campaign.aids.include?(user) || char.current_campaign.gm == user
+        end
       end
       #only admin can see version
       cannot :read, Version
@@ -40,7 +40,6 @@ class Ability
       can [:update, :attach_event, :add_pc, :remove_pc], Campaign do |campaign|
          (campaign.aids.include?(user) || campaign.gm == user || campaign.players.include?(user))
       end
-      can :update, Character, :user_id => user.id
       can :update, Resource, :user_id => user.id
     else
       can :read, :all

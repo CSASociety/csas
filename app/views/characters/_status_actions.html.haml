@@ -1,13 +1,34 @@
 - if current_user == character.user
   - if character.current_campaign.present?
-    = form_tag(remove_pc_path(character.current_campaign.id), method: :patch) do
+    = form_tag(character_quit_path(character), method: :patch) do
       = hidden_field_tag(:character, character.id)
       = submit_tag "Leave Campaign"
-  = form_for character, url: kill_character_path(character) do |f|
-    = f.submit value: "Set Character to dead", disabled: true
-  = form_for character, url: retire_character_path(character) do |f|
-    = f.submit value: "Set character retired", disabled: true
-  = form_for character, url: lose_character_path(character) do |f|
-    = f.submit value: "Set character to MIA", disabled: true
+    = form_for character, url: kill_character_path(character) do |f|
+      = f.submit value: "Set Character to dead"#, disabled: true
+    = form_for character, url: lose_character_path(character) do |f|
+      = f.submit value: "Set character to MIA"#, disabled: true
+  -else
+    - if character.status  == 'dead'
+      = form_tag(resurrect_character_path(character), method: :patch) do
+        = label_tag :campaign
+        = select_tag(:campaign, options_from_collection_for_select(avaliable_campaigns(current_user), :id, :title))
+        = submit_tag("Resurrect Character")
+    - elsif character.status == "missing"
+      = form_tag(find_character_path(character.id), method: :patch) do
+        = label_tag :campaign
+        = select_tag(:campaign, options_from_collection_for_select(avaliable_campaigns(current_user), :id, :title))
+        = submit_tag("Add")
+    - elsif character.status == 'resting'
+      = form_for character, url: retire_character_path(character) do |f|
+        = f.submit value: "Set character retired"
+      = form_tag(character_join_path(character.id), method: :patch) do
+        = label_tag :campaign
+        = select_tag(:campaign, options_from_collection_for_select(avaliable_campaigns(current_user), :id, :title))
+        = submit_tag("Add")
+    - elsif character.status == 'retired'
+      = form_for character, url: retire_character_path(character) do |f|
+        = f.submit value: "Re-Activate", disabled: true
+
+
 - else
   No action avaliable

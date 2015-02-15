@@ -1,0 +1,4 @@
+= form_tag(find_pc(character.id), method: :patch) do
+  = label_tag :campaign
+  = select_tag(:campaign, options_from_collection_for_select(avaliable_campaigns(current_user), :id, :title))
+  = submit_tag("Add")

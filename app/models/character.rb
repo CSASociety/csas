@@ -59,6 +59,18 @@ class Character < ActiveRecord::Base
       transitions from: :adventuring, to: :resting
     end
 
+    event :find do
+      transitions from: :missing, to: :adventuring
+    end
+
+    event :resurrection do
+      transitions from: :dead, to: :adventuring
+    end
+
+    event :reactivate do
+      transitions from: :retired, to: :adventuring
+    end
+
   end
 
 end
