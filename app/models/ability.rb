@@ -8,6 +8,7 @@ class Ability
       can :manage, :all
     elsif !user.email.empty?
       can :read, :all
+      can :manage, Newsletter
       #can update player if the player is associate with a campaign owned by current user
       can :update, Player, :campaign => { :user_id => user.id }
       #can update player if the player is the current user

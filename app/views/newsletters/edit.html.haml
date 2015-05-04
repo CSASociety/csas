@@ -1,0 +1,23 @@
+- title "Edit Newsletter"
+
+= form_for @newsletter do |f|
+  = f.error_messages
+  %p 
+    Current File is: #{link_to @newsletter.file_file_name, @newsletter.file.url, :target => "_blank"} <br />
+    To replease the file just upload a new file.
+  %p
+    = f.label :file
+    = f.file_field :file
+  %p
+    = f.month_field :month
+  %p
+    = f.submit
+
+%p
+  = link_to "Show", @newsletter
+  = link_to "View All", newsletters_path
+
+%p
+  %h2{:class => "warning"} Danger
+  = link_to "Destory NewsLetter", newsletter_path(@newsletter), data: {confirm: "Are you sure? This is not reversable"}, method: :delete
+

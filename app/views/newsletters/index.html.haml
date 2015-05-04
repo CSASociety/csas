@@ -3,7 +3,8 @@
   - edit_text "Upload Newsletter"
   - edit_path new_newsletter_path
 
-%iframe{src: @current_newsletter.file.url, width: "750", height: "1000"}
+-if @current_newsletter.present?
+  %iframe{src: @current_newsletter.file.url, width: "750", height: "1000"}
 
 %h2 Archive
 %table
@@ -12,6 +13,6 @@
     %th Download
   - @newsletters.each do |newsletter|
     %tr
-      %td= link_to newsletter.created_at.strftime("%B, %Y"), newsletter
+      %td= link_to newsletter.month.strftime("%B, %Y"), newsletter
       %td= link_to newsletter.file_content_type, newsletter.file.url 
   

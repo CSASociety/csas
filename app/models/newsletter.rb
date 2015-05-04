@@ -21,5 +21,7 @@ class Newsletter < ActiveRecord::Base
                     }   
   validates :file, :attachment_presence => true
 
+  validates :month, presence: true, uniqueness: true;
+
   do_not_validate_attachment_file_type :file
 end
