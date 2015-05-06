@@ -16,8 +16,7 @@
 
 class Campaign < ActiveRecord::Base
   has_paper_trail
-  has_many :attachments, as: :attachable
-  has_many :resources, through: :attachments
+  has_many :attachments, as: :entity
 
   has_many :assistants
   has_many :aids, through: :assistants, source: :user

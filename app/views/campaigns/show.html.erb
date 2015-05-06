@@ -60,7 +60,7 @@
     <%- end %>
   </div>
   <div class="section_content">
-    <%= render partial: "attachments/attached", collection: @campaign.attachments, as: "attachment" %>
+    <%= render partial: "attachments/attached", collection: @campaign.attachments, as: "attachment", locals: {item: @campaign} %>
   </div>
 </section>
 <%end%>
@@ -104,6 +104,9 @@
 </section>
 <% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
   <%= atttachment_form(@campaign) -%>
+  <%- @campaign.attachments.each do |attach| -%>
+    <%= atttachment_form(@campaign, attach)-%>
+  <%-end-%>
 <%- end %>
 
 <section>

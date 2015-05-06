@@ -50,9 +50,6 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.find(params[:id])
     @attachments = @campaign.attachments
     @possible_resources = Resource.all
-    @attachments.each do  |attachment|
-      @possible_resources  = @possible_resources  - [attachment.resource]
-    end
     @possible_players = User.confirmed
     @campaign.users.each do |user|
       @possible_players =  @possible_players - [user]

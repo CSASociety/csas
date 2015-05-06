@@ -9,7 +9,7 @@ class AttachmentsController < ApplicationController
 
   def create
     @attachment = Attachment.new(attachment_params)
-    @entry = @attachment.attachable
+    @entry = @attachment.entity
     if @attachment.save
       redirect_to @entry, :notice => "Successfully created attachment ."
     else
@@ -23,17 +23,19 @@ class AttachmentsController < ApplicationController
 
   def update
     @attachment = Attachment.find(params[:id])
+
     if @attachment.update_attributes(attachment_params)
-      redirect_to @attachment, :notice  => "Successfully updated attachment."
+      redirect_to @attachment.entity, :notice  => "Successfully updated attachment."
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    @attachment.find(params[:id])
-    @attachment.destroy
-    redirect_to attachment_url, :notice => "Successfully destroyed hment."
+    attachment = Attachment.find(params[:id])
+    item = attachment.entity
+    attachment.destroy
+    redirect_to item, :notice => "Successfully destroyed hment."
   end
 
   def show
@@ -43,7 +45,7 @@ class AttachmentsController < ApplicationController
   private
 
   def attachment_params
-    params.require(:attachment).permit(:title, :resource_id, :attachable_type, :attachable_id, resource_attributes: [ :file ])
+    params.require(:attachment).permit(:title, :entity_id, :entity_type, :file )
   end
 end
 

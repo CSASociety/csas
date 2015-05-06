@@ -1,12 +1,14 @@
 .summary_box
   = "Attachment Name: #{attachment.title}"
   %br
-  = "File Name:  #{attachment.resource.file_file_name.truncate(20)}"
+  = "File Name:  #{attachment.file_file_name.truncate(20)}"
   %br
-  = "File Type: #{attachment.resource.file_content_type}"
+  = "File Type: #{attachment.file_content_type}"
   %br
-  = "File Size #{number_to_human_size(attachment.resource.file_file_size)}"
+  = "File Size #{number_to_human_size(attachment.file_file_size)}"
   %br
-  = link_to "View Attachment Info", resource_path(attachment.resource)
+  = link_to "Download or Open File", attachment.file.url
   %br
-  = link_to "Download or Open File", attachment.resource.file.url
+  - if can? :update, item
+    = content_tag :a, "Edit File", :href => "#attach_to_#{attachment.id}", :class => '', :data => {:toggle => 'modal'}
+

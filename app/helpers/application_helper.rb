@@ -1,8 +1,8 @@
 module ApplicationHelper
-  def atttachment_form(item)
-    modal_dialog :id => "attach_to",
+  def atttachment_form(item, attachment=Attachment.new)
+    modal_dialog :id => attachment.new_record? ? "attach_to" : "attach_to_#{attachment.id}",
       :header => { :show_close => true, :dismiss => 'modal', :title => "Attach to #{item.title}" },
-      :body => render(partial: "attachments/attach", locals: {item: item, attachment: Attachment.new}),
+      :body => render(partial: "attachments/attach", locals: {item: item, attachment: attachment}),
       :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   end
 

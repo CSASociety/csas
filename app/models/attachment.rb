@@ -13,9 +13,19 @@
 
 class  Attachment < ActiveRecord::Base
 
-  belongs_to :resource
-  belongs_to :attachable, polymorphic: true
+  belongs_to :entity, polymorphic: true
 
-  accepts_nested_attributes_for :resource
+   has_attached_file :file,
+                    :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                    :storage => :s3,
+                    :bucket => ENV['S3_BUCKET'],
+                    :s3_credentials => {
+                      :access_key_id => ENV['S3_KEY'],
+                      :secret_access_key => ENV['S3_SECRET']
+                    }
+
+  validates :file, :attachment_presence => true
+  do_not_validate_attachment_file_type :file
+
 
 end

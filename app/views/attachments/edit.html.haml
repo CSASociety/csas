@@ -1,0 +1,8 @@
+=form_for @attachment do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.label :file
+  = f.file_field :file
+  = f.hidden_field :entity_type, value: item.class
+  = f.hidden_field :entity_id, value: item.id
+  = f.submit value: "Attach"
