@@ -7,7 +7,6 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
-    @possible_images = Resource.where('file_content_type like ?', '%image%')
   end
 
   def create
@@ -22,10 +21,6 @@ class CampaignsController < ApplicationController
 
   def edit
     @campaign = Campaign.find(params[:id])
-    @possible_images = Resource.where('file_content_type like ?', '%image%')
-    if @campaign.image present?
-      @possible_images = @possible_images - [@campaign.image]
-    end
     @attachment = Attachment.new()
   end
 
@@ -113,6 +108,6 @@ class CampaignsController < ApplicationController
   private
 
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :link, :image_id, :intro, :game_id)
+    params.require(:campaign).permit(:title, :description, :link, :intro, :game_id, :image)
   end
 end

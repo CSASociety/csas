@@ -14,9 +14,8 @@
     <%= f.text_area :bio %>
   </p>
   <p>
-    <%= f.label :image %>
-    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, include_blank: "Please Select" , required: false%>
-    <%= link_to("Current Image: #{character.image.file_file_name}", character.image.file.url ) if character.image.present? %>
+    <%= f.label :image -%>
+    <%= f.file_field :image -%>
   </p>
   <p><%= f.submit %></p>
 <%- end %>

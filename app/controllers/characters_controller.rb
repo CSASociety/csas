@@ -22,10 +22,6 @@ class CharactersController < ApplicationController
 
   def edit
     @character = Character.find(params[:id])
-    @possible_images = Resource.where('file_content_type like ?', '%image%')
-    if @character.image present?
-      @possible_images = @possible_images - [@character.image]
-    end
   end
 
   def update
@@ -147,6 +143,7 @@ class CharactersController < ApplicationController
   private
 
   def character_params
-    params.require(:character).permit(:player, :name, :caste, :bio, :gm_bio, :status, :image_id)
+    params.require(:character).permit(:player, :name, :caste, :bio, :gm_bio, :status, :image)
+
   end
 end

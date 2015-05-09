@@ -7,7 +7,6 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    @possible_images = Resource.where('file_content_type like ?', '%image%')
   end
 
   def create
@@ -18,17 +17,12 @@ class GamesController < ApplicationController
       redirect_to @game, :notice => "Successfully created game."
     else
       flash['alert'] = "Unable to save. See errors below"
-      @possible_images = Resource.where('file_content_type like ?', '%image%')
       render :action => 'new'
     end
   end
 
   def edit
     @game = Game.find(params[:id])
-    @possible_images = Resource.where('file_content_type like ?', '%image%')
-    if @game.image present?
-      @possible_images = @possible_images - [@game.image]
-    end
     @attachment = Attachment.new()
   end
 
@@ -57,6 +51,6 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:title, :description, :link, :image_id)
+    params.require(:game).permit(:title, :description, :link, :image)
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506010232) do
+ActiveRecord::Schema.define(version: 20150509211510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,10 @@ ActiveRecord::Schema.define(version: 20150506010232) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "campaigns_characters", id: false, force: true do |t|
@@ -75,6 +79,10 @@ ActiveRecord::Schema.define(version: 20150506010232) do
     t.string   "caste"
     t.integer  "user_id"
     t.integer  "current_campaign_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "characters", ["current_campaign_id"], name: "index_characters_on_current_campaign_id", using: :btree
@@ -117,6 +125,10 @@ ActiveRecord::Schema.define(version: 20150506010232) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "journal_entries", force: true do |t|

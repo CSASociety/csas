@@ -7,7 +7,7 @@
 <section id="main">
   <div id="main_image">
     <%-if @game.image.present? %>
-      <%= image_tag @game.image.file.url(:medium) %>
+      <%= image_tag @game.image.url(:medium) %>
     <%-end%>
   </div>
 

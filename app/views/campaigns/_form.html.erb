@@ -21,9 +21,8 @@
     <%= f.collection_select :game_id, Game.all, :id, :title, prompt: true, required: true %>
   </p>
   <p>
-    <%= f.label :image %>
-    <%= f.collection_select :image_id, @possible_images, :id, :file_file_name, include_blank: "Please Select" %>
-    <%= link_to("Current Image:", @campaign.image.file.url )if @campaign.image.present? %>
+    <%= f.label :image -%>
+    <%= f.file_field :image -%>
   </p>
   <p><%= f.submit %></p>
 <% end %>

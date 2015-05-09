@@ -7,7 +7,7 @@
 <section id="main">
   <div id="main_image">
     <%-if @campaign.image.present? %>
-      <%= image_tag @campaign.image.file.url(:medium) %>
+      <%= image_tag @campaign.image.url(:medium) %>
     <%-end%>
   </div>
   <div id="main_info">
