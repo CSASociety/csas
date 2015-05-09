@@ -35,7 +35,7 @@ class AttachmentsController < ApplicationController
     attachment = Attachment.find(params[:id])
     item = attachment.entity
     attachment.destroy
-    redirect_to item, :notice => "Successfully destroyed hment."
+    redirect_to item, :notice => "Successfully destroyed attachment."
   end
 
   def show

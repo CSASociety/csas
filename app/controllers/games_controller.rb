@@ -52,11 +52,6 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @new_attachment = Attachment.new
     @attachments = @game.attachments
-    @possible_resources = Resource.all
-    @attachments.each do  |attachment|
-      @possible_resources  = @possible_resources  - [attachment.resource]
-    end
-    @possible_resources
   end
 
   private

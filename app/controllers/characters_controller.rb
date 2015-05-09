@@ -48,11 +48,6 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
     @new_attachment = Attachment.new
     @attachments = @character.attachments
-    @possible_resources = Resource.all
-    @attachments.each do  |attachment|
-      @possible_resources  = @possible_resources  - [attachment.resource]
-    end
-    @possible_resources
   end
 
   def quit

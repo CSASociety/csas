@@ -39,13 +39,16 @@
     <%- end %>
   </div>
   <div class="section_content">
-    <%= render partial: "attachments/attached", collection: @character.attachments, as: "attachment" %>
+    <%= render partial: "attachments/attached", collection: @character.attachments, as: "attachment", locals: {item: @character} %>
   </div>
 </section>
 <%end%>
 
 <% unless @character.attachments.empty? && cannot?(:update, @character) %>
   <%= atttachment_form(@character) -%>
+  <%- @character.attachments.each do |attach| -%>
+    <%= atttachment_form(@character, attach)-%>
+  <%-end-%>
 <%- end %>
 
 <section class="actions">

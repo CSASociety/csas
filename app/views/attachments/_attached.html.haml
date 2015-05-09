@@ -6,7 +6,7 @@
   = "File Type: #{attachment.file_content_type}"
   %br
   = "File Size #{number_to_human_size(attachment.file_file_size)}"
-  %br
+  %be
   = link_to "Download or Open File", attachment.file.url
   %br
   - if can? :update, item

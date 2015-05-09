@@ -18,8 +18,7 @@
 
 class Character < ActiveRecord::Base
   has_paper_trail
-  has_many :attachments, as: :attachable
-  has_many :resources, through: :attachments
+  has_many :attachments, as: :entity 
   belongs_to :user
   belongs_to :current_campaign, class_name: :Campaign
 

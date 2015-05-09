@@ -31,10 +31,13 @@
     <%- end %>
   </div>
   <div class="section_content">
-    <%= render partial: "attachments/attached", collection: @game.attachments, as: "attachment" %>
+    <%= render partial: "attachments/attached", collection: @game.attachments, as: "attachment", locals: {item: @game} %>
   </div>
 </section>
 <%end%>
 <% unless @game.attachments.empty? && cannot?(:update, @game) %>
   <%= atttachment_form(@game) -%>
+  <%- @game.attachments.each do |attach| -%>
+    <%= atttachment_form(@game, attach)-%>
+  <%-end-%>
 <%- end %>
