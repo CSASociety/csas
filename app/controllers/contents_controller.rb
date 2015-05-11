@@ -26,10 +26,13 @@ class ContentsController < ApplicationController
   end
 
   def update
-    @content = Content.find(parmas[:id])
-    @content = Content.assign_attributes(content_params)
-    if @content.save
-      redirect_to contents_path, :notice => "Contents created"
+    @content = Content.find(params[:id])
+    if @content.update_attributes(content_params)
+      if @content.title = "Constitution"
+        redirect_to constitution_path, :notice => "Constitution Updated"
+      else
+        redirect_to contents_path, :notice => "Contents Updated"
+      end
     else
       flash[:alert] = "Content was unable to be created"
       render "edit"
