@@ -19,6 +19,8 @@ gem 'aasm'
 gem 'newrelic_rpm'
 gem 'redcarpet'
 gem 'geocoder'
+gem 'simple_form'
+gem 'tinymce-rails'
 
 gem 'annotate', github: 'ctran/annotate_models'
 

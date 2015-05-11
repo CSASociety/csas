@@ -17,4 +17,5 @@
 //= require lodash.min.js
 //= require backbone.js
 //= require rivets.min.js
+//= require tinymce
 //= require_tree .

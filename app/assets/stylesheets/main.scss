@@ -20,7 +20,6 @@ body {
   }
 
   width: 100%;
-  margin: 0 auto;
   table {
     border: 1px solid #CCC;
     tr {
@@ -38,7 +37,11 @@ body {
   }
   nav {
     position: fixed;
-    width: 100%;
+    width: 60%;
+    top: 0;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, 0%);
     background-color: black;
     color: white;
     ul {
@@ -61,10 +64,10 @@ body {
     overflow: hidden;
   }
   #container {
-    float:left;
-    margin: 0;
-    padding-top: 1.2em;
-    width: 100%;
+    border: 1px solid gray;
+    margin: 0 auto;
+    padding: 1.2em;
+    width: 60%;
     form {
       input {
         width: 90%;
@@ -86,8 +89,9 @@ body {
     }
     section {
       &#main_title_section {
-        padding: 14px;
+        padding-top: 14px;
       }
+      padding:7px;
       border-bottom: 2px solid #E3E3DE;
       width: 100%;
       overflow: hidden;
@@ -117,3 +121,5 @@ body {
 #dragon_image {
   width: 400px;
 }
+
+

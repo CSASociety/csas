@@ -4,6 +4,8 @@ Csas::Application.routes.draw do
   resources :profiles
   resources :assistants
   resources :events
+  resources :contents
+  get "/constitution" => 'welcome#constitution', as: :constitution
   patch 'players/:id/request' => 'players#propose', as: :request_campaign_participation
   patch 'players/:id/accept' => 'players#accept', as: :accept_campaign_request
   patch 'players/:id/reject' => 'players#reject', as: :reject_campaign_request

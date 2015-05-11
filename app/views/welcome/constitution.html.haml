@@ -1,0 +1,7 @@
+%h1 Constitution
+
+- if @constitution.value.nil?
+  %p The constitution has not been set up. Please click the following link and add the constitution
+  = link_to "Update Constitution", edit_content_path(@constitution)
+- else
+  .consitution= @constitution.value.html_safe

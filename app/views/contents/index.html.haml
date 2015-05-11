@@ -1,0 +1,10 @@
+%h1 Contents
+%table
+  %tr
+    %th Title
+    %th Actions
+  - @contents.each do |content|
+    %tr
+      %td= content.title
+      %td
+        = link_to "Edit", edit_content_path(content)

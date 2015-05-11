@@ -1,0 +1,7 @@
+%h1 Update Content
+
+= simple_form_for @content do |f|
+  = f.text_area :value, :class => "tinymce", :rows => 40, :cols => 120
+  = f.submit
+
+= tinymce
