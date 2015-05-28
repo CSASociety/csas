@@ -99,7 +99,7 @@
     <%end %>
   </div>
   <div class="section_content">
-    <%= render partial: "events/summary_box", collection: @campaign.events, as: "event" %>
+    <%= render partial: "events/summary_box", collection: @campaign.events.order('start_at desc'), as: "event" %>
   </div>
 </section>
 <% unless @campaign.attachments.empty? && cannot?(:update, @campaign) %>
