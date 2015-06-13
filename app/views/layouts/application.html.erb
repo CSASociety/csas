@@ -7,50 +7,53 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <nav>
-      <ul>
-        <li>
-          <%=link_to 'Home', root_path-%>
-        </li>
-        <li>
-          <%=link_to 'Consitution', constitution_path-%>
-        </li>
-        <li>
-          <%=link_to "Newletters", newsletters_path-%>
-        </li>
+  <header>
+      <div id="logo"></div>
+      <nav>
+        <ul>
+          <li>
+            <%=link_to 'Home', root_path-%>
+          </li>
+          <li>
+            <%=link_to 'Consitution', constitution_path-%>
+          </li>
+          <li>
+            <%=link_to "Newletters", newsletters_path-%>
+          </li>
 
-        <li>
-          <%=link_to 'Games', games_path-%>
-        </li>
-        <li>
-          <%=link_to 'Campaigns', campaigns_path-%>
-        </li>
-        <li>
-          <%=link_to 'Profiles', profiles_path-%>
-        </li>
-        <% if can? :read, Version %>
           <li>
-            <%=link_to 'Versions', versions_path-%>
-          </li>
-        <%end%>
-        <%- if user_signed_in? %>
-          <li>
-            <%= link_to current_user.display_name, edit_user_registration_path %>
+            <%=link_to 'Games', games_path-%>
           </li>
           <li>
-            <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
-          </li>
-        <%-else %>
-          <li>
-            <%= content_tag :a, "Login", :href => "#sign-in-modal", :class => '', :data => {:toggle => 'modal'} %>
-            <%#<%=link_to 'Login', new_user_session_path %>
+            <%=link_to 'Campaigns', campaigns_path-%>
           </li>
           <li>
-            <%=link_to 'Sign Up', new_user_registration_path %>
+            <%=link_to 'Profiles', profiles_path-%>
           </li>
-        <%-end%>
-      </ul>
-    </nav>
+          <% if can? :read, Version %>
+            <li>
+              <%=link_to 'Versions', versions_path-%>
+            </li>
+          <%end%>
+          <%- if user_signed_in? %>
+            <li>
+              <%= link_to current_user.display_name, edit_user_registration_path %>
+            </li>
+            <li>
+              <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+            </li>
+          <%-else %>
+            <li>
+              <%= content_tag :a, "Login", :href => "#sign-in-modal", :class => '', :data => {:toggle => 'modal'} %>
+              <%#<%=link_to 'Login', new_user_session_path %>
+            </li>
+            <li>
+              <%=link_to 'Sign Up', new_user_registration_path %>
+            </li>
+          <%-end%>
+        </ul>
+      </nav>
+    </header>
     <%- if current_user.nil? %>
       <%= modal_dialog :id => "sign-in-modal",
             :header => { :show_close => true, :dismiss => 'modal', :title => "Sign In" },

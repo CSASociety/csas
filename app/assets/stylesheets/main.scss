@@ -35,22 +35,40 @@ body {
     }
 
   }
-  nav {
+  header {
+    border-bottom: 2px solid gray;
+    width: 100%;
     position: fixed;
-    width: 60%;
+    width: 100%;
     top: 0;
-    left: 50%;
+    left: 0;
     /* bring your own prefixes */
-    transform: translate(-50%, 0%);
-    background-color: black;
-    color: white;
-    ul {
-      margin: 0 auto;
-      overflow: auto;
-      li {
-        float:left;
-        list-style: none;
-        padding: 7px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    #logo {
+      float:left;
+      height: 70px;
+      width: 160px;
+      background-image: url(/assets/CSAS.gif);
+      background-size: 160px 70px;
+      background-repeat: no-repeat;
+    }
+    nav {
+      float:right;
+      ul {
+        margin: 0 auto;
+        overflow: auto;
+        li {
+          height: 70px;
+          line-height: 60px;
+          float:left;
+          list-style: none;
+          padding: 7px;
+          a {
+            color: black;
+          }
+        }
       }
     }
   }
@@ -64,10 +82,9 @@ body {
     overflow: hidden;
   }
   #container {
-    border: 1px solid gray;
     margin: 0 auto;
     padding: 1.2em;
-    width: 60%;
+    max-width: 60%;
     form {
       input {
         width: 90%;
@@ -92,7 +109,6 @@ body {
         padding-top: 14px;
       }
       padding:7px;
-      width: 100%;
       overflow: hidden;
       .section_header {
         clear: both;
