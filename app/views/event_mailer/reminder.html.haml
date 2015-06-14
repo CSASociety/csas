@@ -1,6 +1,7 @@
 %h1 GAME ON!!!
 %p= "There has been a event scheduled for #{@start.strftime("%d %b %Y, %I:%M%p")} and running till #{@end.strftime("%d %b %Y, %I:%M%p")}. The event will take place at #{link_to @location, @map_link}".html_safe
 - unless @event.campaigns.empty?
+  %p= @event.info if @event.info.present?
   %p The following campaigns will be played
   %ul
     - @event.campaigns.each do |campaign|

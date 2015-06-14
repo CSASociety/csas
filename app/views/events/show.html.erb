@@ -15,6 +15,11 @@
       <%= @event.stop_at %>
     </p>
     <p>
+      <strong>Information</strong>
+      <%= @event.infomation if @event.information.present? %>
+    </p>
+
+    <p>
       <strong>Group:</strong>
       <%= @event.group_id %>
     </p>
