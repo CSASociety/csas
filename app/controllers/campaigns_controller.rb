@@ -108,6 +108,6 @@ class CampaignsController < ApplicationController
   private
 
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :link, :intro, :game_id, :image)
+    params.require(:campaign).permit(:title, :description, :link, :intro, :game_id, :image, :information)
   end
 end
