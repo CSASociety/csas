@@ -7,7 +7,12 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif !user.email.empty?
-      can :read, :all
+      can :create, :all do |pc|
+        true
+      end
+      can :read, :all do |pc|
+        true
+      end
       can :manage, Newsletter
       #can update player if the player is associate with a campaign owned by current user
       can :update, Player, :campaign => { :user_id => user.id }
@@ -24,7 +29,6 @@ class Ability
       end
       #only admin can see version
       cannot :read, Version
-      can :create, :all
       cannot :create, PlayerCharacter do |pc|
         result = true
         #Grab each active player and cycle through
@@ -32,14 +36,15 @@ class Ability
           #set return value to true if the player is the user
           result = false if player.user_id == user.id
         end
-        result
+        return result
       end
+
       can :update, Game, :user_id => user.id
       can [:update, :join, :retire, :kill, :remove], PlayerCharacter do |pc|
-        pc.campaign.aids.include?(user)
+        pc.campaign.aids.include?(user) 
       end
       can [:update, :attach_event, :add_pc, :remove_pc], Campaign do |campaign|
-         (campaign.aids.include?(user) || campaign.gm == user || campaign.players.include?(user))
+        (campaign.aids.include?(user) || campaign.gm == user || campaign.players.where(user_id: user.id).present?)
       end
       can :update, Resource, :user_id => user.id
     else
