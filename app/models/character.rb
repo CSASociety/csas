@@ -20,7 +20,10 @@ class Character < ActiveRecord::Base
   has_paper_trail
   has_many :attachments, as: :entity 
   belongs_to :user
-  belongs_to :current_campaign, class_name: :Campaign
+  #belongs_to :campaign, class_name: :Campaign
+
+  has_many :player_characters
+  has_many :campaigns, through: :player_characters
 
   #belongs_to :image, class_name: "Resource"
   has_attached_file :image,
@@ -34,7 +37,7 @@ class Character < ActiveRecord::Base
 
   validates_attachment_content_type :image, :content_type => /\Aimage/
 
-  has_and_belongs_to_many :campaigns
+  #has_and_belongs_to_many :campaigns
 
 
   alias_attribute :title, :name
