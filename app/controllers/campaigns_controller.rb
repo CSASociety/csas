@@ -70,6 +70,7 @@ class CampaignsController < ApplicationController
   def add_pc
     @campaign = Campaign.find(params[:id])
     @character = Character.find(params[:character])
+    debugger
     if @character.status == 'resting' && !@campaign.characters.include?(@character)
       @campaign.characters << @character
       if @campaign.save
