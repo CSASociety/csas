@@ -1,0 +1,8 @@
+.summary_box
+  = "Name: #{player_character.title}"
+  %br
+  = "Class: #{player_character.caste}"
+  %br
+  = "Owner: #{player_character.user.display_name}"
+  %br
+  = link_to "View Full Character", player_character_path(player_character)

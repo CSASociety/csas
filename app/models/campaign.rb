@@ -2,16 +2,20 @@
 #
 # Table name: campaigns
 #
-#  id          :integer          not null, primary key
-#  title       :string(255)
-#  description :text
-#  link        :string(255)
-#  image_id    :integer
-#  intro       :text
-#  game_id     :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#  user_id     :integer
+#  id                 :integer          not null, primary key
+#  title              :string(255)
+#  description        :text
+#  link               :string(255)
+#  image_id           :integer
+#  intro              :text
+#  game_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  user_id            :integer
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
 #
 
 class Campaign < ActiveRecord::Base
@@ -23,11 +27,11 @@ class Campaign < ActiveRecord::Base
 
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
-  has_and_belongs_to_many :characters
+  #has_and_belongs_to_many :characters
   has_and_belongs_to_many :events
 
-  has_many :player_characters
-  has_many :characters, through: :player_characters
+  has_many :characters
+  has_many :player_characters, through: :characters
 
   has_many :players
   has_many :users, through: :players
@@ -50,6 +54,10 @@ class Campaign < ActiveRecord::Base
   #TODO May be unneded. Check later after applyed.
   def active_players
     players.active
+  end
+
+  def adventuring_player_characters()
+    player_characters.where(status: "adventuring")
   end
 
   def user_is_active_player?(user)

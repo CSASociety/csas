@@ -7,13 +7,13 @@
 
 %section.character
   .section_header
-    %h2 Characters
+    %h2 Player Characters
     - if current_user
-      = content_tag :a, "Add a Character", :href => "#add_character", :class => 'btn add_action_link', :data => {:toggle => 'modal'}
+      = content_tag :a, "Add a Player Character", :href => "#add_player_character", :class => 'btn add_action_link', :data => {:toggle => 'modal'}
   .section_content
-    = render partial: "characters/character_summary_box", collection: @user.characters, as: "character"
+    = render partial: "player_characters/character_summary_box", collection: @user.player_characters, as: "player_character"
 
-= modal_dialog :id => "add_character",
+= modal_dialog :id => "add_player_character",
     :header => { :show_close => true, :dismiss => 'modal', :title => "Create Character" },
-    :body => render(partial: "characters/form", locals: {character: Character.new}),
+    :body => render(partial: "player_characters/form", locals: {player_character: PlayerCharacter.new}),
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })

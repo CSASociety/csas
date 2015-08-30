@@ -1,96 +1,62 @@
 <% title @player_character.name %>
 <% if can? :update, @player_character %>
-  <% edit_text "Edit PC" %>
+  <% edit_text "Edit Character" %>
   <% edit_path edit_player_character_path(@player_character) %>
 <%end%>
 
 <section id="main">
   <div id="main_image">
     <%-if @player_character.image.present? %>
-      <%= image_tag @player_character.image.file.url(:medium) %>
+      <%= image_tag @player_character.image.url(:medium) %>
     <%-end%>
   </div>
-  <div class="main_info">
-    <p>
-      <strong>Description:</strong>
-      <%= markdown(@player_character.description) if @player_character.description %>
-    </p>
+  <div id="main_info">
     <p>
       <strong>Bio:</strong>
-      <%= markdown(@player_character.bio) if @player_character.bio %>
+      <%= markdown(@player_character.bio) %>
     </p>
     <p>
-      <strong>Secrets:</strong>
-      <%= markdown(@player_character.secrets) if @player_character.secrets %>
-    </p>
-
-    <p>
-      <strong>Campaign:</strong>
-      <%= link_to @player_character.campaign.title, campaign_path(@player_character.campaign) %>
+      <strong>Status:</strong>
+      <%= @player_character.status %>
     </p>
     <p>
-    <strong>Player:</strong>
-      <%= @player_character.player.display_name %>
-      </p>
-    <p
-    <p>
-    <strong>Status:</strong>
-      <%= @player_character.status.humanize%>
-    </p>
-
-    <p>
-      <strong>Game:</strong>
-      <%= link_to @player_character.campaign.game.title,  @player_character.campaign.game %>
-    </p>
-
-    <p>
-      <strong>GM:</strong>
-      <%= @player_character.campaign.gm.display_name %>
-    </p>
-
-
-    <p>
-      <%= link_to "View All", campaigns_path %>
+      <strong>Current Campaign</strong>
+      <%- if @player_character.current_campaign.present? %>
+        <%= link_to @player_character.current_campaign.title, campaign_path(@player_character.current_campaign) %>
+      <%-else %>
+        Not currently part of a campaign
+      <%-end%>
     </p>
   </div>
-
-  <%= render partial: "status_actions", :locals => {:pc => @player_character} %>
 </section>
+
 <% unless @player_character.attachments.empty? && cannot?(:update, @player_character) %>
 <section class="attachments">
   <div class="section_header">
     <h2> Attachemnts </h2>
-    <% if can? :update, @player_character %>
+    <% if can? :update, @player_character%>
       <%= content_tag :a, "Attach File", :href => "#attach_to", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
     <%- end %>
   </div>
   <div class="section_content">
-    <%= render partial: "attachments/attached", collection: @player_character.attachments, as: "attachment" %>
+    <%= render partial: "attachments/attached", collection: @player_character.attachments, as: "attachment", locals: {item: @player_character} %>
   </div>
 </section>
 <%end%>
+
 <% unless @player_character.attachments.empty? && cannot?(:update, @player_character) %>
   <%= atttachment_form(@player_character) -%>
+  <%- @player_character.attachments.each do |attach| -%>
+    <%= atttachment_form(@player_character, attach)-%>
+  <%-end-%>
 <%- end %>
 
-
-<section>
+<section class="actions">
   <div class="section_header">
-    <h2>Journal Entries</h2>
-    <% if current_user == @player_character.player.user%>
-      <%= content_tag :a, "Add Journal Entry", :href => "#add_journal_entry", :class => 'btn add_action_link', :data => {:toggle => 'modal'} %>
-    <% end %>
-
+    <h2> Actions </h2>
   </div>
   <div class="section_content">
-    <%= render partial: "journal_entries/journal_entry_summary_box", collection: @player_character.journal_entries, as: "journal_entry" %>
+    <%= render partial: "player_characters/status_actions", locals: {player_character: @player_character} %>
   </div>
 </section>
 
-<%if current_user == @player_character.player.user %>
-  <%= modal_dialog :id => "add_journal_entry",
-    :header => { :show_close => true, :dismiss => 'modal', :title => "Add Journal Entry to #{@player_character.name}" },
-    :body => render(partial: "journal_entries/form", locals: {player_character: @player_character, journal_entry: JournalEntry.new}),
-    :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
-  %>
-<%-end%>

@@ -1,52 +1,24 @@
-<%- player_character = @player_character if defined?(@player_character)%>
+<%- player_character = @player_character if (!defined?(player_character) || player_character.nil?) %>
 <%= form_for player_character do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :name %>
+    <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :caste, value: "Class" %>
+    <%= f.label :class%><br />
     <%= f.text_field :caste %>
   </p>
   <p>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :bio %>
+    <%= f.label :bio %><br />
     <%= f.text_area :bio %>
   </p>
   <p>
-    <%= f.label :secrets %>
-    <%= f.text_area :secrets %>
-  </p>
-  <%- if player_character.new_record? %>
-    <%- if defined?(campaign_id) %>
-      <p>
-        <%= f.hidden_field :campaign_id, value: campaign_id %>
-      </p>
-    <%- else %>
-      <p>
-        <%= f.label :campaign %>
-        <%= f.collection_select :campaign_id, current_user.campaigns, :id, :title, prompt: true %>
-      </p>
-    <%- end %>
-    <%- if defined?(player_id)%>
-      <p>
-        <%= f.hidden_field :player_id, value: player_id %>
-      </p>
-    <%- else %>
-      <p>
-        <%= f.label :player %>
-        <%= f.collection_select :player_id, current_user.players, :id, :display_name, prompt: true %>
-      </p>
-    <%- end %>
-  <%- end %>
-  <p>
-    <%= f.label :image %>
-    <%= f.collection_select :image_id, possible_images(player_character), :id, :file_file_name, include_blank: "Please Select" , required: false%>
-    <%= link_to("Current Image: #{player_character.image.file_file_name}", player_character.image.file.url )if player_character.image.present? %>
+    <%= f.label :image -%>
+    <%= f.file_field :image -%>
   </p>
   <p><%= f.submit %></p>
-<% end %>
+<%- end %>
+<%- if player_character.new_record? %>
+  <p>Once you create this character you will be able to go to resource and add images and documents. You will be abe to add thoes here in the future but it is a bit more complicated than expected. </p>
+<%- end%>

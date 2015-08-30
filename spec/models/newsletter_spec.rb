@@ -9,6 +9,7 @@
 #  file_content_type :string(255)
 #  file_file_size    :integer
 #  file_updated_at   :datetime
+#  month             :date
 #
 
 require 'rails_helper'

@@ -14,6 +14,7 @@
 #  updated_at    :datetime
 #  reminder      :integer
 #  reminder_sent :boolean
+#  information   :text
 #
 
 class Event < ActiveRecord::Base

@@ -1,7 +1,7 @@
-<% title "Character" %>
-<% if can? :create, Character %>
-  <% edit_text "Create Character" %>
-  <% edit_path new_character_path %>
+<% title "Player Characters" %>
+<% if can? :create, PlayerCharacter %>
+  <% edit_text "Create New Player" %>
+  <% edit_path new_player_character_path %>
 <%end%>
 
 <section>
@@ -9,6 +9,6 @@
     <h2>Listing</h2>
   </div>
   <div class="section_content">
-    <%= render partial: "character_summary_box", collection: @characters, as: "character" %>
+    <%= render partial: "pc.html.haml", collection: @player_characters, as: "pc" %>
   </div>
 </section>

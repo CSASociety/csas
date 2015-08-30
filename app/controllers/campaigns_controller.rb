@@ -51,7 +51,7 @@ class CampaignsController < ApplicationController
     end
     if current_user.present? && @campaign.user_is_active_player?(current_user)
       @current_player = Player.where(campaign_id: @campaign.id, user_id: current_user.id).first
-      @possible_characters = current_user.characters - @campaign.characters
+      @possible_player_characters = current_user.player_characters - @campaign.player_characters
     end
   end
 
@@ -69,15 +69,15 @@ class CampaignsController < ApplicationController
 
   def add_pc
     @campaign = Campaign.find(params[:id])
-    @character = Character.find(params[:character])
-    debugger
-    if @character.status == 'resting' && !@campaign.characters.include?(@character)
-      @campaign.characters << @character
+    @player_character = PlayerCharacter.find(params[:character])
+    if @player_character.status == 'resting' && !@campaign.player_characters.include?(@player_character)
+      @campaign.player_characters << @player_character
       if @campaign.save
-        @character.begin
-        @character.current_campaign = @campaign
-        @character.save
-        redirect_to campaign_path(@campaign), notice: "#{@character.name} is now adveventuring in #{@campaign.title}"
+        @player_character.begin
+        @player_character.current_campaign = @campaign
+        @player_character.player = current_user.players.where(campaign_id: params[:id]).name
+        @player_character.save
+        redirect_to campaign_path(@campaign), notice: "#{@player_character.name} is now adveventuring in #{@campaign.title}"
       else
         redirect_to campaign_path(@campaign), alert: "Could not add character to campaign"
       end
@@ -89,14 +89,16 @@ class CampaignsController < ApplicationController
   def remove_pc
     debugger
     @campaign = Campaign.find(params[:id])
-    @character = Character.find(params[:character])
-    if @character.status == 'adventuring' && @campaign.characters.include?(@character)
+    @player_character = Character.find(params[:character])
+    if @player_character.status == 'adventuring' && @campaign.player_characters.include?(@player_character)
       # add character to formerchacter association
-      @campaign.characters -= [@character]
+      @campaign.player_characters -= [@player_character]
       if @campaign.save
-        @character.stop!
-        @character.current_campaign = nil
-        @character.save
+        @player_character.stop!
+        @player_character.current_campaign = nil
+        @player_character.save
+        @campaign.characters.where(player_character_id: @player_character.id).first.destroy
+        debugger
         redirect_to campaign_path(@campaign), notice: "#{@character.name} left the campaign: #{@campaign.title}"
       else
         redirect_to campaign_path(@campaign), alert: "Could not remove character from campaign"

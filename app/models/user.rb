@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :invitable
 
   has_many :games
-  has_many :characters
+  has_many :player_characters
   has_many :resources
   has_many :players
   has_many :campaigns, through: :players

@@ -20,29 +20,29 @@ class Ability
       can :update, Player, :user_id => user.id
 
       #can update character if the player is the current user
-      can [:update, :join, :retire, :kill, :remove, :resurrect, :find, :lose, :quit], Character, :user_id => user.id
+      can [:update, :join, :retire, :kill, :remove, :resurrect, :find, :lose, :quit], PlayerCharacter, :user_id => user.id
       #Can update player if they are an assistant on the campaign.
-      can [:update, :join, :remove], Character do |char|
+      can [:update, :join, :remove], PlayerCharacter do |char|
         if char.current_campaign.present?
           char.current_campaign.aids.include?(user) || char.current_campaign.gm == user
         end
       end
       #only admin can see version
       cannot :read, Version
-      cannot :create, PlayerCharacter do |pc|
-        result = true
-        #Grab each active player and cycle through
-        pc.campaign.players.active.each do |player|
-          #set return value to true if the player is the user
-          result = false if player.user_id == user.id
-        end
-        return result
-      end
+      #cannot :create, Character do |pc|
+      #  result = true
+      #  #Grab each active player and cycle through
+      #  pc.campaign.players.active.each do |player|
+      #    #set return value to true if the player is the user
+      #    result = false if player.user_id == user.id
+      #  end
+      #  return result
+      #end
 
       can :update, Game, :user_id => user.id
-      can [:update, :join, :retire, :kill, :remove], PlayerCharacter do |pc|
-        pc.campaign.aids.include?(user) 
-      end
+      #can [:update, :join, :retire, :kill, :remove], PlayerCharacter do |char|
+      #  char.campaign.aids.include?(user)
+      #end
       can [:update, :attach_event, :add_pc, :remove_pc], Campaign do |campaign|
         (campaign.aids.include?(user) || campaign.gm == user || campaign.players.where(user_id: user.id).present?)
       end

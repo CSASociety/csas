@@ -2,13 +2,19 @@
 #
 # Table name: attachments
 #
-#  id              :integer          not null, primary key
-#  title           :string(255)
-#  resource_id     :integer
-#  attachable_id   :integer
-#  attachable_type :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                :integer          not null, primary key
+#  title             :string(255)
+#  resource_id       :integer
+#  attachable_id     :integer
+#  attachable_type   :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  file_file_name    :string(255)
+#  file_content_type :string(255)
+#  file_file_size    :integer
+#  file_updated_at   :datetime
+#  entity_id         :integer
+#  entity_type       :string(255)
 #
 
 class  Attachment < ActiveRecord::Base

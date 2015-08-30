@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819033315) do
+ActiveRecord::Schema.define(version: 20150821201915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,25 +67,20 @@ ActiveRecord::Schema.define(version: 20150819033315) do
     t.integer "event_id"
   end
 
-  create_table "characters", force: true do |t|
-    t.string   "player"
-    t.string   "name"
-    t.text     "bio"
-    t.text     "gm_bio"
+  create_table "character", force: true do |t|
+    t.integer  "campaign_id"
+    t.integer  "character_id"
     t.string   "status"
-    t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
     t.string   "caste"
-    t.integer  "user_id"
-    t.integer  "current_campaign_id"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.text     "description"
+    t.text     "bio"
+    t.text     "secrets"
+    t.integer  "player_id"
+    t.integer  "image_id"
   end
-
-  add_index "characters", ["current_campaign_id"], name: "index_characters_on_current_campaign_id", using: :btree
 
   create_table "contents", force: true do |t|
     t.string   "title"
@@ -159,19 +154,24 @@ ActiveRecord::Schema.define(version: 20150819033315) do
   end
 
   create_table "player_characters", force: true do |t|
-    t.integer  "campaign_id"
-    t.integer  "character_id"
+    t.string   "player"
+    t.string   "name"
+    t.text     "bio"
+    t.text     "gm_bio"
     t.string   "status"
+    t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
     t.string   "caste"
-    t.text     "description"
-    t.text     "bio"
-    t.text     "secrets"
-    t.integer  "player_id"
-    t.integer  "image_id"
+    t.integer  "user_id"
+    t.integer  "current_campaign_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
+
+  add_index "player_characters", ["current_campaign_id"], name: "index_player_characters_on_current_campaign_id", using: :btree
 
   create_table "players", force: true do |t|
     t.integer  "campaign_id"

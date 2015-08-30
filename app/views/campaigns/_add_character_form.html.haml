@@ -1,4 +1,4 @@
 = form_tag(add_pc_path(campaign_id), method: :patch) do
   = label_tag :character
-  = select_tag(:character, options_from_collection_for_select(@possible_characters, :id, :name))
+  = select_tag(:character, options_from_collection_for_select(@possible_player_characters, :id, :name))
   = submit_tag("Add")

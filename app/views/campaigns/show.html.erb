@@ -37,7 +37,7 @@
   </div>
 </section>
 
-<% unless @campaign.characters.empty? && !defined?(@current_player)%>
+<% unless @campaign.player_characters.empty? && !defined?(@current_player)%>
 <section class="character">
   <div class="section_header">
     <h2>PCs</h2>
@@ -46,7 +46,7 @@
     <% end %>
   </div>
   <div class="section_content">
-    <%= render partial: "characters/character_summary_box", collection: @campaign.characters, as: "character" %>
+    <%= render partial: "player_characters/character_summary_box", collection: @campaign.adventuring_player_characters, as: "player_character" %>
   </div>
 </section>
 <%end%>
@@ -135,7 +135,7 @@
 <% if defined?(@current_player) %>
   <%= modal_dialog :id => "add_player_character",
     :header => { :show_close => true, :dismiss => 'modal', :title => "Add Player Character to #{@campaign.title}" },
-    :body => render(partial: "campaigns/add_character_form", locals: {campaign_id: @campaign.id, character: Character.new, player_id: @current_player.id, possible_charcters: @possible_characters }),
+    :body => render(partial: "campaigns/add_character_form", locals: {campaign_id: @campaign.id, character: Character.new, player_id: @current_player.id, possible_charcters: @possible_player_characters }),
     :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })
   %>
 <%-end%>

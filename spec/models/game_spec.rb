@@ -2,14 +2,18 @@
 #
 # Table name: games
 #
-#  id          :integer          not null, primary key
-#  title       :string(255)
-#  description :text
-#  link        :string(255)
-#  image_id    :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#  user_id     :integer
+#  id                 :integer          not null, primary key
+#  title              :string(255)
+#  description        :text
+#  link               :string(255)
+#  image_id           :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  user_id            :integer
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
 #
 
 require 'rails_helper'

@@ -2,50 +2,66 @@
 #
 # Table name: player_characters
 #
-#  id                    :integer          not null, primary key
-#  campaign_id           :integer
-#  character_template_id :integer
-#  status                :string(255)
-#  created_at            :datetime
-#  updated_at            :datetime
-#  name                  :string(255)
-#  caste                 :string(255)
-#  description           :text
-#  bio                   :text
-#  secrets               :text
-#  player_id             :integer
-#  image_id              :integer
+#  id                  :integer          not null, primary key
+#  player              :string(255)
+#  name                :string(255)
+#  bio                 :text
+#  gm_bio              :text
+#  status              :string(255)
+#  image_id            :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  caste               :string(255)
+#  user_id             :integer
+#  current_campaign_id :integer
+#  image_file_name     :string(255)
+#  image_content_type  :string(255)
+#  image_file_size     :integer
+#  image_updated_at    :datetime
 #
 
 class PlayerCharacter < ActiveRecord::Base
-  belongs_to :campaign
-  belongs_to :player
-  belongs_to :character
-  belongs_to :image, class_name: "Resource"
-  has_many :attachments, as: :attachable
-  has_many :resources, through: :attachments
+  has_paper_trail
+  has_many :attachments, as: :entity
+  belongs_to :user
+  belongs_to :current_campaign, class_name: :Campaign
 
-  has_many :journal_entries
+  has_many :characters
+  has_many :campaigns, through: :characters
 
-  validates :player, :presence => true
-  validates :campaign, :presence => true
+  #belongs_to :image, class_name: "Resource"
+  has_attached_file :image,
+                    :styles => { :medium => "300x300>", :thumb => "100x100>" },
+                    :storage => :s3,
+                    :bucket => ENV['S3_BUCKET'],
+                    :s3_credentials => {
+                      :access_key_id => ENV['S3_KEY'],
+                      :secret_access_key => ENV['S3_SECRET']
+                    }
+
+  validates_attachment_content_type :image, :content_type => /\Aimage/
+
+  #has_and_belongs_to_many :campaigns
+
 
   alias_attribute :title, :name
+
 
   include AASM
 
   aasm :column => 'status' do
-    state :adventuring, inital: true
+    state :resting, inital: true
+    state :adventuring
     state :retired
     state :dead
     state :missing
 
-    event :join do
-      transitions from: [:retired, :dead, :missing], to: :adventuring
+    event :begin do
+      transitions from: [:retired, :dead, :missing, :resting], to: :adventuring
     end
 
     event :retire do
-      transitions from: [:adventuring, :missing], to: :retired
+      transitions from: :resting, to: :retired
     end
 
     event :kill do
@@ -56,5 +72,22 @@ class PlayerCharacter < ActiveRecord::Base
       transitions from: :adventuring, to: :missing
     end
 
+    event :stop do
+      transitions from: :adventuring, to: :resting
+    end
+
+    event :find do
+      transitions from: :missing, to: :adventuring
+    end
+
+    event :resurrection do
+      transitions from: :dead, to: :adventuring
+    end
+
+    event :reactivate do
+      transitions from: :retired, to: :adventuring
+    end
+
   end
+
 end

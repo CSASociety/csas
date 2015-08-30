@@ -1,63 +1,33 @@
-# == Schema Information
-#
-# Table name: characters
-#
-#  id                  :integer          not null, primary key
-#  player              :string(255)
-#  name                :string(255)
-#  bio                 :text
-#  gm_bio              :text
-#  status              :string(255)
-#  image_id            :integer
-#  created_at          :datetime
-#  updated_at          :datetime
-#  caste               :string(255)
-#  user_id             :integer
-#  current_campaign_id :integer
-#
-
 class Character < ActiveRecord::Base
-  has_paper_trail
-  has_many :attachments, as: :entity 
-  belongs_to :user
-  belongs_to :current_campaign, class_name: :Campaign
+  belongs_to :campaign
+  belongs_to :player
+  belongs_to :player_character
+  belongs_to :image, class_name: "Resource"
+  has_many :attachments, as: :attachable
+  has_many :resources, through: :attachments
 
-  has_many :player_characters
-  has_many :campaigns, through: :player_characters
+  has_many :journal_entries
 
-  #belongs_to :image, class_name: "Resource"
-  has_attached_file :image,
-                    :styles => { :medium => "300x300>", :thumb => "100x100>" },
-                    :storage => :s3,
-                    :bucket => ENV['S3_BUCKET'],
-                    :s3_credentials => {
-                      :access_key_id => ENV['S3_KEY'],
-                      :secret_access_key => ENV['S3_SECRET']
-                    }
-
-  validates_attachment_content_type :image, :content_type => /\Aimage/
-
-  #has_and_belongs_to_many :campaigns
-
+  #validates :player, :presence => true
+  validates :campaign, :presence => true
 
   alias_attribute :title, :name
-
 
   include AASM
 
   aasm :column => 'status' do
-    state :resting, inital: true
-    state :adventuring
+    state :adventuring, inital: true
     state :retired
     state :dead
     state :missing
+    state :gone
 
-    event :begin do
-      transitions from: [:retired, :dead, :missing, :resting], to: :adventuring
+    event :join do
+      transitions from: [:retired, :dead, :missing], to: :adventuring
     end
 
     event :retire do
-      transitions from: :resting, to: :retired
+      transitions from: [:adventuring, :missing], to: :retired
     end
 
     event :kill do
@@ -68,22 +38,11 @@ class Character < ActiveRecord::Base
       transitions from: :adventuring, to: :missing
     end
 
-    event :stop do
-      transitions from: :adventuring, to: :resting
-    end
-
-    event :find do
-      transitions from: :missing, to: :adventuring
-    end
-
-    event :resurrection do
-      transitions from: :dead, to: :adventuring
-    end
-
-    event :reactivate do
-      transitions from: :retired, to: :adventuring
+    event :quit do
+      transitions from: :adventuring, to: :gone
     end
 
   end
+
 
 end

@@ -1,11 +1,11 @@
 class ProfilesController < ApplicationController
-  load_and_authorize_resource param_method: :game_params
+  load_and_authorize_resource param_method: :profile_params
   def index
     @profiles = Profile.all
   end
 
   def edit
-    @profile = Profile.find(game_params)
+    @profile = Profile.find(profile_params)
   end
 
   def update
@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
     @possible_images = Resource.where('file_content_type like ?', '%image%')
   end
 
-  def game_params
+  def profile_params
     params.require(:profile).permit()
   end
 
