@@ -144,7 +144,6 @@ class PlayerCharactersController < ApplicationController
   private
 
   def player_character_params
-    params.require(:player_character).permit(:user, :name, :caste, :bio, :gm_bio, :status, :image)
-
+    params.require(:player_character).permit(:user, :name, :caste, :bio, :gm_bio, :status, :image, :user_id)
   end
 end

@@ -60,6 +60,7 @@ class Campaign < ActiveRecord::Base
     player_characters.where(status: "adventuring")
   end
 
+
   def user_is_active_player?(user)
     result = false
     self.players.active.each do |player|
