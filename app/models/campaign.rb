@@ -24,6 +24,8 @@ class Campaign < ActiveRecord::Base
 
   has_many :assistants
   has_many :aids, through: :assistants, source: :user
+  has_and_belongs_to_many :sent_emails
+
 
   belongs_to :gm, foreign_key: :user_id, class_name: :User
 
