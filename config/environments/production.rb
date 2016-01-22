@@ -85,8 +85,9 @@ Csas::Application.configure do
     :bucket => ENV['S3_BUCKET_NAME'],
     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    },
+    :url => :"s3-us-west-2.amazonaws.com"
   }
-}
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new

@@ -27,5 +27,16 @@ Csas::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  #Paperclip and S3 configs
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+    :bucket => ENV['S3_BUCKET_NAME'],
+    :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    },
+    :url => :"s3-us-west-2.amazonaws.com"
+  }
+
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end
