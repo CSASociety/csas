@@ -26,7 +26,8 @@ class PlayerCharactersController < ApplicationController
 
   def update
     @player_character = PlayerCharacter.find(params[:id])
-    params["character"] = params["character"].except("image_id") if params["character"]["image_id"].blank?
+    debugger
+    params["player_character"] = params["player_character"].except("image_id") if params["player_character"]["image_id"].blank?
     if @player_character.update_attributes(player_character_params)
       redirect_to @player_character, :notice  => "Successfully updated character."
     else
