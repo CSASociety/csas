@@ -6,3 +6,5 @@
   = "Owner: #{player_character.user.display_name}"
   %br
   = link_to "View Full Character", player_character_path(player_character)
+  %br
+  = image_tag player_character.image.url(:small)
