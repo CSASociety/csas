@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830032547) do
+ActiveRecord::Schema.define(version: 20160128054126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,16 +62,16 @@ ActiveRecord::Schema.define(version: 20150830032547) do
   add_index "campaigns_characters", ["campaign_id"], name: "index_campaigns_characters_on_campaign_id", using: :btree
   add_index "campaigns_characters", ["character_id"], name: "index_campaigns_characters_on_character_id", using: :btree
 
-  create_table "campaigns_events", id: false, force: true do |t|
-    t.integer "campaign_id"
-    t.integer "event_id"
-  end
-
-  create_table "campaigns_sent_emails", id: false, force: true do |t|
-    t.integer  "sent_email_id"
+  create_table "campaigns_emails", id: false, force: true do |t|
+    t.integer  "email_id"
     t.integer  "campaign_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "campaigns_events", id: false, force: true do |t|
+    t.integer "campaign_id"
+    t.integer "event_id"
   end
 
   create_table "characters", force: true do |t|
@@ -112,6 +112,30 @@ ActiveRecord::Schema.define(version: 20150830032547) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "emails", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "status"
+    t.date     "schedule_send_date"
+    t.text     "recipients"
+  end
+
+  create_table "emails_events", id: false, force: true do |t|
+    t.integer  "email_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "emails_users", id: false, force: true do |t|
+    t.integer  "email_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "events", force: true do |t|
     t.datetime "start_at"
     t.datetime "stop_at"
@@ -125,13 +149,6 @@ ActiveRecord::Schema.define(version: 20150830032547) do
     t.integer  "reminder"
     t.boolean  "reminder_sent"
     t.text     "information"
-  end
-
-  create_table "events_sent_emails", id: false, force: true do |t|
-    t.integer  "sent_email_id"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "games", force: true do |t|
@@ -211,20 +228,6 @@ ActiveRecord::Schema.define(version: 20150830032547) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.integer  "user_id"
-  end
-
-  create_table "sent_emails", force: true do |t|
-    t.string   "subject"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "sent_emails_users", id: false, force: true do |t|
-    t.integer  "sent_email_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

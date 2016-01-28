@@ -1,0 +1,31 @@
+<h1>Email</h1>
+<table>
+  <tr>
+    <th>
+      Subject
+    </th>
+    <th>
+      Sceduled Send Date
+    </th>
+    <th>
+      Actions
+    </th>
+  </tr>
+  <%- @emails.each do |email| -%>
+    <tr>
+      <td>
+        <%= email.subject.truncate(40) -%>
+      </td>
+      <td>
+        <%= email.schedule_send_date -%>
+      </td>
+      <td>
+        Show | Edit | Cancel
+      </td>
+    </tr>
+  <%-end %>
+</table>
+
+
+    
+

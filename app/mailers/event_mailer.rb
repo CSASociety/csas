@@ -2,7 +2,8 @@ class EventMailer < ActionMailer::Base
   default from: "donotreply@vaultofholding.com"
 
   def reminder(event)
-    @event = event
+    @event = Event.find(event)
+    #@event = event
     @start = event.start_at
     @end = event.stop_at
     @location = event.location
@@ -24,19 +25,19 @@ class EventMailer < ActionMailer::Base
     if mail(to: (user_emails.present? ? user_emails : 'nejohannsen@gmail.com'), subject: subject)
       @event.reminder_sent = true
       @event.save
-      @sent_email = SentEmail.new(subject: subject, body: render_to_string)
-      #Rails.logger.debug(@sent_email.body)
+      @email = Email.new(subject: subject, body: render_to_string)
+      ##Rails.logger.debug(@email.body)
       users.each do |user|
-        @sent_email.users << user
+        @email.users << user
       end
       users.each do |user|
-        @sent_email.users << user unless @sent_email.users.include?(user)
+        @email.users << user unless @email.users.include?(user)
       end
-      @sent_email.events << event
+      @email.events << event
       @event.campaigns.each do |camp|
-        @sent_email.campaigns << camp
+        @email.campaigns << camp
       end
-      @sent_email.save
+      @email.save
 
     end
   end
