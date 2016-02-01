@@ -21,6 +21,7 @@ gem 'redcarpet'
 gem 'geocoder'
 gem 'simple_form'
 gem 'tinymce-rails'
+gem "font-awesome-rails"
 
 gem 'annotate', github: 'ctran/annotate_models'
 

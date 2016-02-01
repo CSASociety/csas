@@ -1,5 +1,7 @@
+/*.test {border: 1px solid white; height: 37px;}*/
 body {
   overflow-x: hidden;
+  background-color: #fafafa;
   #flash_alert {
     margin: 0 auto;
     width: 90%;
@@ -18,6 +20,108 @@ body {
     height: 28px;
     font-weight: bold;
   }
+  #headerbar {
+    height: 37px;
+    background: black;
+    border-bottom: 1px solid gray;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 37px;
+    overflow:hidden;
+    .right-side-menu-item {
+      float:right;
+      padding: 0 17px;
+    }
+    .left-side-menu-item {
+      float:left;
+      padding: 0 17px;
+
+    }
+    a {
+      color: white;
+      height: 100%;
+      display: inline-block;
+    }
+    a:visted {
+      color: White;
+      height: 100%;
+
+    }
+  }
+  #main {
+    width: 100%;
+    overflow:hidden;
+    #sidebar {
+      height: 100%;
+      -webkit-box-shadow: 7px 7px 3px #888;
+      width:17%;
+      float:left;
+      #logo {
+        margin: 0 auto;
+        background-image: url(/assets/CSAS.gif);
+        height: 70px;
+        width: 160px;
+        background-size: 160px 70px;
+        background-repeat: no-repeat;
+      }
+      ul {
+        list-style-type: none;
+        padding-top: 17px;
+        margin: 0;
+        width: 100%;
+        li {
+          width: 100%;
+          margin: 0;
+          display: inline-block;
+          font-size: 1.2em;
+          width: 100%;
+          height: 42px;
+          line-height: 42px;
+          vertical-align: middle;
+          text-indent: 10px;
+          a {
+            color: black;
+            padding-left: 27px;
+            display: inline-block;
+            width: 83.5%;
+            height: 100%;
+          }
+          a:visted {
+            color: black;
+            padding-left: 17px;
+            display: inline-block;
+            width: 83.5%;
+            height: 100%;
+
+          }
+          a:hover {
+            background-color: silver;
+            display: inline-block;
+            width: 83.5%;
+            height: 100%;
+          }
+
+        }
+      }
+    }
+    #content {
+      width:80%;
+      padding: 17px;
+      float:right;
+
+    }
+    @media (max-width: 500px){
+      #sidebar {
+        display:hidden;
+      }
+      #content {
+        width: 100%;
+      }
+    }
+  }
+
 
   width: 100%;
   table {

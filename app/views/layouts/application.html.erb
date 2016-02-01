@@ -7,7 +7,90 @@
     <%= yield(:head) %>
   </head>
   <body>
-  <header>
+  <div id="fullpage">
+    <div id="headerbar" class="">
+      <div class="Left-side-menu-item"><%= fa_icon "Bars", text: "Menu"%></div>
+      <%- if user_signed_in? %>
+        <div class="right-side-menu-item">
+          <%= link_to fa_icon("user", text: current_user.display_name), edit_user_registration_path %>
+        </div>
+        <div class="right-side-menu-item">
+          <%=link_to fa_icon("sign-out", text: "Sign Out"), destroy_user_session_path, :method => :delete %>
+        </div>
+      <%-else%>
+        <div class="right-side-menu-item">
+          <%= content_tag :a, fa_icon("Sign-in", text: "Sign In"), :href => "#sign-in-modal", :class => '', :data => {:toggle => 'modal'} %>
+        </div>
+        <div class="right-side-menu-item">
+          <%=link_to fa_icon("pencil-square", text: "Sign Up"), new_user_registration_path %>
+        </div>
+      <%-end%>
+    </div>
+    <div id="main" class="row">
+      <div id="sidebar" class="">
+        <div id="logo"></div>
+        <ul>
+          <li>
+          <%=link_to(root_path) do %>
+            <%=fa_icon "home", text: "Home"%>
+          <%-end%>
+          </li>
+          <li>
+            <%=link_to(constitution_path) do-%>
+              <%= fa_icon "university", text: "Constitution"%>
+            <%-end%>
+          </li>
+          <li>
+            <%=link_to(newsletters_path) do-%>
+              <%= fa_icon "newspaper-o", text: "Newsletter" %>
+            <%- end %>
+          </li>
+          <li>
+            <%=link_to(games_path) do -%>
+              <%=fa_icon "Book", text: "Games"%>
+            <%-end%>
+          </li>
+          <li>
+            <%=link_to(campaigns_path) do -%>
+              <%=fa_icon "Globe", text: "Campaigns"%>
+            <%-end%>
+            </li>
+          <li>
+            <%=link_to(profiles_path) do -%>
+              <%=fa_icon "Users", text: "Profiles"%>
+            <%-end%>
+          </li>
+          <% if can? :read, Version %>
+            <li>
+              <%=link_to 'Versions', versions_path-%>
+            </li>
+          <%end%>
+      </ul>
+      </div>
+      <div id="content" class="mobile">
+      <section id="main_title_section">
+        <div class="section_header">
+          <%= content_tag( :h1, yield(:title), class: "title") if show_title? %>
+          <%= link_to yield(:edit_text), yield(:edit_path),  class: "btn add_action_link" if show_edit_button? %>
+        </div>
+        <div class="section_content">
+          <% flash.each do |name, msg| %>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <% end %>
+        </div>
+      </section>
+      <div id="popups">
+         <%- if current_user.nil? %>
+          <%= modal_dialog :id => "sign-in-modal",
+            :header => { :show_close => true, :dismiss => 'modal', :title => "Sign In" },
+            :body => render(partial: "devise/sessions/login" ),
+            :footer =>  content_tag(:button, 'Cancel', :class => 'btn btn-primary', :data => { :dismiss => 'modal' })%>
+        <%-end%>
+      </div>
+     <%= yield %>
+    </div>
+  </div>
+  <!--<header>
       <div id="logo"></div>
       <nav>
         <ul>
@@ -74,7 +157,7 @@
         </div>
      </section>
       <%= yield %>
-    </div>
+    </div>-->
     <%= yield :javascript %>
   </body>
   </html>
